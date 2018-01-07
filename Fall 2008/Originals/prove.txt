@@ -1,0 +1,165 @@
+<ASCII-MAC>
+<Version:5><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1>>
+<pstyle:Feature Lead><CharStyle:pod-C>Test::Harness<CharStyle:> is responsible for running test scripts, analysing their output and reporting success or failure. When I type <CharStyle:pod-C>make test<CharStyle:> (or <CharStyle:pod-C>./Build test<CharStyle:>) for a module, <CharStyle:pod-C>Test::Harness<CharStyle:> is usually used to run the tests (not all modules use <CharStyle:pod-C>Test::Harness<CharStyle:> but the majority do).
+<pstyle:Feature Para>To start exploring some of the features of <CharStyle:pod-C>Test::Harness<CharStyle:> I need to switch from <CharStyle:pod-C>make test<CharStyle:> to the <CharStyle:pod-C>prove<CharStyle:> command (which ships with <CharStyle:pod-C>Test::Harness<CharStyle:>). For the following examples I<0x2019>ll also need a recent version of <CharStyle:pod-C>Test::Harness<CharStyle:> installed; 3.14 is current as I write.
+<pstyle:Feature Para>For the examples I<0x2019>m going to assume that we<0x2019>re working with a <0x201C>normal<0x201D> Perl module distribution. Specifically I<0x2019>ll assume that typing <CharStyle:pod-C>make<CharStyle:> or <CharStyle:pod-C>./Build<CharStyle:> causes the built, ready-to-install module code to be available below <CharStyle:pod-I>./blib/lib<CharStyle:> and <CharStyle:pod-I>./blib/arch<CharStyle:> and that there<0x2019>s a directory called <CharStyle:pod-I>t<CharStyle:> that contains our tests. <CharStyle:pod-C>Test::Harness<CharStyle:> isn<0x2019>t hardwired to that configuration but it saves me from explaining which files live where for each example.
+<pstyle:Feature Para>Back to <CharStyle:pod-C>prove<CharStyle:>; like <CharStyle:pod-C>make test<CharStyle:> it runs a test suite---but it provides far more control over which tests are executed, in what order and how their results are reported. Typically <CharStyle:pod-C>make test<CharStyle:> runs all the test scripts below the <CharStyle:pod-I>t<CharStyle:> directory. To do the same thing with <CharStyle:pod-C>prove<CharStyle:> I type:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    prove -rb t<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>The switches here are <CharStyle:pod-C>-r<CharStyle:> to recurse into any directories below <CharStyle:pod-I>t<CharStyle:> and <CharStyle:pod-C>-b<CharStyle:> which adds <CharStyle:pod-I>./blib/lib<CharStyle:> and <CharStyle:pod-I>./blib/arch<CharStyle:> to Perl<0x2019>s include path so that the tests can find the code they will be testing. If I<0x2019>m testing a module of which an earlier version is already installed I need to be careful about the include path to make sure I<0x2019>m not running my tests against the installed version rather than the new one that I<0x2019>m working on.
+<pstyle:Feature Para>Unlike <CharStyle:pod-C>make test<CharStyle:>, typing <CharStyle:pod-C>prove<CharStyle:> doesn<0x2019>t automatically rebuild my module. If I forget to make before <CharStyle:pod-C>prove<CharStyle:> I will be testing against older versions of those files---which inevitably leads to confusion. I either get into the habit of typing
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    make && prove -rb t<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>or <CharStyle:pod-C>-<CharStyle:> if I have no XS code that needs to be built I use the modules below <CharStyle:pod-I>lib<CharStyle:> instead
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    prove -Ilib -r t<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>So far I<0x2019>ve shown nothing that <CharStyle:pod-C>make test<CharStyle:> doesn<0x2019>t do. Let<0x2019>s fix that.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Saved State	
+<pstyle:Feature Section Lead>If I have failing tests in a test suite that consists of more than a handful of scripts and takes more than a few seconds to run it rapidly becomes tedious to run the whole test suite repeatedly as I track down the problems.
+<pstyle:Feature Para>I can tell <CharStyle:pod-C>prove<CharStyle:> just to run the tests that are failing like this:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    prove -b t/this_fails.t t/so_does_this.t<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>That speeds things up but I have to make a note of which tests are failing and make sure that I run those tests. Instead I can use <CharStyle:pod-C>prove<CharStyle:><0x2019>s <CharStyle:pod-C>--state<CharStyle:> switch and have it keep track of failing tests for me. First I do a complete run of the test suite and tell <CharStyle:pod-C>prove<CharStyle:> to save the results:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    prove -rb --state=save t<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>That stores a machine readable summary of the test run in a file called <CharStyle:pod-I>.prove<CharStyle:> in the current directory. If I have failures I can then run just the failing scripts like this:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    prove -b --state=failed<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>I can also tell <CharStyle:pod-C>prove<CharStyle:> to save the results again so that it updates its idea of which tests failed:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    prove -b --state=failed,save<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>As soon as one of my failing tests passes <CharStyle:pod-C>prove<CharStyle:> removes it from the list of failed tests. Eventually I fix them all and <CharStyle:pod-C>prove<CharStyle:> can find no failing tests to run:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    Files=0, Tests=0,  0 wallclock secs ( 0.00 usr +  0.00 sys =  0.00 CPU)
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>    Result: NOTESTS
+<pSpaceAfter:><pstyle:Feature Para>As I work on a particular part of my module, it<0x2019>s most likely that the tests that cover that code will fail. I<0x2019>d like to run the whole test suite but have it prioritize these <0x201C>hot<0x201D> tests. I can tell <CharStyle:pod-C>prove<CharStyle:> to do this:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    prove -rb --state=hot,save t<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>All the tests will run but those that failed most recently will be run first. If no tests have failed since I started saving state all tests will run in their normal order. This combines full test coverage with early notification of failures.
+<pstyle:Feature Para>The <CharStyle:pod-C>--state<CharStyle:> switch supports a number of options; for example to run failed tests first followed by all remaining tests ordered by the timestamps of the test scripts---and save the results---I can use
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    prove -rb --state=failed,new,save t<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>See the <CharStyle:pod-C>prove<CharStyle:> documentation (type <CharStyle:pod-C>prove --man<CharStyle:>) for the full list of state options.
+<pstyle:Feature Para>When I tell <CharStyle:pod-C>prove<CharStyle:> to save state it writes a file called <CharStyle:pod-I>.prove<CharStyle:> (<CharStyle:pod-I>_prove<CharStyle:> on Windows) in the current directory. It<0x2019>s a YAML document so it<0x2019>s quite easy to write tools of your own that work on the saved test state---but the format isn<0x2019>t officially documented so it might change without (much) warning in the future.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Parallel Testing	
+<pstyle:Feature Section Lead>If my tests take too long to run I may be able to speed them up by running multiple test scripts in parallel. This is particularly effective if the tests are I/O bound or if I have multiple CPU cores. I tell <CharStyle:pod-C>prove<CharStyle:> to run my tests in parallel like this:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    prove -rb -j 9 t<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>The <CharStyle:pod-C>-j<CharStyle:> switch enables parallel testing; the number that follows it is the maximum number of tests to run in parallel. Sometimes tests that pass when run sequentially will fail when run in parallel. For example if two different test scripts use the same temporary file or attempt to listen on the same socket I<0x2019>ll have problems running them in parallel. If I see unexpected failures I need to check my tests to work out which of them are trampling on the same resource and rename temporary files or add locks as appropriate.
+<pstyle:Feature Para>To get the most performance benefit I want to have the test scripts that take the longest to run start first---otherwise I<0x2019>ll be waiting for the one test that takes nearly a minute to complete after all the others are done. I can use the <CharStyle:pod-C>--state<CharStyle:> switch to run the tests in slowest to fastest order:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    prove -rb -j 9 --state=slow,save t<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Non-Perl Tests	
+<pstyle:Feature Section Lead>The Test Anything Protocol (<CharStyle:pod-I>http://testanything.org/<CharStyle:>) isn<0x2019>t just for Perl. Just about any language can be used to write tests that output TAP. There are TAP-based testing libraries for C, C++, PHP, Python and many others. If I can<0x2019>t find a TAP library for my language of choice it<0x2019>s easy to generate valid TAP. It looks like this:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    1..3
+<pSpaceBefore:><pstyle:Feature Code Para>    ok 1 - init OK
+<pstyle:Feature Code Para>    ok 2 - opened file
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    not ok 3 - appended to file
+<pSpaceAfter:><pstyle:Feature Para>The first line is the plan---it specifies the number of tests I<0x2019>m going to run so that it<0x2019>s easy to check that the test script didn<0x2019>t exit before running all the expected tests. The following lines are the test results: <CharStyle:pod-C>ok<CharStyle:> for pass, <CharStyle:pod-C>not ok<CharStyle:> for fail. Each test has a number and, optionally, a description. And that<0x2019>s it. Any language that can produce output like that on <CharStyle:pod-C>STDOUT<CharStyle:> can be used to write tests.
+<pstyle:Feature Para>Recently I<0x2019>ve been rekindling a two-decades-old interest in Forth. Evidently I have a masochistic streak that even Perl can<0x2019>t satisfy. I want to write tests in Forth and run them using <CharStyle:pod-C>prove<CharStyle:> (you can find my gforth TAP experiments at <CharStyle:pod-I>https://svn.hexten.net/andy/Forth/Testing/<CharStyle:>). I can use the <CharStyle:pod-C>--exec<CharStyle:> switch to tell <CharStyle:pod-C>prove<CharStyle:> to run the tests using gforth like this:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    prove -r --exec gforth t<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>Alternately, if the language used to write my tests allows a shebang line I can use that to specify the interpreter. Here<0x2019>s a test written in PHP:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    #!/usr/bin/php
+<pSpaceBefore:><pstyle:Feature Code Para>    \<?php
+<pstyle:Feature Code Para>        print "1..2\\n";
+<pstyle:Feature Code Para>        print "ok 1\\n";
+<pstyle:Feature Code Para>        print "not ok 2\\n";
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    ?\>
+<pSpaceAfter:><pstyle:Feature Para>If I save that as <CharStyle:pod-I>t/phptest.t<CharStyle:> the shebang line will ensure that it runs correctly along with all my other tests.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Mixing it up	
+<pstyle:Feature Section Lead>Subtle interdependencies between test programs can mask problems---for example an earlier test may neglect to remove a temporary file that affects the behaviour of a later test. To find this kind of problem I use the <CharStyle:pod-C>--shuffle<CharStyle:> and <CharStyle:pod-C>--reverse<CharStyle:> options to run my tests in random or reversed order.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Rolling My Own	
+<pstyle:Feature Section Lead>If I need a feature that <CharStyle:pod-C>prove<CharStyle:> doesn<0x2019>t provide I can easily write my own test harness; one of the motives for the 3.00 rewrite of <CharStyle:pod-C>Test::Harness<CharStyle:> was to make it easier to subclass and extend.
+<pstyle:Feature Para>The <CharStyle:pod-C>Test::Harness<CharStyle:> module is a compatibility wrapper around <CharStyle:pod-C>TAP::Harness<CharStyle:>. For new applications I should use <CharStyle:pod-C>TAP::Harness<CharStyle:> directly. As we<0x2019>ll see, <CharStyle:pod-C>prove<CharStyle:> uses <CharStyle:pod-C>TAP::Harness<CharStyle:>.
+<pstyle:Feature Para>When I run <CharStyle:pod-C>prove<CharStyle:> it processes its arguments, figures out which test scripts to run and then passes control to <CharStyle:pod-C>TAP::Harness<CharStyle:> to run the tests, parse, analyse and present the results. By subclassing <CharStyle:pod-C>TAP::Harness<CharStyle:> I can customise many aspects of the test run.
+<pstyle:Feature Para>I want to log my test results in a database so I can track them over time. To do this I override the summary method in <CharStyle:pod-C>TAP::Harness<CharStyle:>. I start with a simple prototype that dumps the results as a YAML document:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    package My::TAP::Harness;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    use base qw( TAP::Harness );
+<pstyle:Feature Code Para>    use YAML;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    sub summary {
+<pstyle:Feature Code Para>      my ( $self, $aggregate ) = @_;
+<pstyle:Feature Code Para>      print Dump( $aggregate );
+<pstyle:Feature Code Para>      $self-\>SUPER::summary( $aggregate );
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    1;
+<pSpaceAfter:><pstyle:Feature Para>I need to tell <CharStyle:pod-C>prove<CharStyle:> to use my <CharStyle:pod-C>My::TAP::Harness<CharStyle:>. If <CharStyle:pod-C>My::TAP::Harness<CharStyle:> is on Perl<0x2019>s <CharStyle:pod-C>@INC<CharStyle:> include path I can tell <CharStyle:pod-C>prove<CharStyle:> to use it with the <CharStyle:pod-C>-harness<CharStyle:> switch:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    prove --harness=My::TAP::Harness -rb t<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>If I don<0x2019>t have <CharStyle:pod-C>My::TAP::Harness<CharStyle:> installed on <CharStyle:pod-C>@INC<CharStyle:> I need to provide the correct path to perl when I run <CharStyle:pod-C>prove<CharStyle:>:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    perl -Ilib `which prove` --harness=My::TAP::Harness -rb t<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>I can incorporate these options into my own version of <CharStyle:pod-C>prove<CharStyle:>. It<0x2019>s pretty simple. Most of the work of <CharStyle:pod-C>prove<CharStyle:> is handled by <CharStyle:pod-C>App::Prove<CharStyle:>. The important code in <CharStyle:pod-C>prove<CharStyle:> is just:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    use App::Prove;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $app = App::Prove-\>new;
+<pstyle:Feature Code Para>    $app-\>process_args(@ARGV);
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    exit( $app-\>run ? 0 : 1 );
+<pSpaceAfter:><pstyle:Feature Para>If I write a subclass of <CharStyle:pod-C>App::Prove<CharStyle:> I can customise any aspect of the test runner while inheriting all of <CharStyle:pod-C>prove<CharStyle:><0x2019>s behaviour. Here<0x2019>s myprove:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    #!/usr/bin/env perl
+<pSpaceBefore:><pstyle:Feature Code Para>    use lib qw( lib );      # Add ./lib to @INC
+<pstyle:Feature Code Para>    use App::Prove;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $app = App::Prove-\>new;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    # Use custom TAP::Harness subclass
+<pstyle:Feature Code Para>    $app-\>harness( 'My::TAP::Harness' );
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    $app-\>process_args( @ARGV );
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    exit( $app-\>run ? 0 : 1 );
+<pSpaceAfter:><pstyle:Feature Para>Now I can run my tests like this
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    ./myprove -rb t<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Sub Section>Deeper Customisation
+<pstyle:Feature Para>Now that I know how to subclass and replace <CharStyle:pod-C>TAP::Harness<CharStyle:> I can replace any other part of the harness. To do that I need to know which classes are responsible for which functionality. Here<0x2019>s a brief guided tour; the default class for each component is shown in parentheses. Normally any replacements I write will be subclasses of these default classes.
+<pstyle:Feature Para>When I run my tests <CharStyle:pod-C>TAP::Harness<CharStyle:> creates a scheduler (<CharStyle:pod-C>TAP::Parser::Scheduler<CharStyle:>) to work out the running order for the tests, an aggregator (<CharStyle:pod-C>TAP::Parser::Aggregator<CharStyle:>) to collect and analyse the test results and a formatter (<CharStyle:pod-C>TAP::Formatter::Console<CharStyle:>) to display those results.
+<pstyle:Feature Para>If I<0x2019>m running my tests in parallel there may also be a multiplexer (<CharStyle:pod-C>TAP::Parser::Multiplexer<CharStyle:>)---the component that allows multiple tests to run simultaneously.
+<pstyle:Feature Para>Once it has created those helpers <CharStyle:pod-C>TAP::Harness<CharStyle:> starts running the tests. For each test it creates a new parser (<CharStyle:pod-C>TAP::Parser<CharStyle:>) which is responsible for running the test script and parsing its output.
+<pstyle:Feature Para>To replace any of these components I call one of these harness methods with the name of the replacement class:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    aggregator_class
+<pSpaceBefore:><pstyle:Feature Code Para>    formatter_class
+<pstyle:Feature Code Para>    multiplexer_class
+<pstyle:Feature Code Para>    parser_class
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    scheduler_class
+<pSpaceAfter:><pstyle:Feature Para>For example, to replace the aggregator I would
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    $harness-\>aggregator_class( 'My::Aggregator' );<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>Alternately I can supply the names of my substitute classes to the <CharStyle:pod-C>TAP::Harness<CharStyle:> constructor:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    my $harness = TAP::Harness-\>new(
+<pSpaceBefore:><pstyle:Feature Code Para>        { aggregator_class =\> 'My::Aggregator' }
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    );
+<pSpaceAfter:><pstyle:Feature Para>If I need to reach even deeper into the internals of the harness I can replace the classes that <CharStyle:pod-C>TAP::Parser<CharStyle:> uses to execute test scripts and tokenise their output. Before running a test script <CharStyle:pod-C>TAP::Parser<CharStyle:> creates a grammar (<CharStyle:pod-C>TAP::Parser::Grammar<CharStyle:>) to decode the raw TAP into tokens, a result factory (<CharStyle:pod-C>TAP::Parser::ResultFactory<CharStyle:>) to turn the decoded TAP results into objects and, depending on whether it<0x2019>s running a test script or reading TAP from a file, scalar or array a source (<CharStyle:pod-C>TAP::Parser::Source<CharStyle:>, <CharStyle:pod-C>TAP::Parser::Source::Perl<CharStyle:>) or an iterator (<CharStyle:pod-C>TAP::Parser::IteratorFactory<CharStyle:>).
+<pstyle:Feature Para>Each of these objects may be replaced by calling one of these parser methods:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    source_class
+<pSpaceBefore:><pstyle:Feature Code Para>    perl_source_class
+<pstyle:Feature Code Para>    grammar_class
+<pstyle:Feature Code Para>    iterator_factory_class
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    result_factory_class
+<pSpaceAfter:><pstyle:Feature Sub Section>Callbacks
+<pstyle:Feature Para>As an alternative to subclassing the components I need to change I can attach callbacks to the default classes. <CharStyle:pod-C>TAP::Harness<CharStyle:> exposes these callbacks:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    parser_args         Tweak the parameters used to create the parser
+<pSpaceBefore:><pstyle:Feature Code Para>    made_parser         Just made a new parser
+<pstyle:Feature Code Para>    before_runtests     About to run tests
+<pstyle:Feature Code Para>    after_runtests      Run all tests
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    after_test          Run an individual test script
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-C>TAP::Parser<CharStyle:> also supports callbacks; it calls <CharStyle:pod-C>bailout<CharStyle:>, <CharStyle:pod-C>comment<CharStyle:>, <CharStyle:pod-C>plan<CharStyle:>, <CharStyle:pod-C>test<CharStyle:>, <CharStyle:pod-C>unknown<CharStyle:>, <CharStyle:pod-C>version<CharStyle:>, and <CharStyle:pod-C>yaml<CharStyle:> for the corresponding TAP result types, <CharStyle:pod-C>ALL<CharStyle:> for all results, <CharStyle:pod-C>ELSE<CharStyle:> for all results for which a named callback is not installed, and <CharStyle:pod-C>EOF<CharStyle:> once at the end of each TAP stream.
+<pstyle:Feature Para>To install a callback I pass the name of the callback and a subroutine reference to <CharStyle:pod-C>TAP::Harness<CharStyle:> or <CharStyle:pod-C>TAP::Parser<CharStyle:><0x2019>s callback method:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    $harness-\>callback( after_test =\> sub {
+<pSpaceBefore:><pstyle:Feature Code Para>        my ( $script, $desc, $parser ) = @_;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    } );
+<pSpaceAfter:><pstyle:Feature Para>I can also pass callbacks to the constructor:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    my $harness = TAP::Harness-\>new( {
+<pSpaceBefore:><pstyle:Feature Code Para>        callbacks =\> {
+<pstyle:Feature Code Para>            after_test =\> sub {
+<pstyle:Feature Code Para>                my ( $script, $desc, $parser ) = @_;
+<pstyle:Feature Code Para>                # Do something interesting here
+<pstyle:Feature Code Para>            }
+<pstyle:Feature Code Para>        }
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    } );
+<pSpaceAfter:><pstyle:Feature Para>When it comes to altering the behaviour of the test harness there<0x2019>s more than one way to do it. Which way is best depends on my requirements. In general if I only want to observe test execution without changing the harness<0x2019> behaviour (for example to log test results to a database) I choose callbacks. If I want to make the harness behave differently subclassing gives me more control.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Parsing TAP	
+<pstyle:Feature Section Lead>Perhaps I don<0x2019>t need a complete test harness. If I already have a TAP test log that I need to parse all I need is <CharStyle:pod-C>TAP::Parser<CharStyle:> and the various classes it depends upon. Here<0x2019>s the code I need to run a test and parse its TAP output
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    use TAP::Parser;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $parser = TAP::Parser-\>new( { source =\> 't/simple.t' } );
+<pstyle:Feature Code Para>    while ( my $result = $parser-\>next ) {
+<pstyle:Feature Code Para>        print $result-\>as_string, "\\n";
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Para>Alternately I can pass an open filehandle as source and have the parser read from that rather than attempting to run a test script:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    open my $tap, '\<', 'tests.tap' or die "Can't read TAP transcript ($!)\\n";
+<pSpaceBefore:><pstyle:Feature Code Para>    my $parser = TAP::Parser-\>new( { source =\> $tap } );
+<pstyle:Feature Code Para>    while ( my $result = $parser-\>next ) {
+<pstyle:Feature Code Para>        print $result-\>as_string, "\\n";
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Para>This approach is useful if I need to convert my TAP based test results into some other representation. See <CharStyle:pod-C>TAP::Convert::TET<CharStyle:> (http://search.cpan.org/dist/TAP-Convert-TET/) for an example of this approach.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Getting Support	
+<pstyle:Feature Section Lead>The <CharStyle:pod-C>Test::Harness<CharStyle:> developers hang out on the tapx-dev mailing list[1]. For discussion of general, language independent TAP issues there<0x2019>s the tap-l[2] list. Finally there<0x2019>s a wiki dedicated to the Test Anything Protocol[3]. Contributions to the wiki, patches and suggestions are all welcome.
+<pstyle:Feature Para>[1] http://www.hexten.net/mailman/listinfo/tapx-dev [2] http://testanything.org/mailman/listinfo/tap-l [3] http://testanything.org/
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> About the Author	
+<pstyle:Feature Section Lead>Andy Armstrong has been learning Perl for about twelve years. He<0x2019>s starting to get the hang of it. He<0x2019>s currently maintainer of <CharStyle:pod-C>Test::Harness<CharStyle:> and around fifty other CPAN modules. He works for MessageSystems where his job title is Dark Lord of Destruction. He lives in Cumbria, UK with Th̩r̬se (human, wife) and Mac (canine, dog).

@@ -1,0 +1,205 @@
+<ASCII-MAC>
+<Version:5><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1>>
+<DefineCharStyle:pod-I=<Nextstyle:pod-I><cColor:Black><cTypeface:Italic><cSize:9.500000><cHorizontalScale:1.000000><cTracking:0><cBaselineShift:0.000000><cCase:Normal><cStrokeColor:None><cLanguage:English\: USA><cUnderline:0><cFont:Minion \(T1\)><cPosition:Normal><cStrikethru:0><cColorTint:-1.000000>>
+<DefineCharStyle:pod-C=<Nextstyle:pod-C><cColor:Black><cTypeface:Regular><cSize:9.500000><cHorizontalScale:1.000000><cTracking:0><cBaselineShift:0.000000><cCase:Normal><cStrokeColor:None><cUnderline:0><cFont:Courier New><cPosition:Normal><cStrikethru:0><cColorTint:-1.000000>>
+<DefineCharStyle:pod-B=<Nextstyle:pod-B><cColor:Black><cTypeface:Bold><cSize:9.500000><cHorizontalScale:1.000000><cTracking:0><cBaselineShift:0.000000><cCase:Normal><cStrokeColor:None><cUnderline:0><cFont:Courier New><cPosition:Normal><cStrikethru:0><cColorTint:-1.000000>>
+<DefineParaStyle:NormalParagraphStyle=<Nextstyle:NormalParagraphStyle>>
+<DefineParaStyle:Feature Section=<BasedOn:NormalParagraphStyle><Nextstyle:Feature Section><cTypeface:Bold><cSize:10.000000><pSpaceBefore:4.500000><pTabRuler:20\,Left\,.\,0\,-\;258\,Left\,.\,0\,-\;><cFont:Rockwell><pGridAlign:BaseLine>>
+<DefineParaStyle:Module Author Byline=<Nextstyle:Module Author Byline><cTypeface:Italic><cSize:9.500000><cLigatures:0><pDropCapCharacters:1><pDropCapLines:1><pHyphenationLadderLimit:0><cLanguage:English\: USA><pHyphenation:0><pHyphenationZone:0.000000><cFont:Minion \(T1\)><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pTextAlignment:Right><pGridAlign:BaseLine><bulFont:\<TextFont\>><bulTypeFace:\<TextStyle\>>>
+<DefineParaStyle:Feature Lead=<Nextstyle:Feature Lead><cSize:9.500000><cLigatures:0><cTracking:50><pDropCapCharacters:1><pDropCapLines:3><pHyphenationLadderLimit:0><cLeading:11.400000><cLanguage:English\: USA><pHyphenation:0><pHyphenationZone:0.000000><cFont:Minion \(T1\)><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pTextAlignment:JustifyLeft><pGridAlign:BaseLine>>
+<DefineParaStyle:Feature Para=<BasedOn:Feature Lead><Nextstyle:Feature Para><pDropCapLines:1><pFirstLineIndent:12.024000>>
+<DefineParaStyle:Feature Section Lead=<BasedOn:Feature Para><Nextstyle:Feature Section Lead><pFirstLineIndent:0.000000><cLeading:-1.000000>>
+<DefineParaStyle:Feature Code Para=<Nextstyle:Feature Code Para><cSize:9.500000><cLigatures:0><pHyphenationLadderLimit:0><cLanguage:English\: USA><pHyphenation:0><pHyphenateCapitals:0><pHyphenationZone:0.000000><pTabRuler:18\,Left\,.\,0\,\;31.5\,Left\,.\,0\,\;45\,Left\,.\,0\,\;58.5\,Left\,.\,0\,\;72\,Left\,.\,0\,\;85.5\,Left\,.\,0\,\;99\,Left\,.\,0\,\;112.5\,Left\,.\,0\,\;126\,Left\,.\,0\,\;139.5\,Left\,.\,0\,\;153\,Left\,.\,0\,\;166.5\,Left\,.\,0\,\;180\,Left\,.\,0\,\;193.5\,Left\,.\,0\,\;207\,Left\,.\,0\,\;220.5\,Left\,.\,0\,\;234\,Left\,.\,0\,\;><cFont:Courier New><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pGridAlign:BaseLine>>
+<DefineParaStyle:Feature Sub Section=<BasedOn:Feature Section><Nextstyle:Feature Sub Section><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:News URL=<BasedOn:NormalParagraphStyle><Nextstyle:News URL><cSize:9.500000><pSpaceAfter:4.500000><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pGridAlign:BaseLine><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:News para=<BasedOn:NormalParagraphStyle><Nextstyle:News para><cSize:9.500000><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pGridAlign:BaseLine><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:News Headline=<BasedOn:NormalParagraphStyle><Nextstyle:News Headline><cTypeface:Bold><cSize:9.500000><pSpaceBefore:4.500000><cFont:Gill Sans \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pGridAlign:BaseLine><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar URL=<Nextstyle:Calendar URL><cTypeface:Italic><cSize:10.000000><cLanguage:English\: USA><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar title=<Nextstyle:Calendar title><cSize:10.000000><cLanguage:English\: USA><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar location=<Nextstyle:Calendar location><cSize:10.000000><cLanguage:English\: USA><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar date=<Nextstyle:Calendar date><cTypeface:Bold><cSize:11.000000><cCase:All Caps><cLanguage:English\: USA><cFont:Gill Sans \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Feature Title=<Nextstyle:Feature Title><cSize:26.500000><cLeading:13.500000><cFont:Rockwell Extra Bold><pTextAlignment:Center>>
+<DefineParaStyle:Feature Byline=<BasedOn:NormalParagraphStyle><Nextstyle:Feature Byline><cTypeface:Italic><cSize:11.000000><cLeading:13.000000><cFont:Gill Sans \(TT\)><pTextAlignment:Right>>
+<DefineParaStyle:Feature Deck=<BasedOn:Feature Byline><Nextstyle:Feature Deck><cTypeface:Regular><pSpaceBefore:4.500000><pTextAlignment:Center>>
+<DefineParaStyle:Normal=<Nextstyle:Normal><KeyboardShortcut:Shift\+Cmd\+Num 6><cSize:11.000000><cLigatures:0><pHyphenationLadderLimit:0><cLeading:13.000000><cLanguage:English\: USA><pHyphenation:0><pHyphenationZone:0.000000><pSpaceBefore:4.500000><pSpaceAfter:4.500000><cFont:Arial \(TT\)><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pTextAlignment:JustifyLeft>>
+<DefineParaStyle:Body Copy=<BasedOn:Normal><Nextstyle:Body Copy><cSize:9.500000><pFirstLineIndent:12.024000><cLeading:-1.000000><pSpaceBefore:0.000000><pSpaceAfter:0.000000><cFont:Minion \(T1\)><pGridAlign:BaseLine><bulFont:\<TextFont\>><bulTypeFace:\<TextStyle\>>>
+<DefineParaStyle:author byline=<BasedOn:Feature Para><Nextstyle:author byline><cTypeface:Italic><bulFont:\<TextFont\>><bulTypeFace:\<TextStyle\>>>
+<DefineParaStyle:article head=<BasedOn:Normal><Nextstyle:Normal><KeyboardShortcut:Shift\+Cmd\+Num 1><cSize:14.000000><cHorizontalScale:1.100000><pSpaceBefore:13.500000><pSpaceAfter:0.000000><cFont:Arial Black><pKeepWithNext:4><cSkew:15.000000><pRuleBelowColor:Black><pRuleBelowTint:100.000000><pRuleBelowOffset:9.000000>>
+<DefineParaStyle:article subhead=<BasedOn:article head><Nextstyle:article subhead><KeyboardShortcut:Shift\+Cmd\+Num 2><cSize:11.000000><pSpaceBefore:18.000000>>
+<pstyle:Feature Lead>HTML is a great format for presentation slides. All modern desktop systems can view it with standard software; it's a perfect fit for publishing to the web; and search engines love it. Of course manually editing HTML pages and managing the links between them would be a painful and unpleasant process. That's where Perl can help.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Slide composition	
+<pstyle:Feature Section Lead>As Ruby-on-Rails developer David Heinemeier Hansson is fond of saying, "<CharStyle:pod-I>constraints are liberating<CharStyle:>". When I'm preparing a presentation I find that not having to make decisions about fonts, colours, animation effects, <CharStyle:pod-I>etc<CharStyle:>., frees me up to concentrate on the real job of entering the bullet points and thinking about the message I want to convey.
+<pstyle:Feature Para>To liberate myself from extraneous decision making, I build my presentation slides using a Perl script which imposes certain constraints. Each slide is made up of:
+<cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>* a title<cLeading:><cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>* an optional decorative image<cLeading:><cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>* a list of 'content items'<cLeading:><cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>* navigation links<cLeading:>
+<pstyle:Feature Para>Three types of content items are supported:
+<cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>* simple bullet text (no nesting)<cLeading:><cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>* code samples (with optional syntax highlighting)<cLeading:><cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>* inline images (typically screenshots)<cLeading:>
+<pstyle:Feature Para><CharStyle:pod-I>Figure 1<CharStyle:> shows an example slide that crams in most of these elements.
+<pstyle:Feature Para>The system I have developed is in many respects a throwaway. I sometimes find when preparing a new presentation that the subject matter, the audience or even the forum calls for a subtle twist to my standard slide formula. Rather than try to make my code more and more general to cater for all these different possibilities, I simply take a copy of the script and 'hack in' whatever changes are required or perhaps even 'hack out' some standard feature that's getting in the way.
+<pstyle:Feature Para>In this article I'll walk through my program architecture and some of the design decisions to give you the background to adapt the script or perhaps develop your own from scratch. This will give you the tools to build a system that meets <CharStyle:pod-I>your<CharStyle:> needs.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> What Goes In	
+<pstyle:Feature Section Lead>When I need to create a new presentation, I change into my talks folder; <CharStyle:pod-C>untar<CharStyle:> a skeleton set of files (including the mkpres.pl script itself); rename the resulting directory to match the new talk title; and add the new directory to my subversion repository.
+<pstyle:Feature Para>To flesh out the presentation, I change into the new directory; edit the talk.xml file; and drop some images into the html/images. For example, here's the XML input used to generate the sample slide illustrated in <CharStyle:pod-I>Figure 1<CharStyle:>.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  \<presentation\>
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    \<title\>Title Here\</title\>
+<pstyle:Feature Code Para>    \<author\>Presenter's Name\</author\>
+<pstyle:Feature Code Para>    \<email\>name@somedomain\</email\>
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    \<slide\>
+<pstyle:Feature Code Para>      \<title\>What is Perl?\</title\>
+<pstyle:Feature Code Para>      \<image\>uncle_sam.jpg\</image\>
+<pstyle:Feature Code Para>      \<bullet\>A dynamic programming language\</bullet\>
+<pstyle:Feature Code Para>      \<bullet\>Originally written by Larry Wall\</bullet\>
+<pstyle:Feature Code Para>      \<bullet\>Open Source\</bullet\>
+<pstyle:Feature Code Para>      \<bullet\>Our first example:\</bullet\>
+<pstyle:Feature Code Para>      \<code syntax="perl"\>\<![CDATA[
+<pstyle:Feature Code Para>        print "Hello World\n";
+<pstyle:Feature Code Para>      ]]\>\</code\>
+<pstyle:Feature Code Para>    \</slide\>
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  \</presentation\>
+<pSpaceAfter:><pstyle:Feature Para>Editing raw XML probably sounds like a tedious way to assemble a presentation. Indeed, I originally envisaged building a front-end to hide the XML, using either a GTK interface or a browser-based application. As a stop-gap, I created some macros in my text editor (Vim) and discovered that the result was much more streamlined than a graphical interface could ever be and I've been happy to stick with that ever since. The macros work as follows:
+<cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>,s<cLeading:><pstyle:Feature Para>Add markup for a new slide leaving the cursor positioned to type the title
+<cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>,b<cLeading:><pstyle:Feature Para>Insert a new line with <CharStyle:pod-C>\<bullet\><CharStyle:> ... <CharStyle:pod-C>\</bullet\><CharStyle:> tags, leaving the cursor positioned to type the text
+<cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>,c<cLeading:><pstyle:Feature Para>Add <CharStyle:pod-C>\<code\><CharStyle:> and <CharStyle:pod-C>CDATA<CharStyle:> tags which allow code snippets to be pasted in without worrying about normal XML escaping rules
+<cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>,r<cLeading:><pstyle:Feature Para>Add <CharStyle:pod-C>\<screenshot\><CharStyle:> tags, leaving the cursor positioned to type the image filename
+
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> What comes out	
+<pstyle:Feature Section Lead>When I run the mkpres.pl script, it generates a series of HTML files. In addition to the main content slides, there's a title slide to act as the front cover. A table of contents slide is also generated to allow jumping straight to a specific slide<0x2014>mainly useful when handling questions at the end.
+<pstyle:Feature Para>Each slide file includes navigation links for advancing to the next slide, returning to the previous slide or jumping to the table of contents. A small JavaScript file linked into each slide allows me to advance from one slide to the next by pressing the spacebar<0x2014>far easier than fumbling round with the mouse to click on navigation links.
+<pstyle:Feature Para>A CSS file is used to format the slide pages. The stylesheet applies a large readable font to all text. It replaces the standard HTML bullets with themed images and adjusts alignments and spacing to reduce clutter. The stylesheet also includes a section for assigning colours to syntax highlighted elements in code sections.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> How it works	
+<pstyle:Feature Section Lead>Even on a relatively small project such as this, it's important to stick with established design principles. One such principle is the <CharStyle:pod-I>separation of concerns<CharStyle:>. Rather than weave together bits of code that pick apart the XML and write out snippets of HTML, the script is organised into routines that each concern themselves with one thing. This separation is apparent right from the start of the script:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  my $pres = read_presentation_data($file);
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>  generate_presentation_pages($pres);
+<pSpaceAfter:><pstyle:Feature Para>The <CharStyle:pod-C>read_presentation_data()<CharStyle:> routine is concerned with parsing the XML input while the <CharStyle:pod-C>generate_presentation_pages()<CharStyle:> routine generates the HTML output. The link between the two routines is a Perl data structure. The source XML markup is extremely simple<0x2014>to make data entry easy. The generated HTML is also very simple. The most complex parts of the script are concerned with massaging the input data into a form that can be used to generate the HTML. The data structure will end up looking something like this:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  {
+<pSpaceBefore:><pstyle:Feature Code Para>      'metadata' =\> {
+<pstyle:Feature Code Para>          'title'    =\> 'Title Here',
+<pstyle:Feature Code Para>          'author'   =\> 'Presenter\'s Name',
+<pstyle:Feature Code Para>          'email'    =\> 'name@somedomain'
+<pstyle:Feature Code Para>      },
+<pstyle:Feature Code Para>      'slides' =\> [
+<pstyle:Feature Code Para>          {
+<pstyle:Feature Code Para>              'title'    =\> 'What is Perl?',
+<pstyle:Feature Code Para>              'filename' =\> 'slide001.html',
+<pstyle:Feature Code Para>              'next'     =\> 'slide002.html',
+<pstyle:Feature Code Para>              'previous' =\> 'toc.html',
+<pstyle:Feature Code Para>              'image'    =\> 'unclesam.jpg',
+<pstyle:Feature Code Para>              'content' =\> [
+<pstyle:Feature Code Para>                  [
+<pstyle:Feature Code Para>                      'bullets',
+<pstyle:Feature Code Para>                      [
+<pstyle:Feature Code Para>                          'A dynamic programming language',
+<pstyle:Feature Code Para>                          'Originally written by Larry Wall',
+<pstyle:Feature Code Para>                          'Open Source',
+<pstyle:Feature Code Para>                          'Our first example:'
+<pstyle:Feature Code Para>                      ]
+<pstyle:Feature Code Para>                  ],
+<pstyle:Feature Code Para>                  [
+<pstyle:Feature Code Para>                      'code',
+<pstyle:Feature Code Para>                      'print "Hello World\\n";'
+<pstyle:Feature Code Para>                  ]
+<pstyle:Feature Code Para>              ]
+<pstyle:Feature Code Para>          },
+<pstyle:Feature Code Para>          ...
+<pstyle:Feature Code Para>      ],
+<pstyle:Feature Code Para>      'toc' =\> [
+<pstyle:Feature Code Para>          {
+<pstyle:Feature Code Para>              'filename' =\> 'slide001.html',
+<pstyle:Feature Code Para>              'title' =\> 'What is Perl?'
+<pstyle:Feature Code Para>          },
+<pstyle:Feature Code Para>          ...
+<pstyle:Feature Code Para>      ]
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  };
+<pSpaceAfter:><pstyle:Feature Para>The first step towards producing this data structure is to parse the XML. The <CharStyle:pod-C>XML::LibXML<CharStyle:> module makes parsing the XML file to a DOM object a snap:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  my $parser = XML::LibXML-\>new;
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>  my $doc    = $parser-\>parse_file($file);
+<pSpaceAfter:><pstyle:Feature Para>Extracting the necessary data is then achieved by querying the DOM object using XPath expressions:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  my $pres = {
+<pSpaceBefore:><pstyle:Feature Code Para>      metadata =\> {
+<pstyle:Feature Code Para>          title  =\> $doc-\>findvalue('/presentation/title')  || '',
+<pstyle:Feature Code Para>          author =\> $doc-\>findvalue('/presentation/author') || '',
+<pstyle:Feature Code Para>          email  =\> $doc-\>findvalue('/presentation/email')  || '',
+<pstyle:Feature Code Para>      },
+<pstyle:Feature Code Para>  };
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  add_slide_data($pres, $doc);
+<pSpaceAfter:><pstyle:Feature Para>The <CharStyle:pod-C>findvalue()<CharStyle:> method locates the DOM node that matches the supplied XPath expression (<CharStyle:pod-I>e.g.<CharStyle:> <CharStyle:pod-C>'/presentation/title'<CharStyle:>) and then returns that node's text content as a simple scalar. The <CharStyle:pod-C>add_slide_data()<CharStyle:> routine creates an array of slide data structures and adds the array into the <CharStyle:pod-C>$pres<CharStyle:> hash. It processes the <CharStyle:pod-C>\<slide\><CharStyle:> elements using a simple loop:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  my @slides;
+<pSpaceBefore:><pstyle:Feature Code Para>  foreach my $slide ( $doc-\>findnodes('/presentation/slide') ) {
+<pstyle:Feature Code Para>      push @slides, parse_slide($slide);
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  }
+<pSpaceAfter:><pstyle:Feature Para>The <CharStyle:pod-C>parse_slide()<CharStyle:> routine then uses relative paths (starting with a leading full stop '.') in XPath expressions to extract the required data:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  my $data = {
+<pSpaceBefore:><pstyle:Feature Code Para>      title   =\> $slide-\>findvalue('./title') || '',
+<pstyle:Feature Code Para>      ...
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  };
+<pSpaceAfter:><pstyle:Feature Para>Since the body of each slide may be made up of multiple different types of elements and the order of these elements must be preserved, extracting this data is a little more complex:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    my $item_expr = './bullet|./pause|./screenshot|./code|./image';
+<pSpaceBefore:><pstyle:Feature Code Para>    foreach my $node ($slide-\>findnodes($item_expr)) {
+<pstyle:Feature Code Para>        my $type = $node-\>nodeName;
+<pstyle:Feature Code Para>        if($type eq 'bullet') {
+<pstyle:Feature Code Para>            ...
+<pstyle:Feature Code Para>        }
+<pstyle:Feature Code Para>        elsif($type eq 'pause') {
+<pstyle:Feature Code Para>            ...
+<pstyle:Feature Code Para>        }
+<pstyle:Feature Code Para>        elsif($type eq 'screenshot') {
+<pstyle:Feature Code Para>            ...
+<pstyle:Feature Code Para>        }
+<pstyle:Feature Code Para>        ...
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Para>The <CharStyle:pod-C>\<bullet\><CharStyle:> elements are allowed to contain simple HTML markup. This is primarily to allow clickable links in the generated HTML, but adding emphasis to particular words can also be useful. Extracting the literal value of a <CharStyle:pod-C>\<bullet\><CharStyle:> element would effectively strip out the markup and return only the text. Calling <CharStyle:pod-C>$node-\>toString()<CharStyle:> would retain the markup but would also retain the surrounding <CharStyle:pod-C>\<bullet\><CharStyle:> and <CharStyle:pod-C>\</bullet\><CharStyle:> tags. Instead, we need to call <CharStyle:pod-C>toString()<CharStyle:> on each of the children of <CharStyle:pod-C>$node<CharStyle:> and concatenate the results:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>  push @$blist, join '', map { $_-\>toString } $node-\>childNodes;<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>Handling <CharStyle:pod-C>\<pause /\><CharStyle:> elements in between <CharStyle:pod-C>\<bullet\><CharStyle:> elements adds some complexity. The role of the <CharStyle:pod-C>\<pause /\><CharStyle:> is to expose one bullet point each time the presenter presses the spacebar (a useful feature but one that should be used sparingly). One additional HTML page will be generated for each <CharStyle:pod-C>\<pause\><CharStyle:>; one bullet point on the first page, two on the next and so on.
+<pstyle:Feature Para>The <CharStyle:pod-C>parse_slide()<CharStyle:> routine would usually return one hash reference containing all the data required to generate one HTML file. However if the slide contains pauses, <CharStyle:pod-C>parse_slide()<CharStyle:> will return multiple hash references. The trick with building up the array of hashrefs is to avoid ending up with multiple references to exactly the same hash. Each time a <CharStyle:pod-C>\<pause /\><CharStyle:> is encountered a deep copy of the current hash reference is pushed onto the array:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    elsif($type eq 'pause') {
+<pSpaceBefore:><pstyle:Feature Code Para>      push @partials, Storable::dclone($data);
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>    ...
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  return @partials, $data;
+<pSpaceAfter:><pstyle:Feature Para>Code snippets also require special handling. For example here's the relevant snippet of code as it might appear in the source XML for a presentation:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  \<code syntax="perl"\>\<![CDATA[
+<pSpaceBefore:><pstyle:Feature Code Para>    elsif($type eq 'code') {
+<pstyle:Feature Code Para>        my $code = outdent($node-\>to_literal);
+<pstyle:Feature Code Para>        my $language = $node-\>findvalue('./@syntax') || '';
+<pstyle:Feature Code Para>        $code = syntax_highlight($code, $language) if $language;
+<pstyle:Feature Code Para>        push @$content, [ code =\> $code ];
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  ]]\>\</code\>
+<pSpaceAfter:><pstyle:Feature Para>The <CharStyle:pod-C>outdent()<CharStyle:> routine strips off any leading and trailing blank lines and removes a string of whitespace from the start of each line to leave the outermost block flush with the left margin. If the <CharStyle:pod-C>\<code\><CharStyle:> tag includes a <CharStyle:pod-C>syntax<CharStyle:> attribute then the <CharStyle:pod-C>Text::VimColor<CharStyle:> module is used to apply syntax highlighting for the specified language:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  return Text::VimColor-\>new(
+<pSpaceBefore:><pstyle:Feature Code Para>      string   =\> $code,
+<pstyle:Feature Code Para>      filetype =\> $language,
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  )-\>html;
+<pSpaceAfter:><pstyle:Feature Para>Once all the <CharStyle:pod-C>\<slide\><CharStyle:> elements have been processed, the resulting list of hash references is traversed to set up URLs for preceding and following slides, as well as to build up a list of entries for the table of contents.
+<pstyle:Feature Para>The process of generating the HTML is a simple matter of feeding the data structure for each page into a template. There are many Perl templating solutions available and which you use really comes down to personal choice. In this project I used <CharStyle:pod-C>Template::MasonLite<CharStyle:> which uses the <CharStyle:pod-C>HTML::Mason<CharStyle:> syntax (or at least a minimal subset). The unique feature of <CharStyle:pod-C>Template::MasonLite<CharStyle:> is that the template interpreter embeds directly into your script. This means that apart from <CharStyle:pod-C>XML::LibXML<CharStyle:>, my presentation script uses only core modules included in the Perl standard distribution.
+<pstyle:Feature Para>Writing the main cover page for the presentation involves parsing the template, passing a datastructure to the template object's <CharStyle:pod-C>apply()<CharStyle:> method and saving the result to a file:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  my $tmpl = Template::MasonLite-\>new_from_file('./_index.html');
+<pSpaceBefore:><pstyle:Feature Code Para>  
+<pstyle:Feature Code Para>  open my $out, '\>:utf8', "./html/$file" or die "open(./html/$file): $!";
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  print $out $tmpl-\>apply(%$data);
+<pSpaceAfter:><pstyle:Feature Para>Generating all the slide files works exactly the same way except that the template file only needs to be read once and the template object is reused for each slide.
+<pstyle:Feature Para>All the strings returned from <CharStyle:pod-C>XML::LibXML<CharStyle:> will use UTF-8<0x2014>Perl's native character encoding. All the output is destined for consumption by a web browser and browsers are quite comfortable with UTF-8, so sticking with UTF-8 for output is the simplest option.
+<pstyle:Feature Para>The slide generation program only concerns itself with generating HTML files. The CSS, JavaScript and image files are all managed manually.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Review	
+<pstyle:Feature Section Lead>I examined a common pattern for Perl scripts: parsing input data into a Perl data structure that is then used to generate output. This pattern makes the program more modular by separating the code into sections, each of which is concerned with just one thing.
+<pstyle:Feature Para>When working with XML data it's hard to beat <CharStyle:pod-C>XML::LibXML<CharStyle:> for power. The API provides a bewildering array of methods but XPath expressions allow you to access the data using relatively simple queries and a small number of DOM methods.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> References	
+<pstyle:Feature Section Lead>You can download the presentation builder script, HTML templates, CSS, JavaScript, Vim macros and a skeleton talk.xml file from <CharStyle:pod-I>http://wellington.pm.org/articles/slides/<CharStyle:>.
+<pstyle:Feature Para>For a tutorial introduction to XPath and an interactive tool for trying out your own XPath queries visit <CharStyle:pod-I>http://www.zvon.org/<CharStyle:>
+<pstyle:Feature Para>The <CharStyle:pod-C>Template::MasonLite<CharStyle:> templating system is available at <CharStyle:pod-I>http://www.perlmonks.org/?node_id=393725<CharStyle:>.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> About the author	
+<pstyle:Feature Section Lead>Grant McLean <CharStyle:pod-C>\<grantm@cpan.org\><CharStyle:> lives in Wellington, New Zealand where he works for Open Source specialists Catalyst IT. He's a regular speaker at Wellington Perl Mongers and has presented talks and tutorials at various industry conferences. Grant's CPAN contributions include <CharStyle:pod-C>XML::Simple<CharStyle:>.

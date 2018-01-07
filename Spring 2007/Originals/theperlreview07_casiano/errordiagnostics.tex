@@ -1,0 +1,19 @@
+\begin{verbatim}
+  %%
+  my $lineno = 1;
+
+  sub Err {
+    my $parser = shift;
+
+    my($token)=$parser->YYCurval;
+    my($what)= $token ? "input: '$token'" 
+                        : "end of input";
+    my @expected = $parser->YYExpect();
+    local $" = ', ';
+    die << "ERRMSG";
+Syntax error near $what (line number $lineno).
+Expected one of these terminals: @expected
+ERRMSG
+  }
+\end{verbatim}
+

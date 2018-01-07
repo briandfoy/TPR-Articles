@@ -1,0 +1,555 @@
+
+=pod
+
+=head0 Far More Than I Ever Wanted To Know About Perl Closures
+
+Closures are a wonderful thing. In this article I'll walk through the cases
+where Perl's closures behave differently from one another, and sometimes
+display an at first surprising behaviour.
+
+=cut
+
+### A possibly better start for an article.
+
+=pod
+
+=head1 What's a closure?
+
+There are different ideas of what a closure actually is. The most
+common definition is that it's a function that has deep bindings to
+its lexical context. A broader definition is that it's any data
+structure that has deep bindings to its lexical context.
+
+=cut
+
+### Removed "For instance an inner class (in languages that support that)
+### may be a closure using that definition." as that was originally from
+### Wikipedia, and Wikipedia no longer says that. The Wikipedia page on
+### closures has been almost completely rewritten (to the better--it's a
+### good read).
+
+=pod
+
+=head1 A brief introduction
+
+In Perl, the subroutine is the only data type that deeply binds its
+lexical context. I can define a subroutine in the same scope as a
+lexical variable. When the lexical variable goes out of scope, the
+subroutine still binds to it:
+
+    {
+        my $x = 1;
+        sub f {
+            my ($y) = @_;
+            return $x + $y;
+        }
+
+        print f(4); # 5
+    }
+
+    print f(4); # 5
+
+C<f> is a named closure that deeply binds the lexical variable
+C<$x>. When I call C<f> from anywhere in you program, it returns the
+value given to it plus 1. This is true even if the variable C<$x>
+isn't in scope where I call C<f>, or even if nothing else is holding
+a reference to C<$x>.
+
+=cut
+
+### I notice that you added parenthesis to C<f>. Personally I don't like that
+### as Perl doesn't use "long" names with signatures, and has a sigil for naming
+### subroutines. I don't use &foo nowadays though, as people tend to confuse
+### that with a subroutine invocation. So I prefer to keep it with neither &
+### nor ().
+###
+### Above all though I think it's important to be consistent to be less
+### confusing. Some of the text you added or edited used parenthesis, but the
+### text left untouched was without. I've taken the liberty of removing all
+### parentheses when refering to subroutines, but I don't mind if you change
+### them all back if that's how you refer to subroutines in The Perl Review.
+### If you're running late you can just email me back and I'll change them all.
+
+=pod
+
+A typical example of this is a counter subroutine that remembers its
+value:
+
+=cut
+
+### Removed "starting" from "its starting value".
+
+=pod
+
+    {
+        my $c = 0;
+        sub counter {
+            return ++$c;
+        }
+    }
+
+    print counter();   # 1
+    print counter();   # 2
+    print counter();   # 3
+
+C<counter> is a named closure that deeply binds the lexical variable
+C<$c>. Even though C<$c> has gone out of scope, C<counter> has a
+reference to C<$c>, so Perl does not garbage collect C<$c>.
+
+=head1 References
+
+It's important to realize that a variable represents more than just a
+value. A variable is an instance of a data structure behind the
+scenes, and one of the bits of information in it is the value I get
+when I print the variable:
+
+    my $foo = 1;
+
+    my $r;
+    {
+        my $foo = 2;
+        $r = \$foo;    # make $r a reference to $foo
+    }
+
+    print $$r;         # 2
+
+The C<print> statement outputs 2 instead of 1 because it sees the
+inner C<$foo> instead of the one in scope when I call C<print>.
+C<$foo> is just a name and the underlying data structure it represents
+is the thing of interest. The C<\> operator returns a reference to
+that very instance and doesn't much care what the actual name is.
+
+When I declared C<$foo> the second time with C<my>, I masked the old
+C<$foo> definition, including its value. Understanding this is crucial
+for understanding the more esoteric cases for Perl closures. For more
+about this, see the L<perlref> documentation.
+
+C<my> has both compile time and runtime behaviour. C<my> creates a new
+instance for a variable when its surrounding is defined and when it is
+executed, except for the first time where it reuses the instance
+created at its surrounding's definition time. Without this, the whole
+reference system in Perl wouldn't work.
+
+=cut
+
+### Removed the parenthesis. The first time behaviour is worth more than
+### being in a parenthesis, especially since I return to the subject below.
+
+### Changed "as its surroundings" to "at its surrounding's". An original
+### error by me.
+
+=pod
+
+Compare the following, in which I create a new C<$bar> in every
+iteration of the C<for>. I get what I expect, which is each number
+as an element of C<@foo>:
+
+=cut
+
+### Made a comma into a dot. It got a bit chopped up by all the commas. I tend
+### to overuse commas.
+
+=pod
+
+    my @foo;
+
+    for (1 .. 3) {
+        my $bar = $_;
+        push @foo, \$bar;
+    }
+
+    print join ' ', map { $$_ } @foo;   # 1 2 3
+
+That worked as I wanted, but the next doesn't. If I declare C<$bar> outside
+the loop, when I take a reference to it in each iteration of the loop, I'm
+actually getting the same reference over and over again:
+
+    my @foo;
+    my $bar;
+ 
+    for (1 .. 3) {
+        $bar = $_;
+        push @foo, \$bar;
+    }
+
+    print join ' ', map { $$_ } @foo;   # 3 3 3
+
+This time I get the wrong output. Since C<@foo> has three copies of
+the reference the same variable, I get the same value back for each
+element.
+
+=head1 Anonymous closures
+
+A closure can be anonymous just as any subroutine can. I can modify
+the earlier C<counter> subroutine so that it can count in specified
+steps. I'll make a generator function I'll call C<make_counter> that
+takes the step value as its argument (defaulting to 1):
+
+    sub make_counter {
+        my ($step) = shift || 1;
+        my $x = 0;
+
+        return sub {
+            $x += $step;
+            return $x;
+        };
+    }
+
+Notice the close similarity between the named and the anonymous
+counters. The bare block from before has become the subroutine
+C<make_counter>. The assignment to C<$x> now gets its value from my
+call to C<make_counter>, and I return the anonymous subroutine instead
+of using a named subroutine.
+
+    my $counter = make_counter(3);
+    print $counter->();    # 3
+    print $counter->();    # 6
+    print $counter->();    # 9
+
+
+The anonymous subroutine in C<make_counter> binds (references) a new
+instance of C<$x> each time I call C<make_counter>. This means that I
+can get separate counters that operate independently:
+
+    my $counter1 = make_counter(1);
+    my $counter7 = make_counter(7);
+
+    print $counter1->();    #  1
+    print $counter7->();    #  7
+    print $counter1->();    #  2
+    print $counter7->();    # 14
+
+=head1 Nested, named subroutines
+
+When I have nested, named subroutines, I need to take into account the
+runtime effect of C<my> and the time of definition of the subroutines. As
+the subroutines initially share a lexical context that can be redefined, yet
+the subroutines are only defined once, some peculiarities arise. Here's 
+a subroutine C<outer> in which I define another subroutine, C<inner>.
+
+=cut
+
+### I agree that I was a bit sparse in my first paragraph for this section,
+### so I've reworded it a bit.
+
+### The line "Will the variables I reference already have a value when I
+### define my subroutine." confused me, so I edited away your edit. :-)
+### It's also of a different narrative style using a question. So I removed
+### the second question too, which I left duplicated the two sentences below
+### the code.
+
+### I think the following examples demonstrates the issue clearly enough,
+### and try to put it to word before them confused at least me.
+
+### Finally, I changed all foos and bars to "outer" and "inner".
+
+=pod
+
+    sub prettify { defined $_[0] ? $_[0] : 'undefined' }
+
+    my $x = 'initial';
+
+    sub outer {
+        my $val = $x;
+
+        print prettify($val), "\n";
+
+        sub inner {
+            print prettify($val), "\n";
+        }
+    }
+
+With that code there are a couple of scenarios. I could call C<inner>
+before I call C<outer>. Since I've set C<$x> to C<initial>, that's 
+what I expect C<inner> to output, although it doesn't do that until
+I call C<outer> first:
+
+    inner();          # undefined
+    outer();          # initial
+    inner();          # initial
+
+The value of C<$val> in C<inner> isn't defined in the first call to
+C<inner> since the assignment of C<$val> doesn't happen until I call
+C<outer>, at which point C<$val> gets its value. When I call C<outer>,
+C<$val> in C<inner> gets defined. So far so good. This is comparable to
+trying to use a variable in a C<BEGIN> block, which runs at compile
+time, but not defining it until runtime:
+
+    my $foo = 1;
+
+    BEGIN {
+        print $foo ? 'true' : 'false';  # false
+    }
+
+    print $foo ? 'true' : 'false';      # true
+
+Now, I continue the C<outer>/C<inner> example by changing C<$x> and calling
+C<outer> and C<inner> again. C<outer> recognizes the change in C<$x>, but
+C<inner> doesn't:
+
+    $x = 'second';
+
+    outer();          # second
+    inner();          # initial <--- Unchanged!
+
+The value of C<$val> in C<inner> doesn't change because C<inner> is
+defined once and only once. When I call C<outer> the second time, Perl
+creates a new C<$val>, but only for that call to C<outer>. C<inner>
+is already defined and C<inner>'s binding to C<$val> was done when
+C<inner> was defined.
+
+Another illustration of this idea is using a C<BEGIN> block inside the
+subroutine. 
+
+=cut
+
+### I've removed "The C<BEGIN> block is like C<inner> in that it binds
+### only to the first definition of C<$x>:". I don't feel it's really to the
+### point as the BEGIN block is gone when C<outer> is called. It's more an
+### illustration of that C<outer> doesn't create a new instance of $x the
+### first time it executes.
+
+### The addition below the code is excellent though.
+
+=pod
+
+    my @all;
+
+    sub outer {
+        my $x;
+
+        print "runtime:      ", \$x, "\n";
+
+        push @all, \$x;
+
+        BEGIN { print "compile time: ", \$x, "\n" }
+    }
+
+    outer() for 1 .. 4;
+
+The output show that the C<BEGIN> block connects with the first
+definition of C<$x> that the runtime sees, but every other call to
+C<outer> creates another variable which each has a different reference
+address:
+
+    compile time: SCALAR(0x18241a0)
+    runtime:      SCALAR(0x18241a0)
+    runtime:      SCALAR(0x274ff4)
+    runtime:      SCALAR(0x275018)
+    runtime:      SCALAR(0x27503c)
+
+Note that I used C<@all> just to prevent Perl from using an
+optimization that allows it to reuse memory slots. Since each of the
+references sticks around as an element of C<@all> new instances of C<$x> must be created. Otherwise, Perl
+may reuse the same memory and I wouldn't be able to see the effect
+with this trick.
+
+=head1 Named closures in anonymous subroutines
+
+I change the example from the last section to make C<outer> an
+anonymous subroutine instead, and assign it to C<$outer>. Everything
+else is the same:
+
+    sub prettify { defined $_[0] ? $_[0] : 'undefined' }
+
+    my $x = 'initial';
+
+    my $outer = sub {
+        my $val = $x;
+
+        print prettify($val), "\n";
+
+        sub inner {
+            print prettify($val), "\n";
+        }
+    };
+
+First, I call it in the same sequence that I did before. I'll call
+C<inner> first, and I expect it to output C<undefined> just as it did
+before. Then I'll dereference C<$outer>, and call C<inner> again:
+
+    inner();          # undefined
+    $outer->();       # initial
+    inner();          # undefined
+
+This time C<inner> outputs C<undefined> again! The anonymous
+subroutine is defined at runtime (instead of compile time for named
+subroutines) which means that the scope of C<$val> is B<redefined> at
+runtime, and thus creates a new instance of C<$val> the first time
+it's executed. This is different from the named C<outer> subroutine 
+which reused the
+C<$val> defined at compile time. This time, dereferencing C<$outer>
+creates a different C<$val> so I don't have a chance to assign a value
+to the C<$val> that C<inner> can see. C<&$outer> and C<inner> will
+therefore B<never> share C<$val>.
+
+I can see this by using the same C<BEGIN> block trick I used in the
+previous section:
+
+    my @all;
+
+    my $outer = sub {
+        my $x;
+        print "runtime:      ", \$x, "\n";
+        push @all, \$x;
+
+        BEGIN { print "compile time: ", \$x, "\n" }
+    };
+
+    $outer->() for 1 .. 4;
+
+This time, none of the output lines show the same reference address:
+
+    compile time: SCALAR(0x1bbffbc)
+    runtime:      SCALAR(0x1bc006c)
+    runtime:      SCALAR(0x1bbfd7c)
+    runtime:      SCALAR(0x1bc007c)
+    runtime:      SCALAR(0x1bbfdec)
+
+=cut
+
+### I regenerated the output. It was unfortunate that two addresses were
+### differing only by an "a" and a "d". Now it's clearer that they're all
+### different.
+
+=pod
+
+=head1 Recursive, lexical anonymous closures
+
+With "recursive lexical", I mean that the reference to an anonymous
+subroutine is stored in a lexical variable, and I use that variable to
+call the subroutine from within itself. If I have a lexical anonymous
+subroutine that I want to make recurse I might write it like this:
+
+    my $fac; # The factorial of a non-negative integer.
+
+    $fac = sub {
+        my ($n) = @_;
+        return 0 if $n <= 1;
+        return $n * $fac->($n - 1);
+    };
+
+Typically I want to do this because the anonymous subroutine already
+is a closure and not suited for moving out to the global namespace.
+
+This, however, creates a closure that is a circular reference. C<$fac>
+references the closure which references C<$fac>. This particular
+circular reference will undoubtedly be a noticable memory leak if it's inside
+something that's called repeatedly. A fix for this is to not have
+a lexical variable to hold the subroutine for the recursive call:
+
+=cut
+
+### Slightly edited the sentence starting with "This particular ...".
+
+=pod
+
+    use vars qw/ $REC /;
+    
+    my $_fac = sub {
+        my ($n) = @_;
+        return 0 if $n <= 1;
+        return $n * $REC->($n - 1); # <--- $REC instead of $fac
+    };
+
+    my $fac = sub {
+        local $REC = $_fac;
+        $_fac->(@_);
+    };
+
+This solution solves the memory leak issue and is functionally
+equivalent to the leaking solution except for stack traces due to the
+extra initial call in C<&$fac>. It is, however, slightly overkill if
+I'm not going to use the subroutine outside its lexical scope. For
+that, a simple localization will fix this:
+
+    use vars qw/ $fac /;
+
+    local $fac = sub {
+        my ($n) = @_;
+        return 0 if $n <= 1;
+        return $n * $fac->($n - 1);
+    };
+
+This assumes I don't use C<$fac> anywhere else in the dynamic scope
+(I<i.e.> in the closure directly or indirectly by a subroutine call).
+
+I've written the C<Sub::Recursive> module to provide a convenient
+work-around using pure Perl. With C<Sub::Recursive> I simply replace
+C<sub> with C<recursive> and use C<$REC> for the recursive call:
+
+=cut
+
+### Slight rewording of the above paragraph.
+
+=pod
+
+    use Sub::Recursive;
+
+    my $fac = recursive {
+        my ($n) = @_;
+        return 0 if $n <= 1;
+        return $n * $REC->($n - 1); # <--- $REC instead of $fac
+    };
+
+C<Devel::Caller> is another alternative that uses more low-level access to
+the interpreter to retrieve the currently executing subroutine. The relatively new XS module C<Sub::Current> is yet another alternative.
+
+=cut
+
+### Added paragraph about Devel::Caller and Sub::Current.
+
+### Below I've added a new section, mentioning the difference between old-style
+### closures and subroutines using C<state>.
+
+=pod
+
+=head1 The C<state> keyword
+
+In Perl 5.10 there's a new keyword: C<state>. With C<state> I can rewrite
+
+    {
+        my $c = 0;
+        sub counter {
+            return ++$c;
+        }
+    }
+
+to
+
+    sub counter {
+        state $c = 0;
+        return ++$c;
+    }
+
+or even
+
+    sub counter { ++state $c }
+
+Of course, you can use C<state> in anonymous subroutines as well. However, there's a difference between the closure and the subroutine using C<state>. For the closure the assignment to C<$c> is done during the surrounding lexical context's runtime. The assignment using C<state> is done during the first execution of the subroutine. This becomes significant when the assignment has side effects or is time consuming. Which behaviour I prefer depends on the particular problem at hand.
+
+
+=head1 Conculsion
+
+The more esoteric uses of Perl's closures are as you see full of pitfalls. Hopefully I've helped you avoid them. Don't let this scare you away from closures. They're wonderful and can improve your code quality in many ways.
+
+=head1 References
+
+L<perlref>, L<perlsub>, L<perlfaq7> "What is a closure?", L<perldiag> on the closure warnings category, L<http://en.wikipedia.org/wiki/Closure_%28computer_science%29>.
+
+C<Sub::Recursive> is available at CPAN, L<http://search.cpan.org/dist/Sub-Recursive/>.
+
+=cut
+
+### Removed reference to perl581delta as you've edited away the section about
+### the leaky behaviour of pre 5.8.1 perl's. I've added a reference to
+### perldiag.
+
+=pod
+
+=head1 About the author
+
+Johan Lodin is a student from Sweden that's been using Perl for fun and laziness over the last eight years.
+
+
+=cut

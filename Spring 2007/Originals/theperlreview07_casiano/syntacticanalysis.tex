@@ -1,0 +1,303 @@
+The code below shows the body of the grammar (file 
+\code{Infix.eyp}).
+Eyapp syntax very much resembles the syntax of
+old cherished \code{yacc} \cite{yacc}.
+An Eyapp program has three parts: \I{head}, \I{body} and \I{tail}.
+Each part is separated from the former by the symbol \verb|%%|.
+The head section contains declarations, code support
+and directives.
+The grammar rules describing
+the language - and the semantic actions that indicate how
+evaluate the attributes associated with the symbols -
+reside in the body section.
+The tail section includes Perl code that gives support
+to the semantic actions. Commonly 
+the lexical analyzer and error diagnostic subroutines
+go there.
+ 
+
+\begin{verbatim}
+%right  '='        # Head section
+%left   '-' '+'
+%left   '*' '/'
+%left   NEG
+%tree 
+
+%%
+line:             # Body section
+  sts <%name EXPS + ';'>
+;
+sts:
+    %name PRINT
+    PRINT leftvalue
+  | exp 
+;
+exp:
+    %name NUM    NUM
+  | %name VAR    VAR
+  | %name ASSIGN leftvalue '=' exp
+  | %name PLUS   exp '+' exp
+  | %name MINUS  exp '-' exp
+  | %name TIMES  exp '*' exp
+  | %name DIV    exp '/' exp
+  | %name NEG
+          '-' exp %prec NEG
+  |            '(' exp ')'
+;
+leftvalue : %name VAR VAR
+;
+%% 
+...               # tail section
+\end{verbatim}
+
+\subsection{Ambiguities and Conflicts}
+The former grammar is ambiguous.
+For instance, an expression like \verb|exp '-' exp| followed by a
+minus \verb|'-'| can be worked in more than one way. If we
+have an input like \verb|NUM - NUM - NUM| the activity of a LALR(1) parser
+(the family of parsers to which Eyapp belongs)
+consists of a sequence of \I{shift and reduce actions}. A \I{shift action}
+has as consequence the reading of the next token. A \I{reduce action}
+is finding a production rule that matches and substituting 
+the \I{right hand side} (rhs) of the production by the \
+\I{left hand side} (lhs).  For input \verb|NUM - NUM - NUM|
+the activity will be as follows (the dot is used to indicate where the next 
+input token is):
+
+
+\begin{verbatim}
+.NUM - NUM - NUM # shift
+ NUM.- NUM - NUM # reduce exp: NUM 
+ exp.- NUM - NUM # shift
+ exp -.NUM - NUM # shift
+ exp - NUM.- NUM # reduce exp: NUM
+ exp - exp.- NUM # shift/reduce conflict
+\end{verbatim}
+up to this point two different decisions can be taken: the next description can be
+\begin{verbatim}
+ exp.- NUM # reduce by exp: exp '-' exp 
+\end{verbatim}
+or:
+\begin{verbatim}
+ exp - exp -.NUM # shift '-' 
+\end{verbatim}
+that is called a \I{shift-reduce conflict}: the parser must decide
+whether to shift \verb|NUM| or to \I{reduce} by the rule \verb|exp: exp - exp|.
+
+That is also the reason for the precedence declarations in the 
+head section. Another kind of conflicts are \I{reduce-reduce conflicts}.
+They arise when more that rhs can be applied for a reduction
+action.
+
+By associating priorities with tokens
+the programmer can tell Eyapp what syntax tree
+to build in case of \I{conflict}.
+
+The declarations 
+\verb|%nonassoc|, \verb|%left| and \verb|%right| 
+declare and associate a {\it priority} with the tokens
+that follow them.  
+Tokens declared in the same line have the same precedence. 
+Tokens declared in lines below have more
+precedence than those declared above. Thus, in the example
+we are saying that \verb|'+'| and \verb|'-'| have the same precedence
+but higher than \verb|'='|. The final effect of \verb|'-'|
+having greater precedence than \verb|'='| is that an
+expression like \verb|a=4-5| is interpreted as \verb|a=(4-5)| 
+and not as \verb|(a=4)-5|.  The use of \verb|%left| applied to \verb|'-'|
+indicates that - in case of ambiguity 
+and a match between precedences - 
+the parser must build the tree corresponding
+to a left parenthesization. Thus, \verb|4-5-9| 
+is interpreted as  \verb|(4-5)-9|.
+
+The \verb|%prec| directive can be used when
+a rhs is involved in a conflict and has no tokens
+inside or it has but the precedence of the last token leads
+to an incorrect interpretation. A rhs can be followed by 
+an optional \verb|%prec token| directive
+giving the production the precedence of the \verb|token|
+
+\begin{verbatim}
+exp:   '-' exp %prec NEG { -$_[1] }
+\end{verbatim}
+This solves  the conflict in \verb|- NUM - NUM|
+between \verb|(- NUM) - NUM| and
+{\tt - (NUM - NUM)}. Since \verb|NEG| has more
+priority than \verb|'-'| the first interpretation 
+will win.
+
+\subsection{Building the AST}
+\verb|Parse::Eyapp| facilitates the construction of 
+abstract syntax trees (AST) through the \verb|%tree|
+directive. 
+Nodes in the AST are blessed in the production
+\verb|name|. 
+A rhs can be 
+{\it named} using the \verb|%name IDENTIFIER| directive. 
+For each \I{rhs name} a 
+class/package with name \verb|IDENTIFIER| is created. 
+
+%Eyapp differentiates between two kinds of tokens: \I{syntactic tokens}
+%and \I{semantic tokens}. 
+Symbolic tokens (like \verb|NUM|
+\verb|PRINT| or \verb|VAR|) 
+are considered by default \I{semantic tokens}. 
+String literals 
+(like \verb|'+'|, \verb|'/'|, etc.)
+are - unless explictly 
+declared using the \code{semantic token} directive - 
+considered \I{syntactic tokens}.
+When building the AST syntactic tokens do not yield 
+new nodes.
+Semantic tokens however have their own. Thus
+when feed with input \verb|b=2*a| 
+the generated parser
+produces the following AST\footnote{The information
+between brackets shows the attribute 
+for {\tt TERMINAL} nodes}:
+\begin{verbatim}
+EXPS(
+  ASSIGN(
+    VAR(TERMINAL[b]),
+    TIMES(
+      NUM(TERMINAL[2]),
+      VAR(TERMINAL[a]))
+  )
+)
+\end{verbatim}
+Nodes of the AST are hashes that can be 
+\I{decorated} with new keys/attributes.
+The only reserved field is \verb|children| which is a reference to the
+array of children. 
+Nodes named \verb|TERMINAL| are built from the
+tokens provided by the lexical analyzer. 
+The couple \verb|($token, $attribute)| returned by the lexical analyzer
+is stored under the keys \verb|token| and \verb|attr|.
+\verb|TERMINAL| nodes also have the attribute \verb|children| which is
+set to an anonymous empty list.
+Observe the absence of \verb|TERMINAL| nodes corresponding to 
+tokens \verb|'='| and \verb|'*'|.
+If we change the status of \verb|'*'| and \verb|'='| 
+to \code{semantic} using the \verb|%semantic token| directive:
+\begin{verbatim}
+1   %semantic token '*' '='
+2   %right  '='
+3   ....  etc.
+\end{verbatim}
+we get a - concrete - syntax tree:
+\begin{verbatim}
+EXPS(
+  ASSIGN(
+    VAR(TERMINAL[b]),
+    TERMINAL[=],
+    TIMES(
+      NUM(TERMINAL[2]),
+      TERMINAL[*],
+      VAR(TERMINAL[a])
+    ) # TIMES
+  ) # ASSIGN
+)
+\end{verbatim}
+Let us now consider the input \verb|2*(a+1)|.
+The parser yields the tree:
+\begin{verbatim}
+EXPS(
+  TIMES(
+    NUM(
+     TERMINAL[2]),
+     exp_14(
+       PLUS(
+         VAR(TERMINAL[a]),
+         NUM(TERMINAL[1]))
+       ) # PLUS
+  ) # TIMES
+)
+\end{verbatim}
+Two features are noticeable: the parenthesis rule \verb|exp:| \verb|'(' exp ')'|
+had no name
+and got automatically one: \verb|exp_14|. The \I{name of a rhs} by 
+default results from concatenating the left hand side of the rule
+with the ordinal number of the rule\footnote{As it appears
+in the {\tt .output} file. The {\tt .output} file can be generated 
+using the {\tt -v} option of {\tt eyapp}}.
+The second is that node \verb|exp_14| is useless and can be suppressed. 
+
+The \verb|%tree| directive can be accompanied of the \verb|%bypass|
+clause.  A \verb|%tree bypass| produces an automatic \I{bypass} of any
+node with only one child at \I{tree-construction-time}. 
+A \I{bypass operation} consists in \I{returning the only child 
+of the node being visited to the father of the node and re-typing (re-blessing)
+the node in the name of the production}\footnote{If the production has an
+explicit name. Otherwise there is no re-blessing}. 
+
+Changing the line \verb|%tree| by \verb|%tree bypass|
+in file \verb|Infix.eyp| we get a more suitable 
+AST for input \verb|2*(a+1)|:
+ 
+\begin{verbatim}
+EXPS(TIMES(NUM[2],PLUS(VAR[a],NUM[1])))
+\end{verbatim}
+
+The node \verb|exp_14| has disapeared in this version
+since the \I{bypass operation} applies to the rhs 
+of the rule \verb|exp: '(' exp ')'|:
+Tokens \verb|'('| and \verb|')'| are syntactic tokens
+and therefore at \I{tree construction time}
+only one child is left. Observe also the absence 
+of \verb|TERMINAL| nodes. Bypass clearly applies
+to rules \verb|exp: NUM| and \verb|exp: VAR| since
+they have only one element on their rhs. Therefore the
+\verb|TERMINAL| node is re-blessed as \verb|NUM| and
+\verb|VAR| respectively.
+
+
+A consequence of the global scope application of \verb|%tree bypass|
+is that undesired bypasses may occur. Consider the tree 
+rendered for input \verb|-a*2|:
+
+\begin{verbatim}
+EXPS(TIMES(NEG,NUM))
+\end{verbatim}
+
+What happened? The bypass is applied to the rhs 
+\verb|'-' exp|.  Though the rhs has two symbols, token \verb|'-'| is
+a syntactic token and at \I{tree-construction-time}
+only \verb|exp| is left. The \I{bypass}
+operation applies when building this node.
+This undesired \I{bypass} can be avoided applying 
+the \verb|no bypass| directive to the 
+production:
+
+\begin{verbatim}
+ exp : %no bypass NEG
+       '-' exp %prec NEG
+\end{verbatim}
+Now the AST for \verb|-a*2| is correct:
+\begin{verbatim}
+EXPS(TIMES(NEG(VAR),NUM))
+\end{verbatim}
+
+Eyapp provides operators \verb|+|, \verb|*| and \verb|?| 
+for the creation of lists and optionals as in:
+\begin{verbatim}
+line: sts <EXPS + ';'>
+\end{verbatim}
+which states that a \code{line} is made of a non empty
+list of \verb|EXPS| separated by semicolons.
+By default the class name for such list is \verb|_PLUS_LIST|.
+The \verb|%name| directive can be used to modify
+the default name:
+\begin{verbatim}
+line: sts <%name EXPS + ';'>
+\end{verbatim}
+
+Explicit actions can be specified by the programmer. 
+They are managed as anonymous subroutines
+that receive as arguments the attributes of the symbols
+in the rule and are executed each time a \I{reduction}
+by that rule occurs. When running under the \verb|%tree| directive
+this provides a mechanism to influence the shape of the AST.
+Observe however that the grammar in the example is \underline{clean} of actions:
+\I{Parse::Eyapp allowed us to produce a suitable AST without writing 
+any explicit actions}.

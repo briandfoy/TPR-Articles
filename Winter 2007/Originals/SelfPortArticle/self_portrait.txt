@@ -1,0 +1,214 @@
+<ASCII-MAC>
+<Version:5><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1>>
+<DefineCharStyle:pod-I=<Nextstyle:pod-I><cColor:Black><cTypeface:Italic><cSize:9.500000><cHorizontalScale:1.000000><cTracking:0><cBaselineShift:0.000000><cCase:Normal><cStrokeColor:None><cLanguage:English\: USA><cUnderline:0><cFont:Minion \(T1\)><cPosition:Normal><cStrikethru:0><cColorTint:-1.000000>>
+<DefineCharStyle:pod-C=<Nextstyle:pod-C><cColor:Black><cTypeface:Regular><cSize:9.500000><cHorizontalScale:1.000000><cTracking:0><cBaselineShift:0.000000><cCase:Normal><cStrokeColor:None><cUnderline:0><cFont:Courier New><cPosition:Normal><cStrikethru:0><cColorTint:-1.000000>>
+<DefineCharStyle:pod-B=<Nextstyle:pod-B><cColor:Black><cTypeface:Bold><cSize:9.500000><cHorizontalScale:1.000000><cTracking:0><cBaselineShift:0.000000><cCase:Normal><cStrokeColor:None><cUnderline:0><cFont:Courier New><cPosition:Normal><cStrikethru:0><cColorTint:-1.000000>>
+<DefineParaStyle:NormalParagraphStyle=<Nextstyle:NormalParagraphStyle>>
+<DefineParaStyle:Feature Section=<BasedOn:NormalParagraphStyle><Nextstyle:Feature Section><cTypeface:Bold><cSize:10.000000><pSpaceBefore:4.500000><pTabRuler:20\,Left\,.\,0\,-\;258\,Left\,.\,0\,-\;><cFont:Rockwell><pGridAlign:BaseLine>>
+<DefineParaStyle:Module Author Byline=<Nextstyle:Module Author Byline><cTypeface:Italic><cSize:9.500000><cLigatures:0><pDropCapCharacters:1><pDropCapLines:1><pHyphenationLadderLimit:0><cLanguage:English\: USA><pHyphenation:0><pHyphenationZone:0.000000><cFont:Minion \(T1\)><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pTextAlignment:Right><pGridAlign:BaseLine><bulFont:\<TextFont\>><bulTypeFace:\<TextStyle\>>>
+<DefineParaStyle:Feature Lead=<Nextstyle:Feature Lead><cSize:9.500000><cLigatures:0><cTracking:50><pDropCapCharacters:1><pDropCapLines:3><pHyphenationLadderLimit:0><cLeading:11.400000><cLanguage:English\: USA><pHyphenation:0><pHyphenationZone:0.000000><cFont:Minion \(T1\)><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pTextAlignment:JustifyLeft><pGridAlign:BaseLine>>
+<DefineParaStyle:Feature Para=<BasedOn:Feature Lead><Nextstyle:Feature Para><pDropCapLines:1><pFirstLineIndent:12.024000>>
+<DefineParaStyle:Feature Section Lead=<BasedOn:Feature Para><Nextstyle:Feature Section Lead><pFirstLineIndent:0.000000><cLeading:-1.000000>>
+<DefineParaStyle:Feature Code Para=<Nextstyle:Feature Code Para><cSize:9.500000><cLigatures:0><pHyphenationLadderLimit:0><pLeftIndent:10.799999><cLanguage:English\: USA><pHyphenation:0><pHyphenateCapitals:0><pHyphenationZone:0.000000><pTabRuler:18\,Left\,.\,0\,\;31.5\,Left\,.\,0\,\;45\,Left\,.\,0\,\;58.5\,Left\,.\,0\,\;72\,Left\,.\,0\,\;85.5\,Left\,.\,0\,\;99\,Left\,.\,0\,\;112.5\,Left\,.\,0\,\;126\,Left\,.\,0\,\;139.5\,Left\,.\,0\,\;153\,Left\,.\,0\,\;166.5\,Left\,.\,0\,\;180\,Left\,.\,0\,\;193.5\,Left\,.\,0\,\;207\,Left\,.\,0\,\;220.5\,Left\,.\,0\,\;234\,Left\,.\,0\,\;><cFont:Courier New><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pGridAlign:BaseLine>>
+<DefineParaStyle:Feature Sub Section=<BasedOn:Feature Section><Nextstyle:Feature Sub Section><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:News URL=<BasedOn:NormalParagraphStyle><Nextstyle:News URL><cSize:9.500000><pSpaceAfter:4.500000><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pGridAlign:BaseLine><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:News para=<BasedOn:NormalParagraphStyle><Nextstyle:News para><cSize:9.500000><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pGridAlign:BaseLine><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:News Headline=<BasedOn:NormalParagraphStyle><Nextstyle:News Headline><cTypeface:Bold><cSize:9.500000><pSpaceBefore:4.500000><cFont:Gill Sans \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pGridAlign:BaseLine><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar URL=<Nextstyle:Calendar URL><cTypeface:Italic><cSize:10.000000><cLanguage:English\: USA><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar title=<Nextstyle:Calendar title><cSize:10.000000><cLanguage:English\: USA><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar location=<Nextstyle:Calendar location><cSize:10.000000><cLanguage:English\: USA><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar date=<Nextstyle:Calendar date><cTypeface:Bold><cSize:11.000000><cCase:All Caps><cLanguage:English\: USA><cFont:Gill Sans \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Feature Title=<Nextstyle:Feature Title><cSize:26.500000><cLeading:13.500000><cFont:Rockwell Extra Bold><pTextAlignment:Center>>
+<DefineParaStyle:Feature Byline=<BasedOn:NormalParagraphStyle><Nextstyle:Feature Byline><cTypeface:Italic><cSize:11.000000><cLeading:13.000000><cFont:Gill Sans \(TT\)><pTextAlignment:Right>>
+<DefineParaStyle:Feature Deck=<BasedOn:Feature Byline><Nextstyle:Feature Deck><cTypeface:Regular><pSpaceBefore:4.500000><pTextAlignment:Center>>
+<DefineParaStyle:Normal=<Nextstyle:Normal><KeyboardShortcut:Shift\+Cmd\+Num 6><cSize:11.000000><cLigatures:0><pHyphenationLadderLimit:0><cLeading:13.000000><cLanguage:English\: USA><pHyphenation:0><pHyphenationZone:0.000000><pSpaceBefore:4.500000><pSpaceAfter:4.500000><cFont:Arial \(TT\)><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pTextAlignment:JustifyLeft>>
+<DefineParaStyle:Body Copy=<BasedOn:Normal><Nextstyle:Body Copy><cSize:9.500000><pFirstLineIndent:12.024000><cLeading:-1.000000><pSpaceBefore:0.000000><pSpaceAfter:0.000000><cFont:Minion \(T1\)><pGridAlign:BaseLine><bulFont:\<TextFont\>><bulTypeFace:\<TextStyle\>>>
+<DefineParaStyle:author byline=<BasedOn:Feature Para><Nextstyle:author byline><cTypeface:Italic><bulFont:\<TextFont\>><bulTypeFace:\<TextStyle\>>>
+<DefineParaStyle:article head=<BasedOn:Normal><Nextstyle:Normal><KeyboardShortcut:Shift\+Cmd\+Num 1><cSize:14.000000><cHorizontalScale:1.100000><pSpaceBefore:13.500000><pSpaceAfter:0.000000><cFont:Arial Black><pKeepWithNext:4><cSkew:15.000000><pRuleBelowColor:Black><pRuleBelowTint:100.000000><pRuleBelowOffset:9.000000>>
+<DefineParaStyle:article subhead=<BasedOn:article head><Nextstyle:article subhead><KeyboardShortcut:Shift\+Cmd\+Num 2><cSize:11.000000><pSpaceBefore:18.000000>>
+<pstyle:Feature Lead>This issue<0x2019>s cover illustration is a Perl self-portrait: a picture of picture-generating code. It is a graphic representation of the op trees that make up the program generating the graphic. Strictly speaking, the program itself only outputs a structured description of the op trees, using some of Perl<0x2019>s introspection modules. The heavy lifting of actually plotting digraphs was done by <CharStyle:pod-C>dot<CharStyle:>, part of the GraphViz package.
+<pstyle:Feature Para>This article pokes into Perl internals a little, but from the perspective of the public introspection interface provided by core Perl modules. Results may vary considerably from one version of Perl to another. The details of compilation provided are extremely abstracted.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> What are op trees?	
+<pstyle:Feature Section Lead>Perl is not compiled to native machine code, but it is compiled. A compiled Perl program resides in memory as a sort of bytecode. This bytecode consists of trees of operations against the Perl stack. Like many <0x201C>virtual machines<0x201D> the Perl runtime engine is stack-based rather than register-based. These operations, called <0x201C>PP ops<0x201D> for <0x201C>push/pop,<0x201D> generally pop items from the top of the stack, operate on them, and push results back on to the stack.
+<pstyle:Feature Para>As you might expect, perl starts parsing an expression like this:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>$a and $b or $c<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>by building a parse tree, like this:
+<pstyle:Feature Para>\<div align=<0x201C>center<0x201D>\> \<img src=<0x201C>./a_and_b_or_c_pruned.png<0x201D>\> \</div\>
+<pstyle:Feature Para>Here the lowest precedent operator is at the top, and the highest at the bottom. The <CharStyle:pod-C>padsv<CharStyle:> opcodes simply fetch a lexical variable from the surrounding scope pad, and place it on the stack. The <CharStyle:pod-C>null<CharStyle:> opcode here is a relic of the parsing.
+<pstyle:Feature Para>Once the parse tree has been completed, perl then plots an execution path through the tree, by joining the opnodes<0x2019> <CharStyle:pod-C>next<CharStyle:> pointers together. In the case of the <CharStyle:pod-C>and<CharStyle:> and <CharStyle:pod-C>or<CharStyle:> ops, which are logical operators (<CharStyle:pod-C>LOGOP<CharStyle:>), there is an additional <CharStyle:pod-C>other<CharStyle:> pointer, for the alternate outcome of the operation. After linking, our expression from above looks like this:
+<pstyle:Feature Para>\<div align=<0x201C>center<0x201D>\> \<img src=<0x201C>./a_and_b_or_c_exec_linked_tree.png<0x201D>\> \</div\>
+<pstyle:Feature Para>The path that perl plots through the tree is generally an in-order traversal of the tree. The entry point for this evaluation is the leftmost leaf of the tree. We push <CharStyle:pod-C>$a<CharStyle:> onto the stack, then evaluate the <CharStyle:pod-C>and<CharStyle:>. If the top item on the stack is false, we can skip up to the <CharStyle:pod-C>or<CharStyle:>, via the <CharStyle:pod-C>next<CharStyle:> link. If <CharStyle:pod-C>$a<CharStyle:> is true, then we need to evaluate <CharStyle:pod-C>$b<CharStyle:>. Note that the <CharStyle:pod-C>null<CharStyle:> opcode is optimized away as a needless step. Perl retains it in the tree, but it is never executed.
+<pstyle:Feature Para>All of the parse tree links are retained in the final structure, but are ignored at runtime, yielding an execution tree that looks like this:
+<pstyle:Feature Para>\<div align=<0x201C>center<0x201D>\> \<img src=<0x201C>./a_and_b_or_c_just_exec.png<0x201D>\> \</div\>
+<pstyle:Feature Para>Obviously such trees quickly become complex. Here<0x2019>s a example of an entire subroutine that is constructed for
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>sub {
+<pSpaceBefore:><pstyle:Feature Code Para>    $a + $b - $c;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>}
+<pSpaceAfter:><pstyle:Feature Para>\<div align=<0x201C>center<0x201D>\>
+<pstyle:Feature Para>\<img src=<0x201C>./add_and_subtract.png<0x201D>\> \</div\>
+<pstyle:Feature Para>The parse tree is relatively complex, but note that there is a single linear path through this code, making it simply a singly-linked list of instructions.
+<pstyle:Feature Para>In this case, the variable retrieval/stack pushing ops are <CharStyle:pod-C>gvsv<CharStyle:> ops, because the variables in this case are globals. Globals need to be fetched by name rather than resolved as lexicals. This graph also includes the <0x201C>op class<0x201D> (<CharStyle:pod-C>UNOP<CharStyle:>, <CharStyle:pod-C>BINOP<CharStyle:>, etc.). Different operations require different numbers of arguments: <CharStyle:pod-C>UNOP<CharStyle:> takes a single argument (think unary negation), <CharStyle:pod-C>BINOP<CharStyle:> takes two (think addition) and <CharStyle:pod-C>LISTOP<CharStyle:> takes a list (think <CharStyle:pod-C>print()<CharStyle:>). Here the <CharStyle:pod-C>COP<CharStyle:> is an interesting and perhaps surprising nullary operation: it introduces a new statement, updating the line number, file name, and any warnings and hints (like <CharStyle:pod-C>use bytes<CharStyle:>) for that statement.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Peeking at Compiled Perl	
+<pstyle:Feature Section Lead>The core module <CharStyle:pod-C>B::Concise<CharStyle:> allows us a view of our compiled bytecode. Although at first the output is somewhat difficult to read, you can get the basic idea quickly.
+<pstyle:Feature Para>Here is about the most basic example:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>perl -MO=Concise,foo -e 'sub foo { 5 }'
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>main::foo:
+<pstyle:Feature Code Para>3  \<1\> leavesub[1 ref] K/REFC,1 -\>(end)
+<pstyle:Feature Code Para>-     \<@\> lineseq KP -\>3
+<pstyle:Feature Code Para>1        \<;\> nextstate(main 1 -e:1) v -\>2
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>2        \<$\> const[IV 5] s -\>3
+<pSpaceAfter:><pstyle:Feature Para>The numbers in the leftmost column are the execution order of the ops, with <0x201C>-<0x201D> meaning we never execute the operation. On the right, we show where we go next. Some of the symbols are a bit obtuse, but <CharStyle:pod-C>\<1\><CharStyle:> means <CharStyle:pod-C>UNOP<CharStyle:>, <CharStyle:pod-C>\<@\><CharStyle:> means <CharStyle:pod-C>LISTOP<CharStyle:> and so on.
+<pstyle:Feature Para>The text output above is like our second diagram, with both the parse tree and the execution links shown. <CharStyle:pod-C>B::Concise<CharStyle:> lets us view an <0x201C>execution order tree<0x201D> as well:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>perl -MO=Concise,foo,-exec -e 'sub foo { 5 }'
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>main::foo:
+<pstyle:Feature Code Para>1  \<;\> nextstate(main 1 -e:1) v
+<pstyle:Feature Code Para>2  \<$\> const[IV 5] s
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>3  \<1\> leavesub[1 ref] K/REFC,1
+<pSpaceAfter:><pstyle:Feature Para>Graphed as above, this looks like this:
+<pstyle:Feature Para>\<div align=<0x201C>center<0x201D>\> \<img src=<0x201C>./sub_5.png<0x201D>\> \</div\>
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Walking through op trees	
+<pstyle:Feature Section Lead>The core B module allows you to fetch object-wrapped versions of internal Perl datatypes:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>my $o = B::svref_2object( \\5 ); 
+<pSpaceBefore:><pstyle:Feature Code Para>print $o-\>IV();         # -\> 5 (integer value)
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>print $o-\>REFCNT();     # -\> 1 (reference count)
+<pSpaceAfter:><pstyle:Feature Para>Here we take a reference to an integer, then fetch an object representing the internal storage for this integer. This is an object in the <CharStyle:pod-C>B::IV<CharStyle:> class (integer value).
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>my $o = B::svref_2object( sub { 5 } ); <pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>This returns a <CharStyle:pod-C>B::CV<CharStyle:> (code value), which has a START and ROOT for the op tree for the subroutine. The ROOT points to the root of the op tree (the exit point), and START points to the subroutine entry point. All the objects representing op codes are derived from <CharStyle:pod-C>B::OP<CharStyle:>.
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>print $o-\>START-\>desc(); # "next statement"<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-C>B<CharStyle:> provides lightweight object-wrapped access to all the fundamental Perl datatypes and op classes, allowing you to build tree representations, follow links, and even access the data bound into these structures and operations.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Graphing the trees	
+<pstyle:Feature Section Lead>The <CharStyle:pod-C>dot<CharStyle:> application from the GraphViz package can draw <0x2019>digraphs<0x2019> (directed graphs) in a number of image formats. <CharStyle:pod-C>dot<CharStyle:> takes specifications in a fairly simple syntax of node declarations and relations, with a handful of attributes for edges and nodes.
+<pstyle:Feature Para>Here is the entire digraph spec for the <CharStyle:pod-C>sub { 5 }<CharStyle:> graph above:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>digraph {
+<pSpaceBefore:><pstyle:Feature Code Para>    start;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    node [ shape=box, style=filled, bgcolor=lightgrey ];
+<pstyle:Feature Code Para>    start -\> n269658992;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    n269659304 [ label="subroutine exit\\nUNOP leavesub" ];
+<pstyle:Feature Code Para>    n269659072 [ label="line sequence\\nLISTOP lineseq" ];
+<pstyle:Feature Code Para>    n269658992 [ label="next statement\\nCOP nextstate" ];
+<pstyle:Feature Code Para>    n269339504 [ label="constant item\\nSVOP const" ];
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    edge [ style=dashed, arrowhead=none, weight=5 ];
+<pstyle:Feature Code Para>    n269659304 -\> n269659072;
+<pstyle:Feature Code Para>    n269659072 -\> n269658992;
+<pstyle:Feature Code Para>    n269659072 -\> n269339504;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    edge [ style=solid, arrowhead=normal, constraint=false ];
+<pstyle:Feature Code Para>    n269658992 -\> n269339504 [ label="next" ];
+<pstyle:Feature Code Para>    n269339504 -\> n269659304 [ label="next" ];
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>}
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-C>B<CharStyle:> nodes are simply blessed integers for the internal pointers to structs, so here I use the integer (with the prefix <CharStyle:pod-C>n<CharStyle:>) as the node name. Using the basic node operations provided by <CharStyle:pod-C>B<CharStyle:>, it was relatively easy to write code to descend op trees, trace through execution paths, and even prune trees to the areas that I was interested in.
+<pstyle:Feature Para>On the cover, I coloured nodes by op class, and graphed all the code in the <CharStyle:pod-C>main::<CharStyle:> package, yielding a colourful self-portrait of a program.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Gory details	
+<pstyle:Feature Section Lead>Now that I know about op codes and how to make the graph, how do I automate it all? Given an <CharStyle:pod-C>B::OP<CharStyle:> node, I need to fetch its parse table immediate children:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>sub children
+<pSpaceBefore:><pstyle:Feature Code Para>{
+<pstyle:Feature Code Para>Ê Ê my $o = shift;
+<pstyle:Feature Code Para>Ê Ê return unless $o and $$o and $o-\>flags() & OPf_KIDS;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Ê Ê my @c;
+<pstyle:Feature Code Para>Ê Ê for ( my $k = $o-\>first(); $$k; $k = $k-\>sibling() )
+<pstyle:Feature Code Para>Ê Ê {
+<pstyle:Feature Code Para>Ê Ê Ê Ê push @c, $k;
+<pstyle:Feature Code Para>Ê Ê }
+<pstyle:Feature Code Para>Ê Ê return @c;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>}
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-C>OPf_KIDS<CharStyle:> is a flag that means that the <CharStyle:pod-C>first()<CharStyle:> child is valid. Parents don<0x2019>t keep pointers to all children, but siblings form a linked list. This linked list is <CharStyle:pod-C>NULL<CharStyle:> terminated in C, but <CharStyle:pod-C>B<CharStyle:> returns null pointers as <CharStyle:pod-C>bless \\0, <0x201C>B::NULL<0x201D>;<CharStyle:> which is why I detect null pointers with <CharStyle:pod-C>$$o<CharStyle:> and <CharStyle:pod-C>$$k<CharStyle:> earlier.
+<pstyle:Feature Para>Once I have <CharStyle:pod-C>children()<CharStyle:>, recursing the tree is trivial. I process a child, get all their children to process, and keep doing that until I<0x2019>m done. I call the <CharStyle:pod-C>$callback<CharStyle:> routine on each item after processing all of their children:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>sub desc_tree
+<pSpaceBefore:><pstyle:Feature Code Para>{
+<pstyle:Feature Code Para>Ê Ê my ( $root, $callback ) = @_;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Ê Ê for my $c ( children( $root ) )
+<pstyle:Feature Code Para>Ê Ê {
+<pstyle:Feature Code Para>Ê Ê Ê Ê desc_tree( $c, $callback );
+<pstyle:Feature Code Para>Ê Ê }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Ê Ê $callback-\>( $root );
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>}
+<pSpaceAfter:><pstyle:Feature Para>So, now declaring and labeling the nodes is easy. The callback subroutine is <CharStyle:pod-C>draw_node<CharStyle:> that creates the \<dot\> data that I needed earlier:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>desc_tree( $root, \\&draw_node );
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>sub draw_node
+<pstyle:Feature Code Para>{
+<pstyle:Feature Code Para>Ê Ê my $n = shift;
+<pstyle:Feature Code Para>Ê Ê printf( "n%u [ label=\\"%s\\\\n%s %s\\" ];\\n",
+<pstyle:Feature Code Para>Ê Ê Ê Ê $$n, $n-\>desc, class( $n ),
+<pstyle:Feature Code Para>Ê Ê Ê Ê $n-\>name eq "null" ?
+<pstyle:Feature Code Para>Ê Ê Ê Ê Ê Ê substr( ppname($n-\>targ), 3 ) : $n-\>name,
+<pstyle:Feature Code Para>Ê Ê );
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>}
+<pSpaceAfter:><pstyle:Feature Para>With the only confusing bit being that if the node was optimized away, it is named <CharStyle:pod-C>null<CharStyle:>, whereas I want the old name, because I will be able to see from the execution path that it was optimized away. Ê<CharStyle:pod-C>targ()<CharStyle:> gives the original op code number, and <CharStyle:pod-C>ppname()<CharStyle:> resolves that to something like <CharStyle:pod-C>pp_and<CharStyle:>.
+<pstyle:Feature Para>To map the execution links, I need to identify all the exit points for a node. I<0x2019>ll create a hash of all of the links:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>sub relations
+<pSpaceBefore:><pstyle:Feature Code Para>{
+<pstyle:Feature Code Para>Ê Ê my $n = shift;
+<pstyle:Feature Code Para>Ê Ê my %relatives;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Ê Ê return {} if $n-\>name eq "null";
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Ê Ê if ( class( $n ) eq 'LOGOP' )
+<pstyle:Feature Code Para>Ê Ê {
+<pstyle:Feature Code Para>Ê Ê Ê Ê $relatives{other} = $n-\>other;
+<pstyle:Feature Code Para>Ê Ê }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Ê Ê $relatives{next} = $n-\>next
+<pstyle:Feature Code Para>Ê Ê Ê Ê if ${ $n-\>next };
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Ê Ê if ( class( $n ) eq 'LOOP' )
+<pstyle:Feature Code Para>Ê Ê {
+<pstyle:Feature Code Para>Ê Ê Ê Ê $relatives{loop_last} = $n-\>lastop;
+<pstyle:Feature Code Para>Ê Ê Ê Ê $relatives{loop_redo} = $n-\>redoop;
+<pstyle:Feature Code Para>Ê Ê Ê Ê $relatives{loop_next} = $n-\>nextop;
+<pstyle:Feature Code Para>Ê Ê }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Ê Ê return \\%relatives;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>}
+<pSpaceAfter:><pstyle:Feature Para>In other words, everything has a <CharStyle:pod-C>next()<CharStyle:>, <CharStyle:pod-C>LOGOP<CharStyle:>s have an <CharStyle:pod-C>other()<CharStyle:>, and <CharStyle:pod-C>LOOP<CharStyle:>s track, for the current loop, where to jump for <CharStyle:pod-C>last<CharStyle:>, <CharStyle:pod-C>next<CharStyle:> and <CharStyle:pod-C>redo<CharStyle:>. Nodes that have been optimized away (and are thus marked <CharStyle:pod-C>null<CharStyle:>), might still have a valid <CharStyle:pod-C>next<CharStyle:> pointer, even though it will never be used. ÊI omit those for clarity. While <CharStyle:pod-C>other<CharStyle:> and the loop pointers will always point to a valid op in the chain, <CharStyle:pod-C>next<CharStyle:> is a null pointer at the end of a subroutine<0x2019>s execution chain.
+<pstyle:Feature Para>The earlier <CharStyle:pod-C>desc_tree<CharStyle:> function does a depth-first traversal of the tree. In many cases, I wanted to prune the tree down to the first interesting op. In order to find the highest interesting op, I need a breadth-first traversal, which additionally has the bonus of being iterative instead of being recursive:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>sub prune_tree_to_first
+<pSpaceBefore:><pstyle:Feature Code Para>{
+<pstyle:Feature Code Para>Ê Ê my ( $root, $type ) = @_;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Ê Ê my @c;
+<pstyle:Feature Code Para>Ê Ê push @c, $root;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Ê Ê while ( @c )
+<pstyle:Feature Code Para>Ê Ê {
+<pstyle:Feature Code Para>Ê Ê Ê Ê my $n = shift @c;
+<pstyle:Feature Code Para>Ê Ê Ê Ê return $n
+<pstyle:Feature Code Para>Ê Ê Ê Ê Ê Ê if $n-\>name eq $type;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Ê Ê Ê Ê push @c, children( $n );
+<pstyle:Feature Code Para>Ê Ê }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Ê Ê return;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>}
+<pSpaceAfter:><pstyle:Feature Para>Once I trim the parse tree, I need to adjust my entry point, similarly a breadth-first execution traversal:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>sub adjust_start
+<pSpaceBefore:><pstyle:Feature Code Para>{
+<pstyle:Feature Code Para>Ê Ê my ( $root, $start ) = @_;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Ê Ê my $enclosed = enclosed( $root );
+<pstyle:Feature Code Para>Ê Ê my @next = ( $start );
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Ê Ê while ( @next )
+<pstyle:Feature Code Para>Ê Ê {
+<pstyle:Feature Code Para>Ê Ê Ê Ê my $n = shift @next;
+<pstyle:Feature Code Para>Ê Ê Ê Ê return $n if $enclosed-\>{$$n};
+<pstyle:Feature Code Para>Ê Ê Ê Ê my $r = relations( $n );
+<pstyle:Feature Code Para>Ê Ê Ê Ê push @next, values %$r;
+<pstyle:Feature Code Para>Ê Ê }
+<pstyle:Feature Code Para>Ê Ê return;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>}
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-C>enclosed()<CharStyle:> simply returns a hash reference keyed by all the nodes below <CharStyle:pod-C>$root<CharStyle:>. ÊIt re-uses <CharStyle:pod-C>desc_tree()<CharStyle:> with a callback that is essentially just:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>sub { $enclosed-\>{ ${ $_[0] } }++; }<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> References	
+<cLeading:5.400000>
+<cLeading:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>GraphViz and dot - \<a href=<0x201C>http://www.graphviz.org/<0x201D>\>http://www.graphviz.org/\</a\>\</li\><cLeading:><cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>B - \<a href=<0x201C>http://search.cpan.org/~nwclark/perl-5.8.8/ext/B/B.pm<0x201D>\>http://search.cpan.org/~nwclark/perl-5.8.8/ext/B/B.pm\</a\>\</li\><cLeading:>
+<pLeftIndent:><pFirstLineIndent:><bnListType:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> About the author	

@@ -1,0 +1,169 @@
+Test::More
+	module by in  Michael G Schwern, mschwern@cpan.org
+	
+	The workhorse of testing modules. With over 20 testing functions, too many to cover in a short section, this module 
+	will satisfy 80% of your testing needs. The modules below can be run in conjunction with Test::More and complete it nicely.
+	
+Test::Differences by Barrie Slaymaker  (barries@slaysys.com) and Test::Deep by Fergal Daly (fergal@esatclear.ie)
+
+	Test::more offers a 'is_deeply' function to compare complex data structures. These two module complement the 
+	data comparison functionality.
+	
+	Test::Differences is based on Text::Diff and compares strings or documents. A side by side comparison goes a long
+	way to help visualize what difference exist.
+	
+	 not ok 1 - differences in text
+	 #     Failed test ((eval 2) at line 14)
+	 #     +---+----------------+----------------+
+	 #     | Ln|Got             |Expected        |
+	 #     +---+----------------+----------------+
+	 #     |  1|this is line 1  |this is line 1  |
+	 #     *  2|this is line 2  |this is line b  *
+
+	Test::Deep provides very flexible comparison functions for your data structures. it can, for example, compare two array
+	but ignore the order of the elements ('is_deeply' expects a one-to-one match)
+	
+	use Test::Deep ;
+	cmp_deeply([1, 2, 2], bag(2, 2, 1)) ;
+
+	Good and complete documentation. It takes some time to go through it and learn the different functions but the 
+	module has an excellent	ROI.
+	
+Test::Block
+	module by Adrian Howard, adrianh@quietstars.com
+	
+	Adrian has written a total of three modules for CPAN. All three are test modules and all three are exceptionally useful.
+	Test::Block allows you to:
+		- Separate your tests in different scopes
+		- Visually separate your tests
+		- set the plan for each scoped test suit
+
+	use Test::More 'no_plan';
+	use Test::Block qw($Plan);
+	
+	{
+	local $Plan = {'test_block_name' => 1} ;
+	ok(1) ;
+	}
+
+	Test::Class, another module by Adrian, lets you do this in an Xunit fashion.
+
+
+Test::Inline
+	module by Adam Kennedy, adamk@cpan.org
+
+	=begin testing label
+	
+	ok(1, 'test that will be extracted');
+
+	=end testing
+	
+	This module allows you to inline, logically independent,  test chunks in your pod. Using the provided
+	'inline2test', you can then transform these chunks into a complete set of standard Test::More-based test scripts.
+	One of the first modules that tried to keep the tests close to the code and documentation.
+
+Test::Cookbook
+	module by Nadim Khemir
+	
+	Test::Cookbook takes a different approach to inlining tests in your documentation. The test chunks are not extracted,
+	but run from the POD directly.  This module lets you write POD documents that are testable.
+	
+	Some advantages when writing your tests as cookbooks:
+	    * Your tests become much easier to read because they must be documented as they serve as user documentation too
+	    * You can use your cookbook as a design document and complete it with documentation and tests.
+
+	use Test::Cookbook ;
+
+	=head1	
+	
+	documentation followed by some code
+	
+		my $object = new Some::Object(NAME => 'Simple') ;
+		my $name = $object->get_name() ;
+		
+	=begin hidden # hidden sections do not appear in the generated POD
+		
+		is($name, 'simple') ;
+		generate_pod("\tname is '$name'.\n") ; # add text to generated POD
+
+	=end hidden
+	
+Test::Exception,
+	module by Adrian Howard, adrianh@quietstars.com
+	
+	This module replaces test code that uses 'eval' to catch exceptions. Any module dying or carping can, and should, 
+	use Test::Exception to verify the right type of exception is generated.
+	
+	use Test::Exception ;
+	
+	throws_ok
+		{
+		die_if_first_argument_isnt_an_array_ref(undef) ;
+		} qr/element '0' is not an array reference/, 'bad argument' ;
+
+	dies_ok { die }, 'dying!' ;
+	
+	dies_ok will catch any exception meaning that you may think you got a test right while you have 
+	successfully caught the wrong exception. throws_ok is far superior to dies_ok.
+
+Test::NoWarnings
+	module by Fergal Daly, fergal@esatclear.ie
+	
+	Check that your test don't produce unwanted warnings. Checking that your warnings are correct is done by
+	Test::Warn (see below). Checking you don't you don't forget to test all the warnings is done with Test::NoWarnings.
+	Use both modules in tandem.
+	
+	use Test::NoWarnings; # that's all!
+	
+	It's also possible to manually check if any warning has been emitted so far with 'had_no_warnings()', IE in 
+	a Test::Block scope.
+	  
+Test::Warn
+	module by Alexandr Ciornii, alexchorny@gmail.com
+
+	use Test::Warn;
+
+	warnings_like
+		{
+		$object = new Some::Object() ; # 
+		is($object->DoSomething(), 'something', 'done something') ;
+		}
+		[
+		# check which warnings are generated
+		qr/creating default object/,
+		qr/doing default action/,
+		], "warnings" ;
+
+
+Test::Trap 
+	module by Eirik Berg Hanssen, ebhanssen@allverden.no
+
+	A great module that deserves to be known. trap{}/$trap mimic eval{}/$@. list/scalar/void context is propagated into the block.
+	
+	use Test::Trap;
+	
+	trap { warn "1\n2\n3" };
+	$trap->warn_like(0, qr/1\n2\n3/);
+
+	This module can trap exit codes, exceptions, output, ... It's very complete but also quite complex. The documentation is a bit fuzzy. 
+	Well worth spending time learning it. unlike Test::Warn, Test::Trap works properly with embedded "\n" in warnings. 
+	Very helpful author.
+
+Test::Without::Module
+	module by Max Maischein, corion@cpan.org
+	
+	The functionality your module implements may depend on a module presence and if the module is not present fail-back code is used instead.
+	Testing must be done with the module, you depend on, installed or not. This can be achieved by configuring your module before testing it. 
+	The problem with this approach is that you are creating a setup that doesn't correspond to what your users will have. Test::Without::Module
+	hides modules allowing you to do a complete testing of you module whether it's dependencies are present or not.
+	
+	use Test::Without::Module qw( Module::To::Hide );
+
+Test::Server
+	module by Jozef Kutej, jozef@kutej.net
+	
+	Not really a test module but more how testing can be applied to your everyday work to make it of higher quality.
+	
+	The module comes with examples for server administration or, more precisely,  test driven administration? It shows the benefits of
+	writing tests to help you easily find errors when they occur. The idea can be applied to any other domain.
+	

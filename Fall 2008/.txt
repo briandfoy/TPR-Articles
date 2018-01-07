@@ -1,0 +1,2 @@
+<ASCII-MAC>
+<Version:5><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1>>

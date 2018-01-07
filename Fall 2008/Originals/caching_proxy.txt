@@ -1,0 +1,154 @@
+<ASCII-MAC>
+<Version:5><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1>>
+<pstyle:Feature Lead>The Comprehensive Perl Archive Network (CPAN) is easily the coolest part of Perl. Over the years I<0x2019>ve become addicted to so many modules on CPAN that installing a new Linux distribution typically means an hour or two of me installing Perl modules somewhere down the road. Since I maintain a few dozen machines, I find myself installing the same modules over and over again. I also find myself typing the same CPAN shell configuration commands over and over again.
+<pstyle:Feature Para>In the <CharStyle:pod-C>CPAN.pm<CharStyle:> shell, the setting that causes me the most grief is the urllist. It<0x2019>s a bit of a project for me to select a mirror site to download the modules from. For me to remember remember which machine had that good mirror, ssh-ing over there and copy/pasting it to the new machine quickly becomes tedious.
+<pstyle:Feature Para>On my machines, I tend not to update modules when everything is working relatively well. Sometimes many months go by before I open a CPAN shell to install new modules (or update old ones). As a result, I find that each time I open the shell I have to pick a mirror.
+<pstyle:Feature Para>I brainstormed one day that I could solve both problems by making my own CPAN mirror. I could simply set all my CPAN shells to point to my mirror and, once they all pointed to the same place, I<0x2019>d only have to change my mirror settings in one place when I wanted to use a different mirror. I could also pull the same modules over and over from many machines without feeling like I<0x2019>m wasting public resources.
+<pstyle:Feature Para>Initially, I had looked at building an actual mirror. This is usually done with rsync and therefore creates a relatively heavy load on the server. It also takes up quite a bit of space (around 1GB), when I really only need a couple megs worth of files. Next, I looked at CPAN::Mini. It is definitely closer to what I had in mind, since it only pulls the newest versions and it allows users to filter out namespaces that aren<0x2019>t likely to be needed.
+<pstyle:Feature Para>Therefore, I never did build a mirror with CPAN::Mini. I only wanted to mirror the modules I was actually going to use. The problem with filtering is that I don<0x2019>t know know which modules I am going to use because the fifty or so I<0x2019>m likely to install all have dependencies of their own.
+<pstyle:Feature Para>Then it occurred to me that what I really wanted was a simple caching proxy. Furthermore, I wanted this to work via plain old vanilla CGI so I could install it on my shared hosting provider without having to jump through a lot of hoops.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> My first proxy	
+<pstyle:Feature Section Lead>So, first things first. Using Apache and the <CharStyle:pod-C>$ENV{PATH_INFO}<CharStyle:> environment variable, it<0x2019>s simple enough for me to construct a CGI script that can deal with paths deeper than the CGI:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   use strict;
+<pSpaceBefore:><pstyle:Feature Code Para>   use warnings;
+<pstyle:Feature Code Para>   use CGI;
+<pstyle:Feature Code Para>   use CGI::Carp qw(fatalsToBrowser);
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>   my $cgi = new CGI;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>   print $cgi-\>header("text/plain");
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   print $cgi-\>path_info, "\\n";
+<pSpaceAfter:><pstyle:Feature Para>Now, if I surf to <CharStyle:pod-I>http://localhost/test.pl/extra1/extra2/extra3<CharStyle:>, I get just the portion of the URL after the script name, which is the <CharStyle:pod-C>path_info<CharStyle:>:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>   /extra1/extra2/extra3<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>All I have to do to fetch files from a mirror is re-write the URL and pull the right file, although it would be best if I could pull the MIME type through so the CPAN shell gets the MIME type it expects.
+<pstyle:Feature Para>LWP does everything a savvy coder needs for all web-related things, this case being no exception. In just a few lines I can get the HTTP status from the CGI header, the content type (also from the header) and the file contents:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    use LWP::UserAgent;
+<pSpaceBefore:><pstyle:Feature Code Para>    use HTTP::Request;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $mirror = "http://cpan.cs.utah.edu/";
+<pstyle:Feature Code Para>    my $ua     = new LWP::UserAgent;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $path_info = $cgi-\>path_info; 
+<pstyle:Feature Code Para>       $path_info =~ s/^\\///;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $new_url  = "$mirror$path_info";
+<pstyle:Feature Code Para>    my $request  = HTTP::Request-\>new(GET =\> $new_url);
+<pstyle:Feature Code Para>    my $response = $ua-\>request($request);
+<pstyle:Feature Code Para>    my $status   = $response-\>status_line;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    print $cgi-\>header(-status=\>$status,
+<pstyle:Feature Code Para>        -type=\>$response-\>header( 'content-type' ));
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    if( $response-\>is_success ) {
+<pstyle:Feature Code Para>        print $response-\>content;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    } else {
+<pstyle:Feature Code Para>        print $status;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Para>With the tiny program above, I can now set all my CPAN shells to point to it and satisfy one of my goals. If I change the mirror in one place all my hosts feel the change.
+<pstyle:Feature Para>Of course, for really big files this CGI script will take up a large amount of RAM for no real reason. To avoid this, I initially decided to write the data to a temporary file, get the response headers, print them, and then print the contents of the temporary file:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    use File::Temp qw( tempfile );<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>The really nice thing about File::Temp is that it decides the location of the temporary file automatically, opens it in read/write and cleans up after itself. So all I have to do is change these couple lines around a little:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    my $temp_file = tempfile();
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    # my $response  = $ua-\>request($request);
+<pstyle:Feature Code Para>    my $response  = $ua-\>request($request,
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>        sub { my $chunk = shift; print $temp_file $chunk });
+<pSpaceAfter:><pstyle:Feature Para>LWP::UserAgent uses the anonymous sub passed as the second argument to <CharStyle:pod-C>request()<CharStyle:> as a chunk handler. It sends each block through the sub as they come in rather than storing them all in memory as one huge string. Then below, instead of printing the response content (which is now empty because of that chunk handler), I just seek back to the top of the temporary file and print the contents. I do this little by little to avoid the memory problem I was solving.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    # print $response-\>content;
+<pSpaceBefore:><pstyle:Feature Code Para>    seek $temp_file, 0, 0 or 
+<pstyle:Feature Code Para>    	die "couldn't get to top of tempfile: $!";
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $buf;
+<pstyle:Feature Code Para>    while( read $temp_file, $buf, 4096 ) {
+<pstyle:Feature Code Para>        print $buf;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Adding caching	
+<pstyle:Feature Section Lead>I used the program as written for a few months before it started to nag me that I could do better. At work, I build huge file-packs full of my favorite Perl modules and the packs usually don<0x2019>t build right on the first try.
+<pstyle:Feature Para>So not only am I downloading the same modules over and over on many machines, but I<0x2019>m now downloading the same modules over and over on the <CharStyle:pod-I>same<CharStyle:> machine. I usually feel a pang of guilt when I<0x2019>m selfishly consuming free resources needlessly.
+<pstyle:Feature Para>I had previously flirted with the Cache::Memcached module. The whole idea of a distributed memory cache daemon is just fantastic and I had a lot of fun with it. Usually when I play around with a module, I go source diving to see what it does and how it does it. I was familiar with the layout of the <CharStyle:pod-C>Cache::*<CharStyle:> tree and it felt like a natural fit for my mirror. Clearly Cache::Memcached is a poor fit, but Cache::File certainly isn<0x2019>t. In fact, it<0x2019>s perfect.
+<pstyle:Feature Para>When I looked at creating a CPAN mirror, I decided it would take up too much space on my servers and would ultimately hurt the CPAN mirror I was trying to help. Ideally, the mirror should only pull and mirror modules that I am actually going to be use immediately.
+<pstyle:Feature Para>The problem really isn<0x2019>t a lot different than the one I was solving before. Instead of using File::Temp to store just the content, I<0x2019>m going to use a Cache::File, and I have to also store the HTTP status and the content type of the result.
+<pstyle:Feature Para>To guarantee that the cache results work the same as regular LWP results, I chose a two stage model. First, I see if there<0x2019>s a cache entry for the URL and use it if there is. Or, if it<0x2019>s not there, I download the file, build a cache entry and return to the first step to display it from the cache:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    my $new_url = "$mirror$path_info";
+<pSpaceBefore:><pstyle:Feature Code Para> 
+<pstyle:Feature Code Para> 	my $cache   = Cache::File-\>new( 
+<pstyle:Feature Code Para>    	cache_root      =\> "/tmp/testc/",
+<pstyle:Feature Code Para>    default_expires =\> "2 day" 
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    );
+<pSpaceAfter:><pstyle:Feature Para>The <CharStyle:pod-C>$cache<CharStyle:> object takes care of all the file and directory management. I just need to tell it where to put the directory and it does all the heavy lifting for me:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    my $only_once = 1;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    MAIN_LOOP: {
+<pstyle:Feature Code Para>        if( $cache-\>exists($new_url) and $cache-\>exists("$new_url.hdr") ) {
+<pstyle:Feature Code Para>            my $VAR1;
+<pstyle:Feature Code Para>            my $response = eval $cache-\>get("$new_url.hdr");
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>            die "problem finding cache entry\\n" if $@;
+<pSpaceAfter:><pstyle:Feature Para>I store the HTTP::Response object as the output from Data::Dumper so when I evaluate it I can use it just like any other HTTP::Response object. Of course, if something is wrong with the cache entry, the <CharStyle:pod-C>eval()<CharStyle:> will fail and set <CharStyle:pod-C>$@<CharStyle:>. That really shouldn<0x2019>t come up very often unless there are some larger problems with the system the cache is running on.
+<pstyle:Feature Para>The rest of this block looks just like it did before except for the way my program opens the input file handle:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>            my $status = $response-\>status_line;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>            print $cgi-\>header(
+<pstyle:Feature Code Para>            	-status =\> $status,
+<pstyle:Feature Code Para>                -type   =\> $response-\>header( 'content-type' )
+<pstyle:Feature Code Para>                );
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>            if( $response-\>is_success ) {
+<pstyle:Feature Code Para>                my $fh = $cache-\>handle( $new_url, "\<" )
+<pstyle:Feature Code Para>                    or die "problem finding cache entry\\n";
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>                my $buf;
+<pstyle:Feature Code Para>                while( read $fh, $buf, 4096 ) {
+<pstyle:Feature Code Para>                    print $buf;
+<pstyle:Feature Code Para>                }
+<pstyle:Feature Code Para>                close $fh;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>            } else {
+<pstyle:Feature Code Para>                print $status;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>            }
+<pSpaceAfter:><pstyle:Feature Para>Not all of the different <CharStyle:pod-C>Cache::*<CharStyle:> modules can return file handles for keys. The ones that can are all usable for this purpose. The ease with which Cache::File drops into place is really quite amazing:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>        } elsif( $only_once ) {
+<pSpaceBefore:><pstyle:Feature Code Para>            # NOTE: without this, the handle() won't create the key
+<pstyle:Feature Code Para>            $cache-\>set( $new_url, 1 );
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>            my $temp_file = $cache-\>handle( $new_url, "\>" );
+<pstyle:Feature Code Para>            my $request   = HTTP::Request-\>new(GET =\> $new_url);
+<pstyle:Feature Code Para>            my $response  = $ua-\>request($request,
+<pstyle:Feature Code Para>                sub { my $chunk = shift; print $temp_file $chunk });
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>            close $temp_file;
+<pSpaceAfter:><pstyle:Feature Para>This all works just like before, too, except that I push the data to the cache instead of printing it to the temporary file. Writing the LWP results to the cache is not very different from writing it to the temporary file.
+<pstyle:Feature Para>The biggest difference is using the <CharStyle:pod-C>Cache::File::handle()<CharStyle:> method instead of writing to a temporary file handle. There is one other difference; I need to also cache the document type and the HTTP status returned by LWP.
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>            $cache-\>set("$new_url.hdr", Dumper($response));<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>I have chosen to dump the entire HTTP::Response object to a cache entry so that I can continue to use ordinary LWP syntax in the top of the if block. Arguably, it makes sense to store only the bits I actually need like so:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>           # $cache-\>set("$new_url.hdr", Dumper({
+<pSpaceBefore:><pstyle:Feature Code Para>           #     status =\> $response-\>status_line,
+<pstyle:Feature Code Para>           #     mime   =\> $response-\>header( 'content-type' )),
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>           # }));
+<pSpaceAfter:><pstyle:Feature Para>Perhaps that<0x2019>s a task for another day. It doesn<0x2019>t save me an <CharStyle:pod-C>eval()<CharStyle:> since I still have to stringify the data, so perhaps not. It<0x2019>s appears to be a matter of preference.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>            $only_once = 0;
+<pSpaceBefore:><pstyle:Feature Code Para>            redo MAIN_LOOP;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>        } else {
+<pstyle:Feature Code Para>            die "unknown problem processing $new_url";
+<pstyle:Feature Code Para>        }
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Para>Lastly, this global <CharStyle:pod-C>$only_once<CharStyle:> variable exists to prevent my CGI from ever looping infinitely from some unforeseen problem.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Conclusion	
+<pstyle:Feature Section Lead>This program has evolved a bit from the final form in the article. I retooled it as a module and released it on CPAN. It only takes a couple seconds to set up using CPAN::CachingProxy.
+<pstyle:Feature Para>The moral of the story is obvious. Nearly everything I needed to make the caching proxy was already on CPAN. And now the caching proxy itself is there, too. CPAN sometimes seems to contain <CharStyle:pod-I>too many<CharStyle:> choices, but there<0x2019>s rarely a need to start from scratch on any project.
+<pstyle:Feature Para>In this case, I barely wrote a hundred lines of glue and everything worked the way I wanted.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> References	
+<pstyle:Feature Section Lead>All the modules used in the article, and their documentation, are available on CPAN:
+<cLeading:5.400000>
+<cLeading:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>CGI<cLeading:><cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>LWP, LWP::UserAgent<cLeading:><cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>HTTP::Response<cLeading:><cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>File::Temp<cLeading:><cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>Cache::File, Cache::Entry, Cache::Memcached<cLeading:><cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000>CPAN::Mini<cLeading:>
+<pLeftIndent:><pFirstLineIndent:><bnListType:><pstyle:Feature Para><pSpaceBefore:4.500000>Information about creating a CPAN rsync mirror can be found in the FAQ on http://cpan.org/.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> About the author	
+<pstyle:Feature Section Lead>Paul Miller received his Bachelor<0x2019>s degree from Western Michigan University in Computer Science: Computational. He<0x2019>s been writing perl programs for work and play, pretty much every day, since 1997. Obsessions not including perl: his wife, his infant son, skydiving and Go.
+<pstyle:Feature Para>Paul Miller (<CharStyle:pod-C>jettero@cpan.org<CharStyle:>)

@@ -1,0 +1,260 @@
+<ASCII-MAC>
+<Version:5><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1>>
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> About this article	
+<pstyle:Feature Section Lead>Welcome to Perl! Here<0x2019>s my advice on ways to find answers to the questions and problems that show up with your first hours in Perl. This isn<0x2019>t a complete guide, but it should be enough to get you started.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> A tiny bit of Perl culture.	
+<pstyle:Feature Section Lead>Some people write it <0x201C>PERL<0x201D>, some people write it <0x201C>Perl<0x201D>, and some people write it <0x201C>perl<0x201D>. Contrary to popular belief, Perl is not an acronym---it<0x2019>s actually a backronym. That being said, <0x201C>Perl<0x201D> is the generally accepted way of writing the name of the language, while <0x201C>perl<0x201D> is the generally accepted way of writing the name of the interpreter.
+<pstyle:Feature Para>Why is this important, you might ask? Well, it<0x2019>s just a small part of the Perl culture. When you get into a website full of Perl adepts and write it <0x201C>PERL<0x201D>, they assume you don<0x2019>t know what you<0x2019>re talking about. They won<0x2019>t be mad at you, but if you want to blend in from day one, learn to tell the difference between the two.
+<pstyle:Feature Para>The moral here is that while you can<0x2019>t judge people<0x2019>s Perl expertise by the way they spell Perl, they will still judge you. The lesson, on the other hand, is that there<0x2019>s lots of tiny cultural aspects of Perl that you<0x2019>ll only learn about with time.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Making sense out of sigils	
+<pstyle:Feature Section Lead>Most programmers that have experience with other sigil-free languages find the small particularity of Perl sigils rather annoying.
+<pstyle:Feature Para>Perl was intended from day one to be a language that would be able to evolve. That meant that it couldn<0x2019>t risk the possibility of new built-ins clashing with variable names someone had used in the meantime.
+<pstyle:Feature Para>Think of all the C programmers who had a variable named <CharStyle:pod-C>new<CharStyle:> and that one day tried to compile their code in C++. You might think <0x201C>but who<0x2019>d name a variable <CharStyle:pod-C>new<CharStyle:>?<0x201D> Well, back then they were thinking <0x201C>but who<0x2019>d name a built-in <CharStyle:pod-C>new<CharStyle:>?<0x201D> Just to play it safe, Perl variables include the sigils in front of them. They will never conflict with a Perl keyword.
+<pstyle:Feature Para>And now, let<0x2019>s get to the <0x201C>how to make sense out of sigils<0x201D> part. They mean more than just the variable type, which is why some people are confused by them. The $ sigil means single item and the @ sigil means multiple items (also known as a list).
+<pstyle:Feature Para>A scalar is preceded with a <CharStyle:pod-C>$<CharStyle:> because it<0x2019>s a single item. If you look closely, <CharStyle:pod-C>$<CharStyle:> is kind of similar to <CharStyle:pod-C>S<CharStyle:>, the first letter in <0x201C>scalar<0x201D>. An array is preceded with a <CharStyle:pod-C>@<CharStyle:> sign because it represents multiple items. If you look closely, <CharStyle:pod-C>@<CharStyle:> is kind of similar to <CharStyle:pod-C>a<CharStyle:>, the first letter in <0x201C>array<0x201D>.
+<pstyle:Feature Para>An hash table is preceded with a % sign. If you look closely at your keyboard, nothing else looked like and <CharStyle:pod-C>H<CharStyle:>. It doesn<0x2019>t quite fit into the single-multiple distinction. It<0x2019>s a fancier sort of variable, so it gets a fancier sigil.
+<pstyle:Feature Para>Now, the trick is to realize that you always use the sigil corresponding to the value you<0x2019>re accessing. When you declare an array, you use the <CharStyle:pod-C>@<CharStyle:> because there are multiple values involved:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>  my @prime_numbers = ( 2, 3, 5, 7, 11, 13, 17, 19, 23 );<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>However, you use <CharStyle:pod-C>$<CharStyle:> when you<0x2019>re accessing a single value from within the array:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>  my $third_prime_number = $prime_numbers[2];<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>When you want to access a sublist of values from the array as a slice, you use the <CharStyle:pod-C>@<CharStyle:> sign, corresponding to what you retrieving: a list:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>  my @first_five_prime_numbers = @prime_numbers[ 0 .. 4 ];<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>That<0x2019>s the same for hash slices too, because you<0x2019>re still accessing a list:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>my @values = @last_names{ @first_names };<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Perl Hygiene	
+<pstyle:Feature Section Lead>As you probably know, some people don<0x2019>t wash their hands afterwards. Now, those people might argue that they don<0x2019>t need to, while those of us who do might argue that they<0x2019>re more susceptible to catch diseases. With Perl, here<0x2019>s how you take care of your personal hygiene:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  use strict;
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>  use warnings;
+<pSpaceAfter:><pstyle:Feature Para>That<0x2019>s how you make sure you don<0x2019>t catch things you don<0x2019>t want. The first line, <CharStyle:pod-C>use strict<CharStyle:>, restricts unsafe or bug-prone constructs. This means that your program won<0x2019>t compile if you<0x2019>re not using things properly. It<0x2019>s an assurance that everything<0x2019>s OK. The second line, <CharStyle:pod-C>use warnings<CharStyle:>, turns warnings on. Perl can tell you problems about suspicious things that way. Here<0x2019>s an example of how this might help:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  my $name = shift;
+<pSpaceBefore:><pstyle:Feature Code Para>  
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  print "Hello, $name\\n";
+<pSpaceAfter:><pstyle:Feature Para>You see, there<0x2019>s nothing testing whether you initialized <CharStyle:pod-C>$name<CharStyle:>. If you have warnings enabled, you<0x2019>ll see a warning message if the variable is undefined. You might think that it<0x2019>s not a big help, but it<0x2019>s kind of like washing your hands. It<0x2019>s not the fact of not washing your hands once that<0x2019>s going to hurt. It<0x2019>s only one of the times. You simply don<0x2019>t know when it will matter.
+<pstyle:Feature Para>One other thing you should realize is that you can<0x2019>t wash your hands 30 times during the weekend to make it up for a very unhygienic week. With Perl, you can<0x2019>t expect to program without using neither <CharStyle:pod-C>strict<CharStyle:> nor <CharStyle:pod-C>warnings<CharStyle:> and, once you get a bug, use them to fix it. By that point, those pragmas are also going to catch dozens of other nasty things in your code. It<0x2019>s going to take you considerably more time fixing all those things than trying to fix that single bug on your own.
+<pstyle:Feature Para>If you<0x2019>re really new to Perl and all those error or warning messages confuse you and you don<0x2019>t know what to make of them, there<0x2019>s something extra just for you:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>  use diagnostics;<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-C>diagnostics<CharStyle:> turns those warning messages into more verbose messages, detailing the problems encountered in a way that people who haven<0x2019>t seen them before will understand better what<0x2019>s going on. They are all in the perldaig documentation, too.
+<pstyle:Feature Sub Section>Perl::Tidy
+<pstyle:Feature Para>The Perl::Tidy module helps you tidy up your code. Installing the module also installs a command line tool, <CharStyle:pod-C>perltidy<CharStyle:>, which, when ran over your script, will rearrange your code to make it more tidy:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>  $ perltidy myscript.pl<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>This turns something that looks like a big mess:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  use warnings;use strict;use My::Module::Creator
+<pSpaceBefore:><pstyle:Feature Code Para>  ;my $days = 7;for(1..7){ My::Module::Creator-\>
+<pstyle:Feature Code Para>  create_module();if($_==4){print
+<pstyle:Feature Code Para>  "Hey, it's Wednesday!\\n"}}
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  
+<pSpaceAfter:><pstyle:Feature Para>into something that<0x2019>s much easier for you to read:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  use warnings;
+<pSpaceBefore:><pstyle:Feature Code Para>  use strict;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>  use My::Module::Creator;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>  my $days = 7;
+<pstyle:Feature Code Para>  for ( 1 .. 7 ) {
+<pstyle:Feature Code Para>      My::Module::Creator-\>create_module();
+<pstyle:Feature Code Para>      if ( $_ == 4 ) { print "Hey, it's Wednesday!\\n" }
+<pstyle:Feature Code Para>  }
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  
+<pSpaceAfter:><pstyle:Feature Para>When used with larger scripts made by beginner Perl programmers, it can be of great help. It also has a lot of options to let you decide exactly how it should prettify the code, so you can make it into any style that you like.
+<pstyle:Feature Sub Section>Perl::Critic
+<pstyle:Feature Para><CharStyle:pod-C>Perl::Critic<CharStyle:> analyzes your code for best-practices, and comes with command line tool <CharStyle:pod-C>perlcritic<CharStyle:>. When you run <CharStyle:pod-C>perlcritic<CharStyle:>:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  $ perlcritic myscript.pl
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>  
+<pSpaceAfter:><pstyle:Feature Para>You get a critique of your Perl program:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  Code structure is deeply nested at line 340, column 21.  Consider refactoring.  (Severity: 3)
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>  Regular expression without "/x" flag at line 364, column 2.  See page 236 of PBP.  (Severity: 3)
+<pSpaceAfter:><pstyle:Feature Para>Each message points to the line and column where Perl::Critic found a problem. It also gives some more information on what to do to better your code by referring to Damian Conway<0x2019>s <CharStyle:pod-I>Perl Best Practices<CharStyle:>.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Documentation	
+<pstyle:Feature Section Lead>Documentation is your friend, and <CharStyle:pod-C>perldoc<CharStyle:> is your new best friend. It<0x2019>s your primary tool for reading the Perl documentation that comes with Perl or the modules that you install.
+<pstyle:Feature Para>To see the documentation sections, use <CharStyle:pod-C>perldoc<CharStyle:> to look at the <0x201C>perl<0x201D> page.
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>  $ perldoc perl<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>Will give you an overview of all the Perl documentation pages available:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  Overview
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>      perl                Perl overview (this section)
+<pstyle:Feature Code Para>      perlintro           Perl introduction for beginners
+<pstyle:Feature Code Para>      perltoc             Perl documentation table of contents
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>  Tutorials
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>      perlreftut          Perl references short introduction
+<pstyle:Feature Code Para>      perldsc             Perl data structures intro
+<pstyle:Feature Code Para>      perllol             Perl data structures: arrays of arrays
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>      perlrequick         Perl regular expressions quick start
+<pstyle:Feature Code Para>      perlretut           Perl regular expressions tutorial
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  ...
+<pSpaceAfter:><pstyle:Feature Para>But that<0x2019>s not all that <CharStyle:pod-C>perldoc<CharStyle:> can do for you. By using the <CharStyle:pod-C>-q<CharStyle:> switch, <CharStyle:pod-C>perldoc<CharStyle:> searches the FAQ sections for questions that mention your search pattern. For instance, if you want to do something that<0x2019>s <CharStyle:pod-C>sort<CharStyle:> related, but not trivial, you can use this command to search for FAQs that are related to <CharStyle:pod-C>sort<CharStyle:>:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  $ perldoc -q sort
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>  
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-C>perldoc<CharStyle:> can also give you direct access to the documentation on a built-in function with the <CharStyle:pod-C>-f<CharStyle:> switch:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>  $ perldoc -f sprintf<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-C>perldoc<CharStyle:> can also show you the documentation of a module:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  $ perldoc Some::Module
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>  
+<pSpaceAfter:><pstyle:Feature Para>However, not all programmers write documentation, unfortunately, so that<0x2019>s when the <CharStyle:pod-C>-m<CharStyle:> switch comes in handy. If typing <CharStyle:pod-C>perldoc Some::Module<CharStyle:> doesn<0x2019>t find you any documentation, you can type <CharStyle:pod-C>perldoc -m Some::Module<CharStyle:> to view the source of that module directly (because in the absence of documentation, the closest thing to it is the code itself).
+<pstyle:Feature Para>If you want to know where a Perl file is, you can use the <CharStyle:pod-C>-l<CharStyle:> switch:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>$ perldoc -l LWP::Simple
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>/usr/local/lib/perl5/site_perl/5.8.8/LWP/Simple.pm
+<pSpaceAfter:><pstyle:Feature Para>You can see more about Perl documentation in brian d foy<0x2019>s <0x201C>Perl documentation documentation<0x201D>.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Special variables and command-line switches	
+<pstyle:Feature Section Lead>Perl, like many other languages, provides a number of special variables and command-line switches you can use to ease up your typing and code readability. For instance, you can use <CharStyle:pod-C>$.<CharStyle:> to see the line number of input you<0x2019>re processing:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  while (\<STDIN\>) {
+<pSpaceBefore:><pstyle:Feature Code Para>    print "This is line $.\\n";
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  }
+<pSpaceAfter:><pstyle:Feature Para>Or you can use <CharStyle:pod-C>$$<CharStyle:> to see the process ID number of your Perl program:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>  print "This is process $$.\\n";<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>Perl might have variables and switches that might already do what you<0x2019>re trying to accomplish, so you should look in <CharStyle:pod-I>perlvar<CharStyle:> to see the list of special variables:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>  $ perldoc perlvar<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>And look in <CharStyle:pod-I>perlrun<CharStyle:> for Perl<0x2019>s command-line switches:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>  $ perldoc perlrun<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Websites	
+<pstyle:Feature Section Lead>There are a number of Perl websites out there--a huge number--but I<0x2019>m only going to mention a few of them. You<0x2019>ll eventually find many more, and I don<0x2019>t mean to slight anyone by leaving out their favorite Perl site.
+<pstyle:Feature Sub Section>PerlMonks - www.perlmonks.org
+<pstyle:Feature Para>If I could recommend only one website, it would definitely be PerlMonks, a forum on Perl with over 35,000 users. You can post Perl questions, answers, tutorials, meditations, code snippets, book and module reviews, etc.
+<pstyle:Feature Para>Even better than posting those things, you can read them. You get to see everyone<0x2019>s answers, even if you didn<0x2019>t ask the question. The PerlMonks are very helpful and very knowledgeable, so you<0x2019>ll be able to learn a lot and get all your questions answered in that website.
+<pstyle:Feature Sub Section>use.Perl - use.perl.org
+<pstyle:Feature Para><CharStyle:pod-C>use.Perl<CharStyle:> is a Slashdot-style blogging platform crowded with Perl people, and some very knowledge and experienced people. You can use it to share your Perl related experiences and grow with the exchange of experiences with other users.
+<pstyle:Feature Sub Section>Comprehensive Perl Archive Network - search.cpan.org
+<pstyle:Feature Para>CPAN is a repository of Perl modules, and many people think it is Perl<0x2019>s killer feature. If there is something that you want to do in Perl, someone has likely done it before and uploaded it to CPAN as a module. It<0x2019>s so useful that it deserves its own article, but I<0x2019>ll show you some examples later.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Perl Mongers groups	
+<pstyle:Feature Section Lead>Perl Mongers groups are the user groups of the community and can be very helpful. They usually consist of a group of Perl programmers and enthusiasts that are bonded together by a common geographical region (usually a city). Their activities vary according to the culture and the group size, but they range from regular social meetings where people discuss Perl to technical meetings where programmers make presentations on several topics.
+<pstyle:Feature Para>You can search for your local group at http://www.pm.org/. If you can<0x2019>t find one, consider starting one. Build it, and they will come (especially if you offer free beer).
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Books	
+<pstyle:Feature Section Lead>If I could recommend only one book to start with Perl, with would be <CharStyle:pod-I>Learning Perl<CharStyle:>. It<0x2019>s the book I learned Perl from and I turned out alright. The authors (one of whom publishes this magazine) recently updated it for Perl 5.10, so it includes some of the latest features of Perl.
+<pstyle:Feature Para>If you<0x2019>re worried about your coding standards (and you should, unless you<0x2019>re aware of what they are), you should also check out <CharStyle:pod-I>Perl Best Practices<CharStyle:>. It<0x2019>s a very useful book even if you<0x2019>re a programmer in another language.
+<pstyle:Feature Para>There are many other good books on Perl, and I don<0x2019>t mean to leave any out. Check out the Perl books site, http://books.perl.org, for a comprehensive list of Perl books with ratings. You can also look in <CharStyle:pod-I>perlfaq2<CharStyle:>, which has a list of books:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>$ perldoc perlfaq2<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> CPAN - Comprehensive Perl Archive Network	
+<pstyle:Feature Section Lead>CPAN is the de facto central repository for Perl modules.
+<pstyle:Feature Para>At the time of this writing, there are almost 15,000 distributions on CPAN, taking up over 4 Gb of disk space. That<0x2019>s growing every day too.
+<pstyle:Feature Para>The subjects are numerous: File handling, Mathematics, Security, Date/Time manipulation (but only on the computer), Database interfaces, Graphics, Linguistic, Networking, and so on. Here are some examples of things that CPAN makes easy for you to do:
+<pstyle:Feature Sub Section>Manipulating dates with DateTime
+<pstyle:Feature Para>First, instantiate a DateTime object:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  use DateTime;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  my $dt = DateTime-\>now();
+<pSpaceAfter:><pstyle:Feature Para>And now you can do everything you always wanted to do with a date:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  $dt-\>add( months =\> 1 );
+<pSpaceBefore:><pstyle:Feature Code Para>  
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  $dt-\>subtract( days =\> 7 );
+<pSpaceAfter:><pstyle:Feature Para>When you want to see your date, just print the variable. The DateTime module takes are of the stringification for you:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   print $dt;
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>   
+<pSpaceAfter:><pstyle:Feature Sub Section>Retrieving a webpage with LWP::Simple
+<pstyle:Feature Para>Here<0x2019>s one of the easiest ways of retrieving a webpage from inside your Perl program:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  use LWP::Simple;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>  my $content = get("http://www.theperlreview.com/");
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  
+<pSpaceAfter:><pstyle:Feature Para>Easy, right? If you want to save the file
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  use LWP::Simple;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>  my $content = getstore(
+<pstyle:Feature Code Para>  	"http://www.theperlreview.com/",
+<pstyle:Feature Code Para>  	"tpr.html"
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  	);
+<pSpaceAfter:><pstyle:Feature Sub Section>Manipulating XML with XML::Simple
+<pstyle:Feature Para>Want to read an XML file from the disk? It<0x2019>s simple, literally:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  use XML::Simple;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  my $ref = XMLin( $file_name );
+<pSpaceAfter:><pstyle:Feature Para>And <CharStyle:pod-C>$ref<CharStyle:> now holds a reference to a data structure containing the representation of the file.
+<pstyle:Feature Para>That stucture is probably big and ugly, so here<0x2019>s another that can help you with your first hours in Perl. The <CharStyle:pod-C>Data::Dumper<CharStyle:> module pretty-prints ugly data structures:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  use Data::Dumper;
+<pSpaceBefore:><pstyle:Feature Code Para>  
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  print Dumper( $ref );
+<pSpaceAfter:><pstyle:Feature Para>Likewise, you can also create an XML structure based on a data structure:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>  my $xml = XMLout( $hash_reference );<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>Don<0x2019>t forget to save it to a file!
+<pstyle:Feature Sub Section>Twittering with Perl
+<pstyle:Feature Para>Like Twittering? Love Perl? Want to tell the world about it?
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  use Net::Twitter;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>  my $twit = Net::Twitter-\>new( 
+<pstyle:Feature Code Para>  	username =\> "username", 
+<pstyle:Feature Code Para>  	password =\> "password" 
+<pstyle:Feature Code Para>  	);
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  $result = $twit-\>update("Man, Perl really is awesome!");
+<pSpaceAfter:><pstyle:Feature Sub Section>Interfacing with a database
+<pstyle:Feature Para>Need to interface with a database? The DBI module does that for you for almost every database out there:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  use DBI;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>  my $dsn = "DBI:mysql:database=$database;host=$hostname;port=$port";
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>  my $dbh = DBI-\>connect($dsn, $user, $password);
+<pstyle:Feature Code Para><pSpaceAfter:4.500000> 
+<pSpaceAfter:><pstyle:Feature Para>It can even handle creating queries for you and putting values in the right places with the right quoting:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  my $sth = $dbh-\>prepare(
+<pSpaceBefore:><pstyle:Feature Code Para>  	"SELECT name, phone_number FROM people WHERE planet = ?"
+<pstyle:Feature Code Para>  	);
+<pstyle:Feature Code Para>  
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  $sth-\>execute( 'Earth' );
+<pSpaceAfter:><pstyle:Feature Para>And now, let<0x2019>s retrieve the results of that query:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  while ( my $row = $sth-\>fetchrow_hashref ) {
+<pSpaceBefore:><pstyle:Feature Code Para>    print "$row-\>{'name'} lives on Earth and can be reached at $row-\>{'phone_number'}\\n";
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  }
+<pSpaceAfter:><pstyle:Feature Sub Section>Sending an email with Email::Send
+<pstyle:Feature Para>Want to send an email to someone telling them how much you<0x2019>re loving Perl?
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  use Email::Send;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>  my $message = \<\<'__MESSAGE__';
+<pstyle:Feature Code Para>  To: myfriend@example.com
+<pstyle:Feature Code Para>  From: me@example.com
+<pstyle:Feature Code Para>  Subject: Perl is so great and so easy!
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>  I think I'm in love...
+<pstyle:Feature Code Para>  __MESSAGE__
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>  my $sender = Email::Send-\>new({mailer =\> 'SMTP'});
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>  $sender-\>mailer_args([Host =\> 'smtp.example.com']);
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  $sender-\>send($message);
+<pSpaceAfter:><pstyle:Feature Para>As you can see, most of the above code is the email message itself. Just construct a valid email message, complete with header, and off it goes.
+<pstyle:Feature Sub Section>Retrieving information from IMDB with IMDB::Film
+<pstyle:Feature Para>Need to do something more specific, like for instance getting information on a movie from IMDB? All you need to do is use <CharStyle:pod-I>http://search.cpan.org/<CharStyle:> and you<0x2019>ll find a couple of modules to help you:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  use IMDB::Film;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>  my $imdbObj = new IMDB::Film(crit =\> 'Troy');
+<pstyle:Feature Code Para>  
+<pstyle:Feature Code Para>  print "Title: " . $imdbObj-\>title()."\\n";
+<pstyle:Feature Code Para>  print "Year: " . $imdbObj-\>year()."\\n";
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  print "Plot Symmary: " . $imdbObj-\>plot()."\\n";
+<pSpaceAfter:><pstyle:Feature Sub Section>Create a tag cloud with HTML::Cloud
+<pstyle:Feature Para>Want to create a tag cloud to use in your website? Of course CPAN also has that!
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  use HTML::TagCloud;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>  my $cloud = HTML::TagCloud-\>new;
+<pstyle:Feature Code Para>  $cloud-\>add( 'perl', 'http://example.com/perl', 1);
+<pstyle:Feature Code Para>  $cloud-\>add( 'cpan', 'http://example.com/programming', 3);
+<pstyle:Feature Code Para>  $cloud-\>add( 'books', 'http://example.com/books', 2);
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  my $html = $cloud-\>html_and_css(50);
+<pSpaceAfter:><pstyle:Feature Para>It<0x2019>s that simple.
+<pstyle:Feature Para>Also, you<0x2019>ll note that CPAN also shows you some simple (and sometimes more complex) code samples that you can use to get you started. And, if you hit a wall, don<0x2019>t forget to ask for help on PerlMonks.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Creating a distribution	
+<pstyle:Feature Section Lead>If you want to start a distribution properly, you should use the <CharStyle:pod-C>module-starter<CharStyle:> command, which is shipped with the <CharStyle:pod-C>Module::Starter<CharStyle:> package.
+<pstyle:Feature Para>Creating a distribution with it is as simple as typing the information you need to start a module:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>  $ module-starter --module=My::Application --author="My Name" --email=myself@example.com<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>Afterwards, browse the files that were created to get a feeling of what should be inside a distribution.
+<pstyle:Feature Para>For further information, check also José<0x2019>s guide for creating Perl modules at http://perlmonks.org/index.pl?node_id=431702.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Testing	
+<pstyle:Feature Section Lead>Perl is very good for testing. While this article is not about testing, I would like (because it has feelings too) to tell you very briefly that test modules in Perl do exist.
+<pstyle:Feature Para>Here<0x2019>s a very simple example in which we test that the function <CharStyle:pod-C>sqr<CharStyle:>, invoked with a value of <CharStyle:pod-C>2<CharStyle:>, returns a true value:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  use Test::More qw(no_plan);
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>  ok ( sqr(2), "sqr is working");
+<pSpaceAfter:><pstyle:Feature Para>And here we<0x2019>re testing whether the result of <CharStyle:pod-C>sqr(2)<CharStyle:> is 4:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>  is ( sqr(2), 4, "sqr(2) is 4");<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>Here<0x2019>s one more tricky, testing whether the result of <CharStyle:pod-C>random_phone_number<CharStyle:> matches a regular expression that only accepts a string comprised of 9 numbers (yes, I know that<0x2019>s not how you validate phone numbers; this is just an example):
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  like ( random_phone_number(), qr/^\\d{9}$/, "random phone number is comprised of nine digits");
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>  
+<pSpaceAfter:><pstyle:Feature Para>For more information about testing,
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Handy references	
+<pstyle:Feature Section Lead>No one knows everything, and even if you do, it<0x2019>s hard being able to recall everything at any given time; hence, print these three reference cards and keep them handy:
+<pstyle:Feature Para>Perl Quick Reference Card - http://johnbokma.com/perl/perl-quick-reference-card.html
+<pstyle:Feature Para>Perl Regular Expressions Card - http://refcards.com/refcard/perl-regexp-trusketti
+<pstyle:Feature Para>Perl Testing Reference Card - http://langworth.com/pub/notes/perltestref.html
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> About the author	

@@ -1,0 +1,58 @@
+perl-5.8.9 released 
+http://www.nntp.perl.org/group/perl.perl5.porters/2008/11/msg141328.html
+http://use.perl.org/article.pl?sid=08/11/11/1842248
+
+TPF announces grant to David Mitchell for the release of Perl 5.10.1
+http://news.perlfoundation.org/2008/11/tpf_announces_grant_to_david_m.html
+
+"Higher-Order Perl" now available for free download 
+http://hop.perl.plover.com/book/
+http://hop.perl.plover.com/
+
+NEW CPAN Testers site - Preferences Administration 
+https://prefs.cpantesters.org/
+http://www.perlmonks.org/index.pl?node_id=728940
+
+Microsoft partners with Strawberry Perl to improve the CPAN 
+http://www.perlmonks.org/index.pl?node_id=728667
+http://use.perl.org/~Alias/journal/38036
+
+Production Perl6 in early 2010? 
+http://lists.parrot.org/pipermail/parrot-dev/2008-November/000234.html
+
+New italian book, "Pocket Perl" 
+http://www.stefanorodighiero.net/pocketperl/
+
+ActiveState has a new PPM setup 
+http://aspn.activestate.com/ASPN/Mail/Message/ppm/3642044
+http://blogs.activestate.com/activestate/2008/11/new-ppm-servers-in-full-swing.html
+http://www.perlmonks.org/index.pl?node_id=722341
+
+	•	ActiveState tells me that the new PPM servers are now available. This is the new hotness that Jan Dubois talked about at the beginning of the year. You need the PPM 4 client, which is already in the 5.10 distros and the 5.8 distros since build 818. 
+The new repos have many more modules. These numbers are straight from ActiveState today: 
+Platform Vers | Old Repo | New Repo (CPANfly)
+	•	
+	•	  Linux   5.8      7790     10961
+	•	  Linux   5.10     5611     10888
+	•	
+	•	  OS X    5.8      8506     10907
+	•	  OS X    5.10     2662     10878
+	•	
+	•	  Windows 5.8      7267      9106
+	•	  Windows 5.10     6524      9060
+	
+The Perl Advent Calendar 2008 is up!
+http://www.perladvent.org/2008/
+
+Catalyst Advent Calendar
+http://www.catalystframework.org/calendar
+
+Booking.com donates $50,000 to TPF
+"Booking.com has donated $50,000 to The Perl Foundation, to aid in the further development and maintenance of the Perl programming language in general, and Perl 5.10 in particular. Booking.com is also donating hardware and sysadmin time to provide the servers for the new git master for Perl 5, which will go live in the next few days."
+
+
+Perl is now in Git
+
+
+http://www.plainblack.com/tbb/introducing-webgui-tv
+http://www.webgui.tv/

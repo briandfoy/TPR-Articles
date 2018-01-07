@@ -1,0 +1,38 @@
+BOOK REVIEW
+
+"Mastering Perl for Bioinformatics" 
+James D. Tisdall
+O'Reilly Media
+ISBN: 0-596-00307-2
+396 pages
+http://www.oreilly.com/catalog/mperlbio/
+
+"Mastering Perl for Bioinformatics" is written well, but
+beware, it might not be what you are looking for. It is not
+a book for the general Perl folk eager to learn
+bioinformatics.  It is a book about Perl, with some detours
+into other topics of computer science.  A book "for
+programmers who want to learn more about bioinformatics" (as
+the back cover says) should include theoretical backgroud,
+descriptions of the problems bioinformaticians are trying to
+solve, etc. None of this is present.
+
+The treatment of Perl object-oriented programming is clear
+and detailed, and dives into the  advanced topics like
+attribute lists, inheritance, and AUTOLOAD. The discussion
+of relational databases in the 6th chapter is also very nice
+and gives a good start for Perl programmers  who want to use
+of the DBI modules. I utterly enjoyed the explanation of the
+Edit Distance algorithm with a reference to Dynamic
+Programming in the 2nd chapter.
+
+If you're a beginning Perl bioinformatics programmer,
+interested in OOP, databases, web, graphics and the Bioperl
+library, you may find this book useful.  If you want to
+learn bioinformatics, you'll have to find something else.
+
+Reviewed by Eli Bendersky <spur4444@yahoo.com>
+
+Eli is  a programmer in IBM's Haifa Research Lab,
+using Perl extensively both for work and for personal
+pet projects.

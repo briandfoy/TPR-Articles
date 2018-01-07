@@ -1,0 +1,52 @@
+The Perl Foundation posts grant proposals
+http://news.perlfoundation.org/2008/05/2008q2_grant_proposals.html
+On May 1, The Perl Foundation posted 17 grant applications and solicited community comments on each one before the Grants Committee started voting on May 10. This is the first time that TPF has allowed public comment on the proposals before the voting, and the public comments allowed the applicants to respond to the questions about their applications. There was some concern that a public comment period would keep people from subjecting themselves to the process and that public discussion might unduly embarrass people. At least for this iteration, everything seems to have gone smoothly, except that the committee received more worthy than they expected and now have to decide which to fund, a
+new but welcome problem.
+
+One Thousand Perl Mongers 
+http://use.perl.org/article.pl?sid=08/04/30/0558209
+José Castro noted on April 30 that Eric Wilhelm because the 1,000th member of the Perl Mongers LinkedIn group. Besides displaying a Perl Mongers badge on
+your LinkedIn profile to show your support of Perl, you can search the Perl Mongers group and contact members directly, even if you are not connected to them (although people may disable this feature). Normally, you cannot see LinkedIn profiles more than three connections away from you. The announcement led to many registrations at the same time and the group now has over 1,200 members. No one was able to claim the title of the 1024th member.
+
+Perl Mongers 2008 Census
+http://www.perlmonks.org/index.pl?node_id=683126
+Dave Cross announced that Perl Mongers would conduct another user group census, giving group representatives a chance to update their contact information in the Perl Mongers group list, available as XML at http://www.pm.org/groups/perl_mongers.xml. The last census was three years ago in 2005, and the results are at http://www.pm.org/census/2005/. By affirmatively contacting group representatives, the Perl Mongers workers can refine the list of active groups and ensure that people can contact the group if they want more information.
+
+WhitePages public API contest 
+http://developer.whitepages.com/
+Whitepages.com, a company that runs on Perl, is conducting an API contest that ends on July 15th. After creating a free account and registering for a developer key, you can create your own application using Whitepages.com database that covers 80% of all U.S. adults, including phone numbers, addresses, geo-coordinates, and much more. The free account has a limit of 1,500 queries per day and a only two queries per second. Darren Chamberlain uploaded Net::WhitePages a couple of days after the start of the contest. His module can run the basic searches and return the results as a Perl hash. The API can return the results in either XML or JSON if you want to write something on your own, although the user registration also asks if you'd like to use Perl Dumper format, YAML, or Storable among the other formats, so maybe you'll have more options in the future. WhitePages.com specifically has prizes for the best iPhone and social networking applications.
+
+Google Summer of Code projects for Perl 
+http://code.google.com/soc/2008/
+Thanks to Eric Wilhelm, The Perl Foundation is mentoring six projects in the 2008 Google Summer of Code (http://code.google.com/soc/2008/perl/about.html). Each summer since 2006, Google has sponsored student open source projects during the school break, this year running from May 26 to August 18. Through mentoring organizations, Google pays $5,000 for each project: $4,500 goes to the student and $500 to the mentoring organization. Overall, Google is sponsoring 1,125 student contributors in 175 mentoring organizations.
+
+MarkMail mail archives have uploaded half a million Perl emails 
+http://markmail.blogspot.com/2008/03/loaded-perl-530000-emails.html
+MarkMail, a new service that indexes mailing lists, importing over half a million messages from 75 Perl-related lists. MarkMail provides a free service for searching the lists along with a Web-2.0ish interface to refine a search. Instead of searching for exactly what you want, you start with a partial search then refine it to slice the search results. See page 32 for an example search. List managers who would like to 
+
+mod_perl-2.0.4 is here 
+http://search.cpan.org/~gozer/mod_perl-2.0.4/
+Philippe M. Chiasson  uploaded the latest release of mod_perl now supports the latest release of Perl, 5.10. In particular, the fixes for Perl 5.10 fixed problems  wit threads and filters. mod_perl 2.0.4 also catches up to the latest changes in Apache up to 2.2.4. The previous release, mod_perl 2.0.3, was in November 2006.
+
+POE-1.0 Released 
+http://www.nntp.perl.org/group/perl.poe/2008/03/msg4193.html
+On March 25, Rocco Caputo promoted POE (http://poe.perl.org/), a portable multitasking and networking framework, to a 1.0 release, which has been a long time in waiting since it's initial 0.01 release in August 1998. POE, which stands for Perl Object Enviroment, originally was an object server but now handles much more than that, but now is mostly used to create multitasking programs. With many plugins (or components), you can have several things going on at once in a single program. POE handles the details of the cooperative multitasking while your program can handle other subtasks without blocking on other sub-tasks.
+
+Math::Pari patch for 5.10.0 
+
+
+Learning Perl, Fifth Edition
+http://www.oreilly.com/catalog/9780596520106/
+The latest edition of I<Learning Perl> by Randal Schwartz, Tom Phoenix, and brian d foy covers Perl 5.10 and some of the features that Perl 5.10 borrowed from Perl 6, including new regex syntax, smart matching, and given-when. I<Learning Perl> is available for pre-order immediately, and should be in bookstores in July. brian d foy, the publisher of this magazine, is one of the authors of I<Learning Perl>.
+
+Ian Hague Donates $200,000 to Perl 6
+http://use.perl.org/article.pl?sid=08/05/21/211253
+An anonymous Perl Monger convinced Ian Hague, a co-founder of Firebird Management to donate $200,000 to The Perl Foundation for the development of Perl 6. Half of this money is targeted directly at developer support, and half for organizational issues within TPF to allow facilitate further fund-raising. The developer money will be managed by the TPF board of directors instead of the normal grants process, and will be used much like the Mozilla Foundation grant given to Patrick Michaud to work on Rakudo Perl. TPF received the money on May 13 and expects to start initial distributions immediately.
+
+White Camel Award Nominations Open
+http://use.perl.org/article.pl?sid=08/05/18/1215209
+Community nominations for the White Camel Awards, given out each year at the O'Reilly Open Source Convention, are open until June 11. The White Camels recognize significant acheivement in non-technical work within the Perl community. This year, Perl Monger Community Liaison José Castro is collecting the nominations and handling the awards. To nominate somebody, send an email with the subject "White Camel Nomination :: $name" to I<jose@pm.org>. Include a short message explaining the worthiness of your nomination.
+
+Vienna.pm Funds Jonathan Worthington
+http://socialtext.useperl.at/woc/index.cgi?work_1_day_per_week_on_rakudo
+The Vienna Perl Mongers, as part of their "Winter of Code", are sponsoring Perl 6 developer Jonathan Worthington to spend one day a week working on Rakudo Perl, the parrot implementation of Perl 6. Their sponsorhsip is over three months for a total of €1,800. There is a possibility of additional funding after that period if Vienna.pm has additional money and like the results.

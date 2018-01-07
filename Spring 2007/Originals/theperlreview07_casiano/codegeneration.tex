@@ -1,0 +1,73 @@
+The translation is approached as a particular case of 
+\I{tree decoration}. Each node is decorated with a new
+attribute - \verb|trans| - that will held 
+the translation for such node.
+To compute it, we must define transformations
+for each of the types in the AST:
+\begin{verbatim}
+translation = t_num t_var t_op t_neg
+             t_assign t_list t_print;
+\end{verbatim}
+
+Some of these transformations are straightforward:
+\begin{verbatim}
+t_num: NUM 
+  => { $NUM->{tr} = $NUM->{attr} }
+t_op:  /TIMES|PLUS|DIV|MINUS/:b($x, $y)
+  => {
+    my $op = $Op{ref($b)};
+    $b->{tr} = "$b->{reg} = $x->{reg}"
+                   ." $op $y->{reg}";
+  }
+\end{verbatim}
+To keep track of the involved variables
+a hash is used as a rudimentary symbol table:
+\begin{verbatim}
+{ our %s; }
+t_assign: ASSIGN($v, $e) => {
+  $s{$v->{attr}} = "num";
+  $ASSIGN->{tr} = "$v->{reg} = $e->{reg}"
+}
+\end{verbatim}
+The translation of the root node (\verb|EXPS|)
+consists of concatenating the translations
+of its children:
+\begin{verbatim}
+{
+  sub cat_trans {
+    my $t = shift;
+
+    my $tr = "";
+    for ($t->children) {
+      (ref($_) =~ m{NUM|VAR|TERMINAL})
+        or $tr .= cat_trans($_)."\n"
+    }
+    $tr .= $t->{tr} ;
+  }
+}
+
+t_list: EXPS(@S)
+  => {
+    $EXPS->{tr} = "";
+    my @tr = map { cat_trans($_) } @S;
+    $EXPS->{tr} =
+      reduce { "$a\n$b" } @tr if @tr;
+  }
+\end{verbatim}
+The treeregexp \verb|@S| matches the children
+of the \verb|EXPS| node. The associated lexical variable \verb|@S| 
+contains the references to the nodes that 
+matched.
+
+The method \verb|bud|\footnote{\underline{B}ottom-\underline{U}p \underline{D}ecorator}
+of \verb|Parse::Eyapp::Node| nodes makes a bootom up traversing
+of the AST applying to the node being visited the only one transformation that 
+matches\footnote{When {\tt bud} is applied the family of transformations \underline{must} constitute
+a \I{partition} of the AST classes, i.e. for each node one and only one
+transformation matches}.
+After the call 
+\begin{verbatim}
+$t->bud(our @translation);
+\end{verbatim}
+the attribute \verb|$t->{trans}| contains 
+a translation to PIR for the whole tree.

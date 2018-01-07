@@ -1,0 +1,121 @@
+<ASCII-MAC>
+<Version:5><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1>>
+<DefineCharStyle:pod-I=<Nextstyle:pod-I><cColor:Black><cTypeface:Italic><cSize:9.500000><cHorizontalScale:1.000000><cTracking:0><cBaselineShift:0.000000><cCase:Normal><cStrokeColor:None><cLanguage:English\: USA><cUnderline:0><cFont:Minion \(T1\)><cPosition:Normal><cStrikethru:0><cColorTint:-1.000000>>
+<DefineCharStyle:pod-C=<Nextstyle:pod-C><cColor:Black><cTypeface:Regular><cSize:9.500000><cHorizontalScale:1.000000><cTracking:0><cBaselineShift:0.000000><cCase:Normal><cStrokeColor:None><cUnderline:0><cFont:Courier New><cPosition:Normal><cStrikethru:0><cColorTint:-1.000000>>
+<DefineCharStyle:pod-B=<Nextstyle:pod-B><cColor:Black><cTypeface:Bold><cSize:9.500000><cHorizontalScale:1.000000><cTracking:0><cBaselineShift:0.000000><cCase:Normal><cStrokeColor:None><cUnderline:0><cFont:Courier New><cPosition:Normal><cStrikethru:0><cColorTint:-1.000000>>
+<DefineParaStyle:NormalParagraphStyle=<Nextstyle:NormalParagraphStyle>>
+<DefineParaStyle:Feature Section=<BasedOn:NormalParagraphStyle><Nextstyle:Feature Section><cTypeface:Bold><cSize:10.000000><pSpaceBefore:4.500000><pTabRuler:20\,Left\,.\,0\,-\;258\,Left\,.\,0\,-\;><cFont:Rockwell><pGridAlign:BaseLine>>
+<DefineParaStyle:Module Author Byline=<Nextstyle:Module Author Byline><cTypeface:Italic><cSize:9.500000><cLigatures:0><pDropCapCharacters:1><pDropCapLines:1><pHyphenationLadderLimit:0><cLanguage:English\: USA><pHyphenation:0><pHyphenationZone:0.000000><cFont:Minion \(T1\)><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pTextAlignment:Right><pGridAlign:BaseLine><bulFont:\<TextFont\>><bulTypeFace:\<TextStyle\>>>
+<DefineParaStyle:Feature Lead=<Nextstyle:Feature Lead><cSize:9.500000><cLigatures:0><cTracking:50><pDropCapCharacters:1><pDropCapLines:3><pHyphenationLadderLimit:0><cLeading:11.400000><cLanguage:English\: USA><pHyphenation:0><pHyphenationZone:0.000000><cFont:Minion \(T1\)><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pTextAlignment:JustifyLeft><pGridAlign:BaseLine>>
+<DefineParaStyle:Feature Para=<BasedOn:Feature Lead><Nextstyle:Feature Para><pDropCapLines:1><pFirstLineIndent:12.024000>>
+<DefineParaStyle:Feature Section Lead=<BasedOn:Feature Para><Nextstyle:Feature Section Lead><pFirstLineIndent:0.000000><cLeading:-1.000000>>
+<DefineParaStyle:Feature Code Para=<Nextstyle:Feature Code Para><cSize:9.500000><cLigatures:0><pHyphenationLadderLimit:0><pLeftIndent:10.799999><cLanguage:English\: USA><pHyphenation:0><pHyphenateCapitals:0><pHyphenationZone:0.000000><pTabRuler:18\,Left\,.\,0\,\;31.5\,Left\,.\,0\,\;45\,Left\,.\,0\,\;58.5\,Left\,.\,0\,\;72\,Left\,.\,0\,\;85.5\,Left\,.\,0\,\;99\,Left\,.\,0\,\;112.5\,Left\,.\,0\,\;126\,Left\,.\,0\,\;139.5\,Left\,.\,0\,\;153\,Left\,.\,0\,\;166.5\,Left\,.\,0\,\;180\,Left\,.\,0\,\;193.5\,Left\,.\,0\,\;207\,Left\,.\,0\,\;220.5\,Left\,.\,0\,\;234\,Left\,.\,0\,\;><cFont:Courier New><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pGridAlign:BaseLine>>
+<DefineParaStyle:Feature Sub Section=<BasedOn:Feature Section><Nextstyle:Feature Sub Section><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:News URL=<BasedOn:NormalParagraphStyle><Nextstyle:News URL><cSize:9.500000><pSpaceAfter:4.500000><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pGridAlign:BaseLine><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:News para=<BasedOn:NormalParagraphStyle><Nextstyle:News para><cSize:9.500000><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pGridAlign:BaseLine><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:News Headline=<BasedOn:NormalParagraphStyle><Nextstyle:News Headline><cTypeface:Bold><cSize:9.500000><pSpaceBefore:4.500000><cFont:Gill Sans \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pGridAlign:BaseLine><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar URL=<Nextstyle:Calendar URL><cTypeface:Italic><cSize:10.000000><cLanguage:English\: USA><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar title=<Nextstyle:Calendar title><cSize:10.000000><cLanguage:English\: USA><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar location=<Nextstyle:Calendar location><cSize:10.000000><cLanguage:English\: USA><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar date=<Nextstyle:Calendar date><cTypeface:Bold><cSize:11.000000><cCase:All Caps><cLanguage:English\: USA><cFont:Gill Sans \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Feature Title=<Nextstyle:Feature Title><cSize:26.500000><cLeading:13.500000><cFont:Rockwell Extra Bold><pTextAlignment:Center>>
+<DefineParaStyle:Feature Byline=<BasedOn:NormalParagraphStyle><Nextstyle:Feature Byline><cTypeface:Italic><cSize:11.000000><cLeading:13.000000><cFont:Gill Sans \(TT\)><pTextAlignment:Right>>
+<DefineParaStyle:Feature Deck=<BasedOn:Feature Byline><Nextstyle:Feature Deck><cTypeface:Regular><pSpaceBefore:4.500000><pTextAlignment:Center>>
+<DefineParaStyle:Normal=<Nextstyle:Normal><KeyboardShortcut:Shift\+Cmd\+Num 6><cSize:11.000000><cLigatures:0><pHyphenationLadderLimit:0><cLeading:13.000000><cLanguage:English\: USA><pHyphenation:0><pHyphenationZone:0.000000><pSpaceBefore:4.500000><pSpaceAfter:4.500000><cFont:Arial \(TT\)><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pTextAlignment:JustifyLeft>>
+<DefineParaStyle:Body Copy=<BasedOn:Normal><Nextstyle:Body Copy><cSize:9.500000><pFirstLineIndent:12.024000><cLeading:-1.000000><pSpaceBefore:0.000000><pSpaceAfter:0.000000><cFont:Minion \(T1\)><pGridAlign:BaseLine><bulFont:\<TextFont\>><bulTypeFace:\<TextStyle\>>>
+<DefineParaStyle:author byline=<BasedOn:Feature Para><Nextstyle:author byline><cTypeface:Italic><bulFont:\<TextFont\>><bulTypeFace:\<TextStyle\>>>
+<DefineParaStyle:article head=<BasedOn:Normal><Nextstyle:Normal><KeyboardShortcut:Shift\+Cmd\+Num 1><cSize:14.000000><cHorizontalScale:1.100000><pSpaceBefore:13.500000><pSpaceAfter:0.000000><cFont:Arial Black><pKeepWithNext:4><cSkew:15.000000><pRuleBelowColor:Black><pRuleBelowTint:100.000000><pRuleBelowOffset:9.000000>>
+<DefineParaStyle:article subhead=<BasedOn:article head><Nextstyle:article subhead><KeyboardShortcut:Shift\+Cmd\+Num 2><cSize:11.000000><pSpaceBefore:18.000000>>
+<pstyle:Feature Lead>Unfortunately these last months I haven<0x2019>t have much time to learn new modules or to write about them. In this issue I<0x2019>ll present <CharStyle:pod-C>LWP::Simple<CharStyle:>, a well known module to retrieve documents from the Web. ÊIt<0x2019>s a simple wrapper around the LWP module, a full featured framework to develop any kind of web client I might need. The module is in the Perl <CharStyle:pod-C>libwww<CharStyle:> package.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Basic Usage	
+<pstyle:Feature Section Lead>The most used function in <CharStyle:pod-C>LWP::Simple<CharStyle:> is <CharStyle:pod-C>get<CharStyle:>. It accepts an URL, retrieves it, and returns its content. As URLs are sometimes wrong, or the servers busy, I don<0x2019>t forget to test if the retrieval was succeeded:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>use LWP::Simple;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>if (defined($contents = get("http://use.perl.org/"))) {
+<pstyle:Feature Code Para>    # ... do something with the web page contents
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>else {
+<pstyle:Feature Code Para>    # ... fail gracefully
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Para>While I might want to look to the contents of the URL and do something with it, I usually just want to make it available to the user by saving it (mostly if I am fetching a lot of pages), or by printing it. As these two tasks are very common, <CharStyle:pod-C>LWP::Simple<CharStyle:> provides two functions to help me performing these actions: <CharStyle:pod-C>getstore<CharStyle:> and <CharStyle:pod-C>getprint<CharStyle:>.
+<pstyle:Feature Para>When I want to fetch a page and save it to a file I use <CharStyle:pod-C>getstore<CharStyle:>, a function that takes as arguments not just the URL to be fetched but the name of the file where I want to save its contents:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>Êuse LWP::Simple;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Êgetstore(
+<pstyle:Feature Code Para>    "http://use.perl.org/index.rss", 
+<pstyle:Feature Code Para>    "perlnews.rss"
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    );
+<pSpaceAfter:><pstyle:Feature Para>With the same idea in mind, <CharStyle:pod-C>LWP::Simple<CharStyle:> gives me a <CharStyle:pod-C>getprint<CharStyle:> function, although I do not think it is that useful. Its usage is straightforward: it just prints to the default file handle.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>Êuse LWP::Simple;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>Êgetprint( "http://use.perl.org/" );
+<pSpaceAfter:><pstyle:Feature Para>While this code is simple, I like to give feedback to my users about the success of my operation. Although my first example checks the return contents from the <CharStyle:pod-C>get<CharStyle:> function, I am not doing the same with <CharStyle:pod-C>getstore<CharStyle:> or <CharStyle:pod-C>getprint<CharStyle:>. These two functions return the HTTP response code, but I don<0x2019>t know HTTP enough to decide what the successful response codes are. <CharStyle:pod-C>LWP::Simple<CharStyle:> makes my life easier with the <CharStyle:pod-C>is_success<CharStyle:> and <CharStyle:pod-C>is_error<CharStyle:> functions that figure it out for me:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>use LWP::Simple;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>my $code = getstore(
+<pstyle:Feature Code Para>    "http://use.perl.org/index.rss", 
+<pstyle:Feature Code Para>    "perlnews.rss"
+<pstyle:Feature Code Para>    );
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>if( is_error($code) ) {
+<pstyle:Feature Code Para>    die "Unfortunately Perl geeks have their server down!";
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Looking to document headers	
+<pstyle:Feature Section Lead>Web servers, when answering the HTTP protocol, give more information to clients than just the content. There are three main properties about web documents that I like to examine: the document MIME type (such as plain text, HTML, PDF or something else), the content size, and the last time that page was modified.
+<pstyle:Feature Para>To access this information, I can ask <CharStyle:pod-C>LWP::Simple<CharStyle:> for the document headers with the <CharStyle:pod-C>head<CharStyle:> function. This function is mainly used in list context and returns a five item list that includes the MIME type, the content length, the last modification time, information about when the document expires (useful mostly for proxies), and the name (and version) of the web server:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>use LWP::Simple;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>my $url = "http://a.strange.url.com/";
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>my( $type, $length, $mime, $expires, $server ) 
+<pstyle:Feature Code Para>    = head($url);
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>if( $type =~ /pdf/i ) {
+<pstyle:Feature Code Para>    getstore( $url, "file.pdf" );
+<pstyle:Feature Code Para>    } 
+<pstyle:Feature Code Para>else {
+<pstyle:Feature Code Para>    getprint( $url );
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Para>As a side note, I should have in mind that all web servers might not return all this information. It depends a lot on the web server, and in the URL I use. Additionally, some web servers do not respond correctly to <CharStyle:pod-C>head<CharStyle:>, but I can<0x2019>t do the same thing with <CharStyle:pod-C>get<CharStyle:>. If <CharStyle:pod-C>head<CharStyle:> doesn<0x2019>t work, I have to use <CharStyle:pod-C>LWP<CharStyle:> instead of <CharStyle:pod-C>LWP::Simple<CharStyle:> to get more information.
+<pstyle:Feature Para>While I use this function a lot of times, some times I just need to check if a file I<0x2019>ve retrieved some time ago has been modified. I need to compare the modification time for my stored version and the server version, and fetch it only if the file in the server is newer. That sounds like a lot of work. One more time, <CharStyle:pod-C>LWP::Simple<CharStyle:> can help me with this task with the <CharStyle:pod-C>mirror<CharStyle:> function that handles all of that for me:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>use LWP::Simple;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>my $code = mirror(
+<pstyle:Feature Code Para>    "http://use.perl.org/index.rss", 
+<pstyle:Feature Code Para>    "perlnews.rss"
+<pstyle:Feature Code Para>    );
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>if( is_error($code) ) {
+<pstyle:Feature Code Para>    die "Try again later!";
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-C>LWP::Simple<CharStyle:> also includes a list of constants for all the HTTP answer codes, so I can compare the answer codes from all these functions with a specific error if I need more control:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>if( $code == RC_NOT_FOUND ) {
+<pSpaceBefore:><pstyle:Feature Code Para>    die "File not found!";
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>elsif( $code == RC_INTERNAL_SERVER_ERROR ) {
+<pstyle:Feature Code Para>    die "The server has a problem";
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Going Forward	
+<pstyle:Feature Section Lead><CharStyle:pod-C>LWP::Simple<CharStyle:> is exactly that: a simple interface to <CharStyle:pod-C>LWP<CharStyle:>. But it does not limit my possibilities. Behind the scenes, <CharStyle:pod-C>LWP::Simple<CharStyle:> uses <CharStyle:pod-C>LWP<CharStyle:>, and if I ask politely, it gives me the <CharStyle:pod-C>LWP<CharStyle:> user agent object that gives me power to configure some interesting aspects of my application.
+<pstyle:Feature Para>One important thing it the ability to configure a web proxy. Sometimes I really need to work with them, and it is important to me to be able to configure a web proxy server on my code. I can export the <CharStyle:pod-C>$ua<CharStyle:> (for <0x201C>user-agent<0x201D>) variable from <CharStyle:pod-C>LWP::Simple<CharStyle:> so I can modify it:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>Êuse LWP::Simple qw/$ua/;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Ê$ua-\>proxy( 'http','http://my.http.proxy.com:8080' );
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>Êget("http://use.per.org/");
+<pSpaceAfter:><pstyle:Feature Para>I must use that variable name. I am exporting the variable used under <CharStyle:pod-C>LWP::Simple<CharStyle:>, named <CharStyle:pod-C>$ua<CharStyle:>, to use in my code. This variable is holds an <CharStyle:pod-C>LWP::UserAgent<CharStyle:> object, so I can call any of those methods.
+<pstyle:Feature Para>One other property that I like to change on my applications is the user agent name. By default, <CharStyle:pod-C>LWP::Simple<CharStyle:> uses as agent name <CharStyle:pod-C>libwww-perl/<CharStyle:> followed by the version number of the library. But this is not always a good choice. Some web pages do not work correctly unless my user agent have the string <0x201C>mozilla<0x201D> in it. Some other times, I just want to give my application a specific user name. For that, I can use the <CharStyle:pod-C>agent<CharStyle:> function:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>Êuse LWP::Simple qw/$ua/;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>Ê$ua-\>agent('My dear crawler');
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>Êget("http://use.per.org/");
+<pSpaceAfter:><pstyle:Feature Para>With the user agent object I can play with cookies, more headers than the ones used by the <CharStyle:pod-C>head<CharStyle:> function, redirects, protocols and a lot of other specific properties.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Conclusion	
+<pstyle:Feature Section Lead><CharStyle:pod-C>LWP::Simple<CharStyle:> provides many convenience functions to help me do simple web tasks without doing a lot of work. I can fetch, store, and print web files with a single function call. If I need more power, I can use <CharStyle:pod-C>LWP::Simple<CharStyle:> to get to the underlying user-agent object.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> References	
+<cLeading:5.400000>
+<cLeading:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000><CharStyle:pod-C>LWP::Simple<CharStyle:><cLeading:><cLeading:5.400000>
+<cLeading:><pLeftIndent:><pFirstLineIndent:><bnListType:><ParaStyle:Feature Section Lead><pLeftIndent:10.000000><pFirstLineIndent:10.000000><bnListType:Bullet><cLeading:5.400000><CharStyle:pod-C>LWP::UserAgent<CharStyle:><cLeading:>
+<pLeftIndent:><pFirstLineIndent:><bnListType:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> About the author	
+<pstyle:Feature Section Lead>Alberto Sim›es is doing his Ph.D. in Machine Translation. He has been working in natural language for four years which explains the large amount of Perl contributions under the Lingua::PT namespace. He is one of the YAPC::EU::2005 organizers.

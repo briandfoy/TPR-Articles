@@ -1,0 +1,39 @@
+The name \I{peephole optimizer} comes from
+the image of sliding a small window 
+over the target code attempting to 
+replace patterns of instructions 
+by better ones. If we have a look at the code 
+generated in the previous phase for the input
+\verb|a = 5-b*2|
+we see that produces:
+\begin{verbatim}
+$N1 = b * 2
+$N2 = 5 - $N1
+a = $N2
+\end{verbatim}
+PIR allows memory instructions involving 
+three arguments like \verb|a = b + c|.
+This fact and the observation that \verb|$N2| 
+is used only once 
+lead us to conclude that 
+the former translation can be changed to:
+\begin{verbatim}
+$N1 = b * 2
+a = 5 - $N1
+\end{verbatim}
+Perl regular expressions constitute a formidable
+tool to implement \I{peephole optimization}. The
+regexp below finds patterns 
+\begin{verbatim}
+$N# = something
+IDENT = $N#
+\end{verbatim}
+and substitutes them by \verb|IDENT = something|:
+\begin{verbatim}
+sub peephole_optimization {
+  $_[0] =~ 
+   s{(\$N\d+)\s*=\s*(.*\n)\s*
+     ([a-zA-Z_]\w*)\s*=\s*\1}
+    {$3 = $2}gx;
+}
+\end{verbatim}

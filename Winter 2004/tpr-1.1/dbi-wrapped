@@ -1,0 +1,307 @@
+Perl's DBI module has become the tool of choice for those squaring off with databases with Perl, and, in my current post, I find myself doing exactly that.  I process a lot of data, and to get it down quickly and efficiently, I create dynamic DBI "stored procedures" in my scripts.  The stored procedure is a just a series of database instructions that I run as a group.  I implement these directly in my scripts as Perl closures.
+
+We have legions of people downloading and creating data, filling directories full of hundreds, or sometimes thousands, of files that must be parsed and crammed into an Oracle database. We have several types of files that we must handle slightly differently, although they still belong to the same set of data and we should  process them in one shot by the same program. I carve up these unwieldy chunks of data into hundreds of thousands of bite-sized morsels for our customers to consume.
+
+With thousands of files to process, I have to consider efficiency and resource concerns, especially if my program is run from cron with hundreds of other programs waiting for their 15 seconds of fame. The hacking brethren before me resorted to the Oracle "sqldr" tool, figuring Perl was simply not up to the task of handling large volumes. I've never liked backticking the tools that ship with the various databases when there is a Perl solution that can do it.
+
+Of course, I don't want to process several thousand files into memory only to have the first INSERT statement fail. Even with DBI's "connect-and-prepare once, execute many" model, such a strategy could prove to be a miserable waste of time, and depending on the size of the files, my system or its administrator may not appreciate my gross memory transgressions. Such errors would be a little less devastating by committing a file's worth of data at time.
+
+	my $dbh = DBI->connect($dsn, {RaiseError => 1,
+					  AutoCommit => 0,
+								  PrintError => 0});
+	my $insert_stmt = $dbh->prepare(q-insert into table (col1,
+														 col2,
+														 col3,
+														 col4,
+														 col5)
+												 values (?, ?, ?, ?, ?-);
+	for my $file (@files){ 
+		my $data = parse_file($file);
+		$insert_stmt->execute(@$_) for @$data;
+		archive_file($file);
+		}
+	
+	$dbh->disconnect;
+
+For simple programs, this approach works. However, when I add statement handles to look up values, multiple INSERT statements, transactions, or even more complex SQL statements, the DBI code overwhelms the main flow of my program in a hurry. I have had to modify programs with the main logic embedded in a mess of DBI, and I can say that it is not the most maintainable structure.
+
+It would be much cleaner if my main processing loops could stand on their own, despite the complexity of the DBI code.  I can put the DBI stuff somewhere else.
+
+	for my $file (@files){
+		my $data = parse_file($file);
+		insert_data($data);
+		archive($file);
+		}
+	
+	sub insert_data { ...DBI code as before... }
+
+
+I  exiled the DBI code to the C<insert_date()> subroutine. The flow of the program is cleaner, and the database code is now in a single spot, which makes it easier to maintain in the future.
+
+However, even if I connect to the database earlier in the program, I now have the problem of preparing for every file whatever statement handles I need in C<insert_data()>. We need a way to save our prepared statements between calls to C<insert_date()> without putting them in the main flow of my program.
+
+=head2 What is a Closure, Anyway?
+
+Not long ago, in a company far, far away I mucked around on Microsoft SQL servers creating stored procedures at will to handle the raw data my programs had coaxed from the ether. A stored procedure is simply a set of SQL statements that I group together to do a particular task.  The stored procedure treats a bunch of SQL statements as one operation.  I savve these in the database server, and they act as shorthand for their complex task: functional calls for databases, if you will.
+
+Stored procedures were an effective way to greatly simplify the interaction between my programs and the database. In fact, after connecting to the database with Win32::ODBC, the whole job usually boils down to a single C<if> statement.
+
+	if($con->Sql('exec stored_procedure list of data')) { ..handle error.. }
+
+As long as the list of data I passed in was in the right order, I would never need to know what monstrous collection of Transact-SQL statements C<stored_procedure> hid.
+
+If I cannot create stored procedures, either by policy or missing features, I can still play database developer and fake it in my code by using closures with DBI. A closure is just an anonymous subroutines that references a lexical variable that has gone out of scope.
+
+	my $incrementer = print_increment();
+	for my $word (qw/what will happen?/) { $incrementer->($word) }
+
+	sub print_increment{ 
+		# initialization #
+		my $call_count;
+		# closure #
+		return sub { print ++$call_count, ': ', $_[0], "\n" };
+	}
+	
+	# OUTPUT:
+	# 1: what
+	# 2: will
+	# 3: happen
+
+The call to the anonymous subroutine referenced by C<$incrementer> prints the value of C<$call_count> as well as the string passed in as a parameter. Normally, lexical variables such as C<$call_count> would be swept into the abyss at the end of their scope: in this case the end of C<print_increment()>. However, because the returned subroutine reference has access to C<$call_count> is value is  available until the closure, C<$incrementer>, goes out of scope.
+
+I can use this technique, albeit a little more complex, to effectively turn your DBI code into a stored procedure for the duration of your program.  The general structure of C<print_increment()> comprises two sections: initialization and declaration. The initialization section houses all of the variables that the closure needs, and the declaration creates the closure.
+
+=head2 Using Closures with DBI
+
+Suppose I have files containing stock exchange information.  Each file contains the data for a specific date with one line per company. From each line in the file, I extract 10 values: a company name, date, day high, day low, open price, closing price, volume, 52-week high, 52-week low, and the percentage change for the day. In other words, from the for loop I showed earlier, C<parse_files()> will return an array reference where each element itself is an array reference of the form with those ten items.
+
+I insert each array reference as a single row into the table "stock_prices". However, I also need to look up the appropriate ticker symbol for each company in the table "ticker_map". I need to do several things for each row, but I can bundle those into my Perl stored procedure.
+
+
+The bare bones structure is very similar to the previous closure example. The initialization section will contain our prepared statement handles, and the closure loops through the rows in $data while providing transaction handling by using eval:
+
+	1: sub init_stock_inserter {
+	2:   my ($con) = @_; # Pass in connection
+	3:
+	4:   # Declare and initialize lexical variables that we want our 
+		 # anon sub to access
+	5:
+	6:   my $get_ticker = $con->prepare(q-select ticker from ticker_map 
+										  where company = ?-);
+	7:
+	8:   my $insert_stock_prices = $con->prepare(q-insert into stock_prices (ticker,
+	9:                                       company,
+	10:                                    date,
+	11:                                    day_high,
+	12:                                    day_low,
+	13:                                    open,
+	14:                                    close,
+	15:                                    volume,
+	16:                                    year_high,
+	17:                                    year_low,
+	18:                                    change)
+	19:                              values (?,
+	20:                                    TO_DATE(?, 'YYYY/MM/DD'),
+	21:                                    ?,
+	22:                                    ?,
+	23:                                    ?,
+	24:                                    ?,
+	25:                                    ?,
+	26:                                    ?,
+	27:                                    ?,
+	28:                                    ?)-);
+	29:
+	30:    return sub {
+	31:         my ($data) = @_;
+	32:
+	33:         eval {
+	34:         	for my $row (@$data) {
+	35:         		$get_ticker->execute($row->[0]);
+	36:         		my $ticker = ($get_ticker->fetchall_array())[0];
+	37:         		$ticker or die join(' ', 'No ticker for', $row->[0], 'found');
+	38:         		$insert_stock_prices->execute($ticker, @$row);
+	39:       	}
+	40:       	$con->commit;
+	41:         };
+	42:
+	43:         if($@) {
+	44:           	$con->rollback;
+	45:           	$con->disconnect;
+	46:           	notify('Insert error: ' . $@);
+	47:         }
+	48:    };
+	49: }
+
+=head2 Initialization
+
+The first half of init_stock_inserter is a typical setup, except for the fact that I pass in the database handle. This is really the only loose end preventing me from quarantining all of my database code in C<init_stock_inserter()>. So, why did I create the connection elsewhere and passed it in? There are really two reasons.
+
+First, if I wanted to create multiple inserters by calling a similar inserter subroutine several times, I would need to create a connection each time. For instance, if I had to process two different types of files, say, NASDAQ and NYSE, the data from each type might be inserted into its own table with its own set of statement handles, though still using the same database connection. So, passing in the database handle saves me multiple connections.
+
+Second, I really have no good way to explicitly disconnect when I'm finished with the handle. I could have a second parameter to the subroutine reference, which would indicate that the $data coming in is from the last file in the queue, but I would also need to keep track of the number of files outside of C<init_stock_inserter()> in addition to making sure I don't re-create or delete the connection when calling the inserter the second time. And that's just plain ugly.
+
+I can easily hide the connection code away with the other subroutines, so it's not a big deal.
+
+	sub make_DB_connection {
+		return DBI->connect(..., {
+			RaiseError => 1,
+			AutoCommit => 0,
+			PrintError => 0 
+			}
+		);
+	}
+
+Next, I prepare two statement handles with placeholders for the data One  handle I use to obtain the ticker symbol and the other to insert the new found ticker and associated data. Nothing special here.
+
+=head2 The Closure
+
+The C<return()> statement is where things get interesting. The only parameter my sub needs is the data itself, which I pass in for each file. Since I use references to arrays for each row, I know the order element order maps to the right placeholders.  This works as long as C<parse_file()> returns data in the same order as the placeholders.
+
+I implement transactions in DBI using an eval block. Everything the closure does is enclosed within that block. For eval to manage the transaction, when I create the DBI object, I set C<RaiseError> to 1 and C<AutoCommit> to 0.
+
+C<RaiseError> causes any database error to die with the specific database error message. The eval block exits at the point of failure and sets C<$@> with the error message.
+
+When C<AutoCommit> is false, I can roll back any rows I may have already been inserted. The scope of my transaction is be at the level of an entire file: I either insert all of the data from that file or none at all. This prevents me from having to determine whether a particular company's data has already been inserted for a specific date if my program chokes midway through a file.
+
+The for loop simply iterates through the rows of data. Both C<$get_ticker> and C<$insert_stock_prices> are lexical variables (as was C<$call_count>) and are available through the variable to which the returned sub reference is assigned.
+
+For each row of data, I fetch the associated ticker using the company value and ensure that it's not undefined or empty. The final statement in the loop simply calls my insert handle with the ticker and the array to which C<$row> refers. My call to C<$insert_stock_prices> effectively becomes
+
+	$insert_stock_prices->execute($ticker,
+		company,
+		date,
+		day high,
+		day low,
+		open price,
+		closing price,
+		volume,
+		52-week high,
+		52-week low,
+		change
+		);
+
+Once I finish the for loop, I am certain that all of the rows passed in were inserted successfully, and I can commit my transaction to the database. C<$con>, too, is just a lexical vari- able and is preserved between invocations of the subroutine reference. All of the database handle methods, such as C<commit()> and C<rollback()>, are available too.
+
+The final component in my inserter provides the error handling for a failed transaction. I need to rollback any rows I already inserted, close the database connection, and then call a general error handling routine. After closing the database connection, the script should die also since the closure  no longer has a database connection.
+
+=head2 The Closure in Action
+
+Using C<init_stock_inserter()>, I arrange the main flow of my program in a way that will make my grandchildren giddy when it comes time to maintain it.
+
+	1:   my $con = make_DB_connection();              # 1. Connect
+	2:   my $stock_inserter = init_stock_inserter($con);# 2. Initialize
+	3:
+	4:   for my $file (@files){
+	5:        my $data = parse_file($file);            # 3. Parse
+	6:        $stock_inserter->($data);                # 4. Insert
+	7:        archive($file);                         # 5. Archive
+	8:   }
+	9:   $con->disconnect;                            # 6. Disconnect
+                                                                                
+I reduced the main flow to less than ten lines. My simulated stored procedure boils down to two lines of code. On line 2, I call C<init_stock_inserter()> to create my closure, which I store in C<$stock_inserter>. I execute the closure on line 6 by passing in $data which I freshly extracted from one of the files with C<parse_file()>. Once C<$stock_inserter> gets a reference to some data, all of its primed statement handles are brought to bear on conducting the data to its new home in the database.
+
+=head2 Further Fine Tuning
+
+Although the initialization section in C<init_stock_inserter()> was fairly simple, it doesn't necessarily have to be. I can add all the database related code (other than the connection itself).
+
+
+For example, if the stock exchange files I process always contained the same 10 companies in each file, I can look up their ticker symbols during initialization and store them in a hash. I use the company field for each row to retrieve the ticker from the hash without having to talk to the database.
+
+	sub init_stock_inserter{
+		my ($con) = @_;
+		my $tickers = get_tickers($con);  # $tickers->{company} = ticker
+		...
+	}
+
+C<get_tickers()> contains the code to perform the lookups from the ticker_map table. When I execute C<$insert_stock_prices> in the closure, I retrieve the ticker from the hash.
+
+	$insert_stock_prices->execute(
+		$tickers->{$row->[0]}, @$row
+		);
+
+Even in my original implementation of C<init_stock_inserter()>, I could dramatically reduce the number of lookups from the C<ticker_map()> table by storing the ticker symbols as we go.
+
+	1:  sub init_stock_inserter{
+	2:      
+	3:      my ($con) = @_;
+	4:      my %tickers;     # hash to hold the tickers we've already 
+				 # retrieved
+	5:
+	6:      ...statements as before
+	7:
+	8:      return sub{
+	9:          my ($data) = @_;
+	10:         eval{
+	11:                  for my $row (@data){
+	12:                  	my $company = $row->[0];
+	13:                  	unless(exists $tickers{$company}){    # check if we've already looked it up
+	14:                      	$get_ticker->execute($company);
+	15:                      	my $ticker = ($get_ticker->fetchall_array())[0];
+	16:                      	$ticker or die join(' ', 'No ticker for', 
+							   $company, 'found.');
+	17:                      	$tickers{$company} = $ticker;     
+	18:                  	}
+	19:                  	$insert_stock_prices->execute($tickers{$company},
+								@$row);
+	20:                  }
+	21:         };
+	22:     };
+	23:
+	24:      ...error checking as before
+	25:  }
+                                                                                
+Now the lookup code, lines 14-17, is only executed once for each company, and the ticker is stored in C<%tickers> for future reference. As with our statement handles, the closure will preserve the state of C<%tickers> between invocations. If I were processing a year's worth of files, this might save me a few hundred lookups for each company, depending on how often data appears for that company in the files.
+
+=head2 Creating Multiple Inserters
+
+Creating multiple inserters is easy enough: I just call my init subroutine for each inserter I wish to create. With a little modification to our main loop and the initialization section of C<init_stock_inserter()>, I could have my program handle several file types with different database requirements. I might iterate through each file type as follows in our main loop.
+
+	my $con = make_DB_connection();
+	
+	for my $type (qw/NYSE NASDAQ/){
+		my $stock_inserter = init_stock_inserter($con, $type);
+		for my $file (@files){
+			my $data = parse_file($file);
+			$stock_inserter->($data)
+			archive_file($file);
+		}
+	}
+
+Now I loop through both New York Stock Exchange (NYSE) and NASDAQ type files. These may differ in file structure, lookup tables referenced, and the tables that ultimately stores the data. Nevertheless, the steps in processing the data remain the same. I now pass the type of file being processed to the init routine in addition to the database connection. This allows my init routine to distinguish which type of file it is expected to handle and to initialize the closure appropriately.
+
+	sub init_stock_inserter{
+		my ($con, $type) = @_;
+		my (%tickers, $insert_stmt, $ticker_query);
+		if($type eq 'NYSE'){
+			$insert_stmt = 'insert into NYSE_prices...';
+			$ticker_query = 'select ticker from NYSE_ticker_map...';
+		}
+		elsif($type eq 'NASDAQ'){
+			$insert_stmt = 'insert into NASDAQ_prices...';
+			$ticker_query = 'select ticker from NASDAQ_ticker_map...';
+		}
+		else{notify('Invalid file type specified: ' . $type) }
+		
+		my $get_ticker = $con->prepare($ticker_query);
+		my $insert_stock_prices = $con->prepare($insert_stmt);        
+		....as before
+	}
+
+The major difference in this new version is that I use a chain of conditionals to determine the specific SQL statements to use according to the file type. Once I assign the SQL statements, I prepare the same two statement handles I did earlier. My closure won't even mind if the data passed in differs in the order or number of columns in each row. As long as the dereferenced C<$row> maps to the placeholders in C<$insert_stmt>, the data will be inserted. I could even further simplify C<init_stock_inserter()> by delegating the SQL generation to another subroutine entirely.
+
+	sub init_stock_inserter{
+		my ($con, $type) = @_;
+		my (%tickers, $get_ticker, $insert_stock_prices);
+		
+		my ($insert_stmt, $ticker_query) = get_sql($type);
+		$get_ticker = $con->prepare($ticker_query);
+		$insert_stock_prices = $con->prepare($insert_stmt);
+		
+		...create and return closure
+	}
+
+The initialization section is now compact and clean as a whistle. Our new subroutine C<get_sql()> doesn't even need to contain the SQL itself. It could suck the statements in from a prescribed file, thus eliminating the SQL from our program altogether. Having declared the two SQL statement variables, C<$insert_stmt> and C<$ticker_query>, inside a superficial block, I ensure that they return to obscurity as quickly as they were generated. After all, I only need them to prepare my statement handles, and I don't need my closure dragging around extra weight. However, the statement handle variables must now be declared outside of the block so that our closure can still access them.
+
+=head2 Final Musings
+
+Using closures with DBI is an effective way to introduce some order into complex database code while still taking advantage of the efficiency that DBI provides with prepared statement handles. DBI closures also allow me to simulate calls to stored procedures native to the database. I can rope off database specific code, and the SQL statments in particular, to prevent them from dominating the flow of my programs. In Perl, SQL should be second-class citizen and shouldn't be allowed to run the show. Give it a spin the next time the mailman drops 10,000 files on your doorstep!

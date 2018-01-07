@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+use CGI qw/:standard/;
+use XML::DT ;
+my $filename = shift;
+
+%hdl=(
+      -default => sub {$c},
+
+      -type => {
+                channel   => 'MAP',
+                item      => 'MAP',
+                items     => 'ID',
+                'rdf:Seq' => 'SEQ'
+               },
+
+      '/*/image' => sub{""},
+
+      'channel' => sub{
+        h1(a({ -href=>$c->{link}},
+             img{-src=>$c->{image},
+                   -border=>0,
+                     -alt=>$c->{title}}), $c->{description});
+      },
+
+      'item' => sub {
+        h3(a({-href=>$c->{link}},$c->{title})).
+          blockquote($c->{description});
+      },
+
+      'image' => sub{ $v{'rdf:resource'} || $v{'rdf:about'} },
+     );
+
+print pathdt($filename,%hdl);

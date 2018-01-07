@@ -1,0 +1,429 @@
+
+Introduction 
+------------
+
+I did a talk for my local Perl Mongers group in January of this
+year, and presented some discussion about solving and grading
+Sudoku puzzles with Perl.  My conclusion was that Sudoku solvers
+are wonderful programming exercises.  I've written a couple now,
+and they both exercised my brain in interesting ways.  The truth
+is that just sitting and doing Sudoku puzzles might have done
+the same, but I lack the patience.  Why do the work myself when
+I have an x86 genius peering over my shoulder?
+
+Generating Sudoku is in the realm of the NP-complete.  It's not
+a decision problem, but generating a puzzle can be mapped to two
+NP-complete problems.  I'll address these two problems in this
+article, and the result will be a Sudoku puzzle generator in
+Perl.
+
+The first problem is to generate a solution grid: given nothing,
+return a 9x9 grid that satisfies all the constraints of Sudoku.
+This is essentially a standard Sudoku solver on steroids - you
+feed in a puzzle with no clues, and get a solution.  The second
+problem is to decide which clues to remove to produce a puzzle.  
+
+While researching my talk, I discovered that many of the most
+efficient generators and solvers (mostly written in C/C++) used
+a very interesting strategy.  Rather than a data representation
+that dealt with a grid of possible values, they map the puzzle
+to a different puzzle, something called an 'exact cover'
+problem.  
+
+
+Exact Cover
+-----------
+
+The exact cover problem is: Given a boolean matrix, determine if
+there is a set of rows such that each column contains a single 1:
+
+ 1 0 1 0 1 0
+ 0 1 0 0 1 0
+ 0 1 0 0 0 0
+ 0 0 0 1 0 1
+
+In this trivial example, we can see by inspection that rows 0, 2
+and 3 satisfy the conditions and exactly cover the columns.
+
+I wasn't able to find a Perl Sudoku generator using exact cover,
+so I decided to give it a try.  I haven't determined if this is
+the most efficient solution possible, but I think that it is a
+tremendously graceful one.  
+
+Once I wrote the exact cover solver, the rest was trivial.  
+
+To implement a recursive exact cover solver is relatively
+straightforward.  Here is the basic algorithm:
+
+ pick a column 'c'
+ enumerate the rows that have a 1 in column 'c'
+
+ base-cases: 
+   - if there are no remaining columns, we succeed
+   - if 'c' contains no rows, we fail
+
+ for each row 'r' in the above set:
+   - place 'r' in the solution set
+   - delete all the columns that 'r' has a value of 1
+   - delete all rows that had 1s in any of those columns
+   - solve this derived puzzle
+
+The algorithm uses the typical recursive approach of solving one
+component of a puzzle, then recursing to solve the remainder.
+
+If the recursive call to solve the sub-puzzle fails, we simply
+try the next row.  In this manner, we would eventually try all
+of the rows at each level until we hit then all or find a
+solution.  The column selection, though, is permanent.  
+
+It might seem like a lot of work, but think of it this way: this
+problem maps all of the constraints of Sudoku into a single
+constraint.  We have a relatively basic algorithm that allows us
+to forget about Naked Singles and Hidden Singles and just solve
+one basic problem.
+
+With an array of arrays and dclone from Storable, you can
+implement an exact cover solver in a few minutes, naively
+picking columns and rows sequentially.  Unfortunately, it is
+incredibly expensive, as well as RAM-hungry.  Fortunately, Perl
+gives us lots of tools to optimize this problem. 
+
+The first, and most obvious, is that the rows in our matrix
+don't need to be arrays.  I toyed with using PDL for a bit,
+before settling on lowly bit-vector.  vec() is a powerful tool
+that rarely gets noticed (see sidebar).  Combining a bit-vector
+with bitwise logical operators makes for a surprisingly clean
+and fast implementation.
+
+
+Mapping Sudoku to Exact Cover
+-----------------------------
+
+First let's place the problem in an exact cover state.  This
+turns out to be extremely easy.  Sudoku has two constraints:
+
+ - each square needs a value between 1 and 9
+ - each row, col, and 3x3 block needs each value between 1
+   and 9
+
+If we split the last constraint into row, column and block
+components, then we have 4 constraints, each of which need to be
+satisfied exactly once.  If we can map each of these constraints
+to a column in our matrix, then by solving the exact cover, we
+solve the solution grid.
+
+Our vector will be 325 bits long, in four segments of 81.
+Arbitrarily, the first 81 represent a given square having a
+value.  I'll number these squares 0 through 80.  The next 81
+represent each of the 9 rows having each of the 9 values.
+Similar mappings are used for the columns and blocks.  
+
+ sub map_to_covervec
+ {
+    my ( $num, $sqr ) = @_;
+    my $bitmap = $ZEROCOL;      # blank row (9**2 * 4 zeros)
+    my $seg = 9**2;             # constraint segment offset
+ 
+    my $row = int( $sqr / 9 );  
+    my $col = $sqr % 9;        
+    my $blk = int( $col / 3 ) + int( $row / 3 ) * 3; 
+ 
+    my @offsets = ( 
+       $sqr,
+       $seg + $row * 9 + $num - 1,
+       $seg * 2 + $col * 9 + $num - 1,
+       $seg * 3 + $blk * 9 + $num - 1,
+       );
+ 
+    vec( $bitmap, $_, 1 ) = 1 for @offsets;
+    return $bitmap;
+ }
+
+To build our matrix, we simply iterate through the squares and
+values, enumerating each of the 9**3 placement possibilities.  I
+simply push these into an array.  I don't track what each
+represents, but because I populate sequentially, I can determine
+meaning by indices.
+
+Solving Exact Cover
+-------------------
+
+Now our puzzle matrix is extremely slender, but we have a lot of
+overhead to worry about.  Deleting rows is relatively cheap, but
+splicing and shifting hundreds of rows for each recursion is
+going to add up.  Worse is the fact that for each recursion, we
+need to delete 4 columns from each remaining row.   Bitmasks
+save the day: rather than deleting columns we can simply mask
+them out.  
+
+In fact, with a bitmask for the columns, rows and items promoted
+to our solution set, we can avoid any deletions, and needn't
+clone our matrix at all.  We can now encapsulate our recursion
+state in three values, totalling about 227 bytes payload (about
+0.01% of the size of cloning an array of arrays.)
+
+There are a couple of places where the bitvectors provide
+tremendous advantage.  For example, when we select a 'pivot row'
+to add to our solution set, we need to prune out all rows that
+had 1s in the same columns.  
+
+ # prune out covered rows
+ for my $r ( @liverows )
+ {
+    vec( $removed, $r, 1 ) = 1
+      if ( $puz[$r] & $puz[$pivotrow] ) ne $ZEROCOL;
+ }
+
+Here $removed is the list of rows now excluded from the puzzle.
+If we bitwise AND the pivot row with each row, we can discard
+any that don't yield all zeros.  Discarding in this case means
+simply setting a bit in the removed vector.
+
+Once I built the first solver with the bitvecs, I ran it.  I had
+to kill it after 10 or 15 minutes... it was trashing my CPU, but
+clearly not making the least progress.  After staring at debug
+output of the enormous matrix, my first "optimization" became
+clear.  We needed an extra base-case in the recursion.  If we
+wait around until we find an unsatisfiable column, we might
+recurse dozens of times into a puzzle that is clearly
+unsatisfiable by inspection.  
+
+With bitvectors, this turns out to be easy, though O(n).
+Clearly, though, it's a massive win overall.  If we have no way
+to satisfy our needed columns, then we're just wasting time,
+possibly enormous amounts of time.  
+
+ my $colcheck = $ZEROCOL;
+ $colcheck |= $puz[$_] for @liverows;
+ return unless $colcheck eq $livecols;
+
+Those three lines cut what I can only estimate is a 100 hours
+from my running time.  Initialize an empty vector, then bitwise
+OR all the rows remaining into it.  If at the end, we can't
+satisfy the remaining columns exactly, reject this path.  (Here
+$livecols is a vector representing the columns not resolved.)
+
+With this first optimization, the generator ran and produced
+results, but with a wildly unstable running time.  Sometimes I
+got grids in 3 seconds, other times 45 minutes.  That suggests
+that we are getting stuck in very deep, messy paths that have no
+solutions.  This is a depth-first algorithm, so we have to
+completely probe that path before even looking at another.
+
+We aren't taking advantage of all the information we have at our
+disposal, though.  We're just picking columns for our pivot
+sequentially - if there are any columns with 1 row, we should
+always pick that first.  We will have to pick it eventually, and
+if it yields unsatisfiability, we can stop quickly.
+
+Here's a relatively cheap way to probe for singleton columns:
+
+ COLPICK:
+ for my $col ( 0 .. $COLCNT - 1 )
+ {
+    # skip consumed columns
+    next COLPICK unless vec( $livecol, $col, 1 );
+   
+    $pivcol = $col;
+    $pivmask = $ZEROCOL;
+    vec( $pivmask, $pivcol, 1 ) = 1;
+ 
+    # count remaining rows for that column
+    my $cnt = 0;
+    (( $pivmask & $puz[$_] ) ne $ZEROCOL ) and $cnt++ 
+       for @liverows;
+
+    # shortcurcuit select if any singletons found
+    last COLPICK if $cnt == 1;
+ }
+
+Here we just check for singleton columns, otherwise we pick the
+last available column.  With this optimization, we see a
+tremendous speed up with partially solved branches - something
+that is very important in the next step.  More importantly, the
+running time is now stable and fast.
+
+We might feel very removed from the Sudoku context now, so think
+of this optimization this way: we are simultaneously finding
+hidden and naked singles in all three dimensions.  This
+convergence shows the power of reducing complex puzzles to
+simpler ones.
+
+The rest of the cover solver is just a matter of programming the
+main base case and something to manage pruned puzzles.  Note
+that everything I've mentioned so far would yield exactly the
+same grid over and over.  However, if at each branch we first
+enumerate the rows active in our pivot column, then shuffle them
+before recursing, we cover the entire problem space. 
+
+I bundled up the information required for each solution state
+into a 300 byte bundle I arbitrarily named path-stashes.  At
+that point, we can actually do away with the recursion entirely:
+just create the pruned puzzles, and push them onto a stack.  At
+the top of the loop, we pop the last thing off, and handle it.
+If we save one of these path-stashes, we can return to that
+state at any time, feeding it in as the initial state to the
+cover solver.
+
+What is interesting about this approach is that it is now
+trivial to turn this from a depth-first search into a
+breadth-first search, something rather hard to do with
+recursion.  We definitely don't want that for the general grid
+solver, though.
+
+In the end, my solver bears no signs of its Sudoku parentage,
+but nonetheless spits out solutions quickly and with
+considerably less code then my other solvers, well under 50
+lines of code.
+
+
+Minimal Puzzles:
+----------------
+
+Once you have a solution grid, the next challenge is to remove
+entries to yield a puzzle.  In our exact cover, this simply
+means removing rows.  You can see that there are somewhere on
+the order of 2**81 possibilities for removing values.  (This is
+the powerset of the solution set, and huge.)  Obviously a huge
+number of those are trivial... if we remove one clue, then we
+have a puzzle, but it sucks.  
+
+On the other hand, if we remove too many clues, the puzzle
+becomes ambiguous - you can solve it to many grids.  A true
+Sudoku puzzle can only have one valid solution.  Sitting between
+the too many and too few clue boundary is a boundary set of
+"minimal puzzles."  Minimal puzzles have a single solution, but
+if you remove any clue from them, they become ambiguous.
+Research has suggested that minimal puzzles are distributed in a
+bell-curve, starting at around 36 clues, peaking at 26 clues,
+and then stopping hard at 17. It has been conjectured that no 16
+clue Sudoku exists, but not proven.
+
+It's possible to enumerate all the minimal puzzles for a given
+grid, but not easy.  The best available compiled enumerators can
+take up to ten days to find all the minimal puzzles for a single
+grid, and it is an unstable algorithm, depending on some complex
+characteristics of grid dependencies.
+
+I focused on a more realistic goal: find a single minimal puzzle
+per grid.  Again, we can solve this quite easily, though
+expensively, with a bit of recursion.  First a helper function:
+
+   sub is_ambiguous
+   {
+      my @set = @_;
+      # create a cover problem for that set
+      my $pstash = make_path_stash( $puzzle, @set );
+
+      # use our solver to look for up to 2 solutions:
+      my @solutions  = solve_cover( $puzzle, $pstash, 2 );
+      return ( scalar( @solutions ) == 1 );
+   }
+
+make_path_stash() simply takes the full puzzle, and prunes
+the stash to represent the solution set we have.  Then it can
+be fed directly into our cover solver.  To find a minimal
+puzzle:
+
+   sub reduce_set
+   {
+      my @set = @_;
+      for ( 0..$#set )
+      {
+         my $first = shift @set;
+         if ( is_unambiguous( @set ) )
+         {
+            return if reduce_set( @set );
+         }
+         push @set, $first;
+      }
+      print "Minimal set: @set\n";
+      return 1;
+   }
+
+You likely want to convert the @set into a useful
+representation, or you could just bubble it up the stack and
+return it to the caller.  There are many optimizations available
+to us, but I'll just mention two very quickly.  
+
+For the first, notice that this is a funny sort of tail
+recursion: if we recurse we never finish our loop.  Using the
+standard tail-recursion elimination jiggery-pokery, we end up
+with something surprisingly simple:
+
+   TRIM: while ( 1 ) 
+   {
+      for ( 0..$#sol ) 
+      {
+         my $front = shift @sol;
+         next TRIM if is_unambiguous( @sol );
+         push @sol, $front;
+      }
+      last TRIM;
+   }
+   return @sol;
+
+The other is something obvious by experimentation... you have to
+remove quite a few rows before you get an ambiguous puzzle.  9
+times out of 10 you can remove 30 clues without going ambiguous.
+That saves a lot of solving:
+
+   my @sol;
+   do
+   {
+      @sol = shuffle @solset;
+      pop @sol for 0..30;
+   }
+   until is_unambiguous( @sol );
+
+That shuffle in there is nice too.  It means that if we call
+this 10 times, we'll almost certainly get 10 different puzzles.
+In fact, I ran it 10000 times, and got 10000 different minimal
+puzzles.  We prune quickly from the front, and we are fairly
+unlikely to reach the tail or the set.  Changing what makes up
+the front and back makes a profound difference.
+
+It's worth mentioning the obvious, too: as we prune more and
+more, is_unambiguous() becomes more and more expensive.
+
+Conclusion:
+-----------
+
+Perl doesn't have the power to blaze through this type of
+problem: even with heavy optimizations it takes my machine 15
+seconds to produce a grid and find a minimal puzzle for it.
+
+I find this type of problem to be extremely interesting to deal
+with.  With no input, this program produces a virtually infinite
+number of interesting outputs.  Googling about Sudoku and
+programming yields a massive number of hits, and that's a
+reflection of the fact that it's fun.  There are still some open
+questions about Sudoku, and while I doubt they will be solved in
+Perl, I'm sure they will be solved with code.
+
+
+Author:
+-------
+
+Eric Maki <eric@uc.org> lives and works in Waterloo, Ontario.
+He is a Perl programmer by profession.
+
+
+Selected References:
+--------------------
+
+Knuth Dancing Links paper
+http://xxx.lanl.gov/PS_cache/cs/pdf/0011/0011047.pdf
+
+Wikipedia: Mathematics of Sudoku
+http://en.wikipedia.org/wiki/Mathematics_of_Sudoku
+
+Counting essentially different puzzles:
+http://www.shef.ac.uk/~pm1afj/sudoku/sudgroup.html
+
+Minimal Puzzles:
+http://www.maths.nuim.ie/staff/gmg/sudoku/checker.html
+
+Distribution of minimal puzzles:
+http://www.research.att.com/~gsf/sudoku/sudoku.html
+

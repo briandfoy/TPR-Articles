@@ -1,0 +1,70 @@
+Almost any reader of this Journal knows what {\it Parsing} is about.
+One of the strengths of Perl is its excellence for text analysis. 
+Additionally to its embedded regular expression capacities, modules 
+like \code{Parse::RecDescent} \cite{conwayrd} and 
+\code{Parse::Yapp} \cite{desarmenien} make easier the task of text 
+understanding and text transformation.
+This is in clear contrast with the absence of Perl 5 
+generic tools\footnote{There are however very good specific ones,
+for example, for \code{XML} and \code{HTML} support and 
+symbolic mathematics
+% \cite{muller}
+}
+giving support for the subsequent stages
+of text processing.
+The exception being the module \code{Language::AttributeGrammar}
+\cite{luke}. Parrot does well in this 
+chapter, having the Parrot Grammar Engine (PGE) \cite{michaud}
+and the Tree Grammar Engine (TGE)
+\cite{randaltge}.
+
+\code{Parse::Eyapp} (Extended yapp) is a collection of modules
+that extends Francois Desarmenien \code{Parse::Yapp} \code{1.05}:
+Any \code{yapp} program runs without changes with \code{eyapp}.
+Additionally \code{Parse::Eyapp} provides new 
+functionalities like named attributes,
+EBNF-like expressions, modifiable default actions,
+abstract syntax tree building and translation schemes. 
+It also provides a language for tree transformations.
+This article introduces the basics of 
+translator construction with \code{Parse::Eyapp} through an
+example that compiles infix expressions into Parrot 
+Intermediate Representation (PIR)\cite{randal04}.
+The input to the program will be a (semicolon separated)
+list of infix expressions, like:
+
+\begin{verbatim}
+1  b = 5;
+2  a = b+2;
+3  a = 2*(a+b)*(2-4/2); # is zero
+4  print a;
+5  d = (a = a+1)*4-b;
+6  c = a*b+d;
+7  print c;
+8  print d
+\end{verbatim}
+
+and the output is an equivalent
+PIR: 
+\begin{verbatim}
+ 1  .sub 'main' :main
+ 2     .local num a, b, c, d
+ 3     b = 5
+ 4     a = b + 2
+ 5     a = 0 # expression at line 3 
+ 6     print "a = "     # above was
+ 7     print a    # reduced to zero
+ 8     print "\n" # at compile time
+ 9     a = a + 1
+10     $N5 = a * 4
+11     d = $N5 - b
+12     $N7 = a * b
+13     c = $N7 + d
+14     print "c = "
+15     print c
+16     print "\n"
+17     print "d = "
+18     print d
+19     print "\n"
+20  .end
+\end{verbatim}

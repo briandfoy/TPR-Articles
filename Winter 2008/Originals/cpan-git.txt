@@ -1,0 +1,244 @@
+<ASCII-MAC>
+<Version:5><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1>>
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> CPAN Patching with Git	
+<pstyle:Feature Section Lead>Git, the distributed version control system originally written by Linus Torvalds for the Linux kernel, has grown tremendously in popularity in the last few years. A big part of its success is the ridiculous ease with which one can turn any directory into an ad hoc, versioned repository. Indeed, all it takes is the magic incantation and voilà, instant versioning control:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   $ git init
+<pSpaceBefore:><pstyle:Feature Code Para>   $ git add .
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   $ git commit -m "original commit"
+<pSpaceAfter:><pstyle:Feature Para>With such a low overhead, Git is not only useful for code sharing, but is also a very attractive tool to easily add versioning, branching, or history capabilities to any project or task.
+<pstyle:Feature Para>In this article, I<0x2019>ll show you how to use Git with to easily prepare a patch for a CPAN module.
+<pstyle:Feature Sub Section>Step 1: From CPAN into my grubby mi^D^D Git
+<pstyle:Feature Para>So, I found a bug in a CPAN module and, infused with the proper dose of hubris or impatience for the task, decided to write a patch for it. Excellent!
+<pstyle:Feature Para>But before going on a patching rampage, I must first set my baseline and download the module<0x2019>s latest release. To do so, I use a script called <CharStyle:pod-C>git-cpan-init<CharStyle:>. The script<0x2019>s functionality can be divided into three distinct parts: 1) retrieval of the module<0x2019>s distribution file from CPAN, 2) its extraction, and 3) gitification.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    01 #!/usr/bin/perl
+<pSpaceBefore:><pstyle:Feature Code Para>    02
+<pstyle:Feature Code Para>    03 use 5.10.0;
+<pstyle:Feature Code Para>    04
+<pstyle:Feature Code Para>    05 use strict;
+<pstyle:Feature Code Para>    06 use warnings;
+<pstyle:Feature Code Para>    07
+<pstyle:Feature Code Para>    08 use autodie;
+<pstyle:Feature Code Para>    09
+<pstyle:Feature Code Para>    10 use CPANPLUS;
+<pstyle:Feature Code Para>    11
+<pstyle:Feature Code Para>    12 my $module = shift;
+<pstyle:Feature Code Para>    13
+<pstyle:Feature Code Para>    14 my $location = fetch( $module )
+<pstyle:Feature Code Para>    15    or die "couldn't retrieve distribution file for module $module";
+<pstyle:Feature Code Para>    16
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    17 say "downloaded distribution at $location";
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-B>git-cpaninit, part 1: fetching the latest distribution<CharStyle:>
+<pstyle:Feature Para>In this first part, I use <CharStyle:pod-B>CPANPLUS<CharStyle:> to fetch the module (which is passed as an argument to the script at line 12) from CPAN. Although I don<0x2019>t use it in this part, I import <CharStyle:pod-B>autodie<CharStyle:> to take care of the calls to <CharStyle:pod-C>unlink<CharStyle:>, <CharStyle:pod-C>mkdir<CharStyle:>, <CharStyle:pod-C>open<CharStyle:> and such that will happen later in the script, so that I won<0x2019>t have to clutter my code with the usual <CharStyle:pod-C>... or die<CharStyle:> suffixes.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   19 use Archive::Tar;
+<pSpaceBefore:><pstyle:Feature Code Para>   20
+<pstyle:Feature Code Para>   21 my $tar = Archive::Tar-\>new;
+<pstyle:Feature Code Para>   22 $tar-\>read( $location =\> 1 );
+<pstyle:Feature Code Para>   23
+<pstyle:Feature Code Para>   24 say "extracting distribution in current directory";
+<pstyle:Feature Code Para>   25
+<pstyle:Feature Code Para>   26 for my $file ( $tar-\>list_files ) {
+<pstyle:Feature Code Para>   27     # change root directory to current dir
+<pstyle:Feature Code Para>   28     ( my $location = $file ) =~ s#^.*?/##;
+<pstyle:Feature Code Para>   29     $tar-\>extract_file( $file =\> $location );
+<pstyle:Feature Code Para>   30 }
+<pstyle:Feature Code Para>   31
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   32 unlink $location;
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-B>git-cpan-init, part 2: extracting the archive<CharStyle:>
+<pstyle:Feature Para>This second part is rather straightforward; I use <CharStyle:pod-B>Archive::Tar<CharStyle:> to extract the distribution<0x2019>s files into the current directory and, once I<0x2019>m done, I tidily remove the now-useless archive file.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   34 use Git;
+<pSpaceBefore:><pstyle:Feature Code Para>   35
+<pstyle:Feature Code Para>   36 say "initializing Git repository";
+<pstyle:Feature Code Para>   37
+<pstyle:Feature Code Para>   38 Git::command_oneline('init');
+<pstyle:Feature Code Para>   39
+<pstyle:Feature Code Para>   40 my $repo = Git-\>repository;
+<pstyle:Feature Code Para>   41 $repo-\>command( add =\> '.'    );
+<pstyle:Feature Code Para>   42 $repo-\>command( commit =\> '--message' =\> 'original import from CPAN' );
+<pstyle:Feature Code Para>   43 $repo-\>command( branch =\> '-M', master =\> 'cpan' );
+<pstyle:Feature Code Para>   44
+<pstyle:Feature Code Para>   45 use YAML;
+<pstyle:Feature Code Para>   46
+<pstyle:Feature Code Para>   47 my $meta = YAML::LoadFile( 'META.yml' );
+<pstyle:Feature Code Para>   48
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   49 $repo-\>command( tag =\> "v$version" ) if $meta-\>{version};
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-B> git-cpan-init, part 3: initializing the repository <CharStyle:>
+<pstyle:Feature Para>The third part is where I bring Git into the picture. I create an empty repository structure (line 38) that I populate with everything in the current directory, including all sub-directories (lines 41 and 42). To put emphasis on the fact that the master branch<0x2019>s purpose is to track the CPAN versions of the module, I rename my master branch to <CharStyle:pod-C>cpan<CharStyle:> (line 43). Finally, I open the distribution<0x2019>s META.yml and, if I find the module<0x2019>s version inside, tag the current commit with it.
+<pstyle:Head3Style>Module Git.pm not found?
+<pstyle:Feature Para>If you don<0x2019>t have <CharStyle:pod-C>Git.pm<CharStyle:> is on your system, download Git<0x2019>s source and look for the perl subdirectory. Inside, you<0x2019>ll find a familiar <CharStyle:pod-C>Makefile.PL<CharStyle:> file. Doing the usual dance (<CharStyle:pod-C>perl Makefile.PL; make; make install<CharStyle:>) will install the missing module.
+<pstyle:Head3Style>Making <CharStyle:pod-B>git-cpan-init<CharStyle:> part of the family
+<pstyle:Feature Para>Now that I have a snazzy script, I need to integrate it with Git.
+<pstyle:Feature Para>To do so, I find out where the git-* programs reside on my computer (up to version 1.5 of Git, it should be either in /usr/bin or /usr/local/bin, for version 1.6, it should be /usr/libexec/git-core or /usr/local/libexec/git-code). Drop git-cpan-init in that directory and that<0x2019>s it. I<0x2019>m done!
+<pstyle:Feature Para>Because my script begins with git-, Git will consider it to be just another member of its suite of help programs, and everything -- including command completion if I have it enabled -- will Just Work.
+<pstyle:Feature Para>With <CharStyle:pod-C>git-cpan-init<CharStyle:> in place, I can now import the CPAN module I wish to patch:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   [tpr]$ mkdir L-l33t
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>   [tpr]$ cd L-l33t
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>   [L-l33t]$ git cpan-init Language::l33t
+<pstyle:Feature Code Para>   downloaded distribution at Language-l33t-0.03.tar.gz
+<pstyle:Feature Code Para>   extracting distribution in current directory
+<pstyle:Feature Code Para>   initializing Git repository
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>   [L-l33t (cpan)]$ git status
+<pstyle:Feature Code Para>   # On branch cpan
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   nothing to commit (working directory clean)
+<pSpaceAfter:><pstyle:Head3Style>An alternate way of getting the code: Is there a repository in the room?
+<pstyle:Feature Para>The latest released version of the module still ain<0x2019>t fresh enough for you? I could also see if the development code is available through a public repository. Nicely enough, the specification for <CharStyle:pod-B>META.yml<CharStyle:> has provisions for a repository resource field. This field is not yet widely used (nor, indeed, known), but it still doesn<0x2019>t hurt to look:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   01 #!/usr/bin/perl
+<pSpaceBefore:><pstyle:Feature Code Para>   02
+<pstyle:Feature Code Para>   03 use 5.10.0;
+<pstyle:Feature Code Para>   04 use LWP::Simple;
+<pstyle:Feature Code Para>   05 use YAML;
+<pstyle:Feature Code Para>   06 use Git;
+<pstyle:Feature Code Para>   07
+<pstyle:Feature Code Para>   08 ( my $dist = shift ) =~ s/::/-/g;
+<pstyle:Feature Code Para>   09
+<pstyle:Feature Code Para>   10 my $meta = YAML::Load(
+<pstyle:Feature Code Para>   11     get "http://search.cpan.org/dist/$dist/META.yml"
+<pstyle:Feature Code Para>   12         or die "couldn't retrieve META.yml\\n"
+<pstyle:Feature Code Para>   13 );
+<pstyle:Feature Code Para>   14
+<pstyle:Feature Code Para>   15 my $url = $meta-\>{resources}{repository} || die 'no repository found';
+<pstyle:Feature Code Para>   16
+<pstyle:Feature Code Para>   17 say "repository for $dist found: $url";
+<pstyle:Feature Code Para>   18
+<pstyle:Feature Code Para>   19 if ( $url =~ /git/ ) {
+<pstyle:Feature Code Para>   20     say "looks Gittish, cloning...";
+<pstyle:Feature Code Para>   21     Git::command_oneline( clone =\> $url );
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   22 }
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-B> git-cpan-clone<CharStyle:>
+<pstyle:Feature Para>With this script, I play fast and loose and only retrieve the distribution<0x2019>s META.yml from CPAN. If I find that it does contain a repository resource, I try to figure out if it<0x2019>s a Git repository. This is more tricky than it seems, as the URL of a Git repository can use Git<0x2019>s own protocol (<CharStyle:pod-C>git://...<CharStyle:>) as well as the more generic <CharStyle:pod-C>http<CharStyle:>. For the sake of brevity, I<0x2019>ll assume here that the string <0x2019>git<0x2019> appearing anywhere in the URL is good enough for us.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   [tpr]$ git cpan-clone WWW::Ohloh::API
+<pSpaceBefore:><pstyle:Feature Code Para>   repository for WWW-Ohloh-API found: http://babyl.dyndns.org/git/www-ohloh-api.git
+<pstyle:Feature Code Para>   repository looks Gittish, cloning...
+<pstyle:Feature Code Para>   ...
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>   [tpr]$ ls
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   www-ohloh-api
+<pSpaceAfter:><pstyle:Feature Sub Section>Step 3: Hard work, beautiful patch
+<pstyle:Feature Para>Now that everything is ready and at my disposition, I can begin to hack. First, I create a working branch:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   [L-l33t (cpan)]$ git checkout -b mypatch
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>   [L-l33t (mypatch)]$
+<pSpaceAfter:><pstyle:Feature Para>Now I get to work. Initially, I don<0x2019>t have to worry about making pretty commits with overly insightful messages; this is a branch that only my eyes will ever see, so there is no reason not to commit soon, and commit often:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   \<hack, hack, hack\>
+<pSpaceBefore:><pstyle:Feature Code Para>   [L-l33t (mypatch)]$ git commit -a -m "first stab at it"
+<pstyle:Feature Code Para>   \<more hack\>
+<pstyle:Feature Code Para>   [L-l33t (mypatch)]$ git commit -a -m "changed calls to foo() to bar()"
+<pstyle:Feature Code Para>   \<even more hack\>
+<pstyle:Feature Code Para>   [L-l33t (mypatch)]$ git commit -a -m "added a frobuscate()"
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   \<etc\>
+<pSpaceAfter:><pstyle:Feature Para>Once I<0x2019>m done, I can look back at all the commits I did since I branched from the <CharStyle:pod-C>cpan<CharStyle:> version:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   [L-l33t (mypatch)]$ git log --pretty=oneline cpan..
+<pSpaceBefore:><pstyle:Feature Code Para>   0eabd477df... added a frobuscate()
+<pstyle:Feature Code Para>   6f15bcf141... changed calls to foo() to bar()
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   7150740d97... first stab at it
+<pSpaceAfter:><pstyle:Feature Para>Since I want to submit a patch, I now want to collapse our changes into a single commit. I can do this via an interactive rebasing:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>   [L-l33t (mypatch)]$ git rebase -i cpan<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>This lets me open a text file listing all the commits done on the branch, and asks me what I want to do with them. In this case, I want to collapse them all into one big commit:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   pick   d9a0035 first stab at it
+<pSpaceBefore:><pstyle:Feature Code Para>   squash 6f15bcf changed calls to foo() to bar()
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   squash 0eabd47 added a frobuscate()
+<pSpaceAfter:><pstyle:Feature Para>After that, I<0x2019>m given the opportunity to change the merged commit message. Now is a good time to tidy it up, as git will ultimately use it as the text accompanying my patch. Also, because git uses the first line of the commit message will as the email subject line, I make sure it describes succintly and adequately what the patch is about.
+<pstyle:Feature Sub Section>Step 3: Sending the patch
+<pstyle:Feature Para>I<0x2019>m almost done. All that is left is to actually send my patch, which I do with <CharStyle:pod-C>git-cpan-sendpatch<CharStyle:>.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   01 #!/usr/bin/perl
+<pSpaceBefore:><pstyle:Feature Code Para>   02
+<pstyle:Feature Code Para>   03 use 5.10.0;
+<pstyle:Feature Code Para>   04
+<pstyle:Feature Code Para>   05 use strict;
+<pstyle:Feature Code Para>   06 use warnings;
+<pstyle:Feature Code Para>   07 use autodie;
+<pstyle:Feature Code Para>   08
+<pstyle:Feature Code Para>   09 use Git;
+<pstyle:Feature Code Para>   10 use YAML;
+<pstyle:Feature Code Para>   11 use Email::Send;
+<pstyle:Feature Code Para>   12 use Email::Simple;
+<pstyle:Feature Code Para>   13 use File::Slurp qw/ slurp /;
+<pstyle:Feature Code Para>   14
+<pstyle:Feature Code Para>   15 my $repo = Git-\>repository;
+<pstyle:Feature Code Para>   16 my @patches = $repo-\>command( 'format-patch' =\> 'cpan' );
+<pstyle:Feature Code Para>   17
+<pstyle:Feature Code Para>   18 if ( @patches \> 1 ) {
+<pstyle:Feature Code Para>   19     say "more than one patch file, aborting";
+<pstyle:Feature Code Para>   20     unlink @patches;
+<pstyle:Feature Code Para>   21 }
+<pstyle:Feature Code Para>   22
+<pstyle:Feature Code Para>   23 my $patch = Email::Simple-\>new( slurp( $patches[0] ) );
+<pstyle:Feature Code Para>   24
+<pstyle:Feature Code Para>   25 my $meta = YAML::LoadFile( 'META.yml' );
+<pstyle:Feature Code Para>   26 my $to = bug-' . $meta-\>{name} . '@rt.cpan.org';
+<pstyle:Feature Code Para>   27 $patch-\>header_set( To =\> $to );
+<pstyle:Feature Code Para>   28
+<pstyle:Feature Code Para>   29 my $sender = Email::Send-\>new({
+<pstyle:Feature Code Para>   30     mailer =\> 'SMTP',
+<pstyle:Feature Code Para>   31     mailer_args =\> [ Host =\> 'your.smtp-server.com' ]
+<pstyle:Feature Code Para>   32 });
+<pstyle:Feature Code Para>   33 $sender-\>send( $patch );
+<pstyle:Feature Code Para>   34
+<pstyle:Feature Code Para>   35 say 'patch sent!';
+<pstyle:Feature Code Para>   36
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   37 unlink $patches[0];
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-B> git-cpan-sendpatch<CharStyle:>
+<pstyle:Feature Para>Before sending the patch, my script checks that my branch has exactly one commit (just in case I forgot to collapse them). If the patch passes muster, it<0x2019>s being sent to the module<0x2019>s bug queue on RT.cpan.org.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   [L-l33t (mypatch)]$ git cpan-sendpatch
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>   patch sent!
+<pSpaceAfter:><pstyle:Feature Sub Section>Step 2.5: Argh! They upgraded on us!
+<pstyle:Feature Para>It has happened to all of us: seconds before my patch is ready to send, the module is updated. Fortunately, Git makes it easy to port my patch branch to the new version of the module.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   01 #!/usr/bin/perl
+<pSpaceBefore:><pstyle:Feature Code Para>   02
+<pstyle:Feature Code Para>   03 use 5.10.0;
+<pstyle:Feature Code Para>   04
+<pstyle:Feature Code Para>   05 use strict;
+<pstyle:Feature Code Para>   06 use warnings;
+<pstyle:Feature Code Para>   07
+<pstyle:Feature Code Para>   08 use autodie;
+<pstyle:Feature Code Para>   09
+<pstyle:Feature Code Para>   10 # make sure we are in the right directory
+<pstyle:Feature Code Para>   11 # as we're going to delete stuff
+<pstyle:Feature Code Para>   12 die "this isn't a Git root directory, aborting\\n" unless -d '.git';
+<pstyle:Feature Code Para>   13
+<pstyle:Feature Code Para>   14 use Git;
+<pstyle:Feature Code Para>   15 my $repo = Git-\>repository;
+<pstyle:Feature Code Para>   16 $repo-\>command( checkout =\> 'cpan' );
+<pstyle:Feature Code Para>   17
+<pstyle:Feature Code Para>   18 use File::Path;   # for 'rmtree'
+<pstyle:Feature Code Para>   19
+<pstyle:Feature Code Para>   20 opendir my $dir, '.';
+<pstyle:Feature Code Para>   21 my @untouchables = qw/ . .. .git /;
+<pstyle:Feature Code Para>   22 -d $_ ? rmtree  $_ : unlink $_ for grep    { not $_ ~~ @untouchables }
+<pstyle:Feature Code Para>   23                                    readdir $dir;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>   \<same code as for 'git-cpan-init' parts 1 and 2\>
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>   52 say "updating Git repository";
+<pstyle:Feature Code Para>   53
+<pstyle:Feature Code Para>   54 $repo-\>command( add =\> '--all', '.' );
+<pstyle:Feature Code Para>   55 $repo-\>command( commit =\> '--message' =\> 'import from CPAN' );
+<pstyle:Feature Code Para>   56
+<pstyle:Feature Code Para>   57 use YAML;
+<pstyle:Feature Code Para>   58
+<pstyle:Feature Code Para>   59 my $meta = YAML::LoadFile( 'META.yml' );
+<pstyle:Feature Code Para>   60
+<pstyle:Feature Code Para>   61 my $version = 'v' . $meta-\>{version};
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   62 $repo-\>command( 'tag' =\> $version );
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-B> git-cpan-update<CharStyle:>
+<pstyle:Feature Para><CharStyle:pod-B>git-cpan-update<CharStyle:> is very similar to <CharStyle:pod-B>git-cpan-init<CharStyle:>. Instead of creating a new repository, I return to the <CharStyle:pod-B>cpan<CharStyle:> branch (line 16), replace the working copy of the code with the files of the new distribution (lines 20 onward) and let Git do the heavy work of figuring out what changed (lines 52 to 55). Once my <CharStyle:pod-B>cpan<CharStyle:> branch is updated, I can then rebase or merge my patch with the new version and continue my work.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   [L-l33t (mypatch)]$ git cpan-update
+<pSpaceBefore:><pstyle:Feature Code Para>   downloaded distribution at Language-l33t-0.04.tar.gz
+<pstyle:Feature Code Para>   extracting distribution in current directory
+<pstyle:Feature Code Para>   updating Git repository
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>   [L-l33t (cpan)]$ git checkout mypatch  # return to our branch
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   [L-l33t (mypatch)]$ git rebase cpan    # rebase on new version
+<pSpaceAfter:><pstyle:Feature Sub Section>Putting it all together
+<pstyle:Feature Para>With the three scripts I put together in this article, I have set up a very simple workflow that should work for the majority of CPAN modules. Quite literally, I have reduced the patching process to four lines:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   $ git cpan-init Some::Module     # fetch the baseline
+<pSpaceBefore:><pstyle:Feature Code Para>   $ git checkout -b mypatch        # create working branch
+<pstyle:Feature Code Para>   ...hack hack hack...
+<pstyle:Feature Code Para>   $ git rebase -i cpan             # prettify changes into patch
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   $ git cpan-sendpatch             # off it goes
+<pSpaceAfter:><pstyle:Feature Para>which, hopefully, will leave you much more time to concentrate on the hacking part.
+<pstyle:Feature Para>Happy patching!
+<pstyle:Feature Sub Section>About the author
+<pstyle:Feature Para>Yanick Champoux is a contributor to <CharStyle:pod-B>cil<CharStyle:> (http://kapiti.geek.nz/software/cil.html), a distributed issue tracking system (written in Perl, natch) that can be used in conjunction with Git.

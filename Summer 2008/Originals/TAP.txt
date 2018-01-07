@@ -1,0 +1,156 @@
+<ASCII-MAC>
+<Version:5><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1>>
+<pstyle:Feature Lead>Unit testing is not optional because working software is not optional.[0] -- From a job posting
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> What good is testing?	
+<pstyle:Feature Section Lead>Why should I care about testing? Well I shouldn<0x2019>t, unless, of course, I want my software to work. If I hack a little code, run the code to check its output, then I<0x2019>m testing. So why not preserve those small tests in code and run it against my new module or program?
+<pstyle:Feature Para>If I do that, I find that I catch a lot of unexpected bugs and learn more about how things work. Testing is an integral part of Perl, as anyone who has programmed in Perl for a while will tell me. When I add a new module from CPAN and I see all those <0x201C>ok<0x201D> messages shoot by, those are from various tests built into the module I<0x2019>m downloading. In fact the <0x201C>ok<0x201D> is the fundamental unit of Perl testing showing how simple the testing syntax of Perl is.
+<pstyle:Feature Para>When I contribute to CPAN, my software enters a matrix of testing; from CPANTS (The CPAN testing service), to tests measuring <0x201C>kwalitee<0x201D>, to CPAN testers at <CharStyle:pod-I>perl.org<CharStyle:>, to end users who will leave reviews on CPAN ratings---my code is very public and well tested.
+<pstyle:Feature Para>Of course, I may be a seasoned software designer, forced by employers and habit to run tests. I want to run my tests in an automated fashion but I don<0x2019>t want to sift through the voluminous output of the test log afterwards---I want just the juicy bits; did my tests pass or fail?
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Test Anywhere Protocol	
+<pstyle:Feature Section Lead>Whether I<0x2019>m a n00b or seasoned vet, TAP is the perfect thing for my toolkit. TAP is the <0x201C>Test Anything Protocol<0x201D> designed to run my tests and report back to me the relevant info I want---and only that. It is flexible enough to give me a complete picture of what is going on, but terse enough not to weigh me down with a novel thick enough to stun an ox every time I run my tests. TAP is a reporting layer between me and my tests.
+<pstyle:Feature Para>This reporting layer is agnostic as it gets: it does not care what language my test is written in, as long as my program produces proper TAP output. So I can use the best tool for the job at hand. I can use a variety of programming languages and mix them together and TAP will still be able to check and report back the output. In fact, I<0x2019>m going to use both Perl and shell script (bash) to demonstrate TAP in this article showing how flexible it can be.
+<pstyle:Feature Para>TAP is useless of course without a test to report on, so I<0x2019>ll create my first test. Starting with something simple for the purpose of this article I<0x2019>ll write a Perl script that checks which operating system I<0x2019>m operating under. This type of test might be useful for my Perl script since resources can be located in different places depending on operating system. To get the operating system, I<0x2019>m going to use Perl<0x2019>s built in variable <CharStyle:pod-C>$^0<CharStyle:>. Using Perl<0x2019>s built-in variable for the OS helps ensure that I<0x2019>m going to be as cross-platform as possible since there are Perl porters and other wizards working to ensure Perl works on as much hardware as possible, let them do the heavy lifting for us. So, here is my code:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   Code sample 1
+<pSpaceBefore:><pstyle:Feature Code Para>   -------------
+<pstyle:Feature Code Para>     1  #!/usr/bin/perl -w
+<pstyle:Feature Code Para>     2
+<pstyle:Feature Code Para>     3  # Name:             get_os.pl
+<pstyle:Feature Code Para>     4  # Purpose:          Demonstrate TAP
+<pstyle:Feature Code Para>     5
+<pstyle:Feature Code Para>     6  use strict;
+<pstyle:Feature Code Para>     7  use Test::More tests =\> 3;
+<pstyle:Feature Code Para>     8
+<pstyle:Feature Code Para>     9  require_ok( 'Test::File' );
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    10  ok($^O eq 'linux', 'Operating system is correct');
+<pSpaceAfter:><pstyle:Feature Para>This simple script is all I need to get started. Note that I use warnings (<CharStyle:pod-C>-w<CharStyle:> in the shebang line) and strict (the <CharStyle:pod-C>use strict<CharStyle:> line.) I added two comment lines describing the script, then the last two lines create the output, on my machine it prints the text in <CharStyle:pod-I>Output Listing 1<CharStyle:>:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   Output 1
+<pSpaceBefore:><pstyle:Feature Code Para>   --------
+<pstyle:Feature Code Para>   1..3
+<pstyle:Feature Code Para>   ok 1 - require Test::More;
+<pstyle:Feature Code Para>   ok 2 - Operating system is correct
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   # Looks like you planned 3 tests but only ran 2.   
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-I>Output Listing 1<CharStyle:> is TAP output. I know it is TAP output because I used the module <CharStyle:pod-C>Test::More<CharStyle:> which is known as a TAP <CharStyle:pod-I>producer<CharStyle:>; there are other TAP producers on CPAN. The first line of the output reflects the number of tests I said I would run when I called <CharStyle:pod-C>Test::More<CharStyle:>. The second and third lines are the results of those individual tests; first, I see the <0x201C>ok<0x201D> and then I see a number indicating the test and any description I gave. The last line is a bonus; it is TAP trying to reconcile the fact that I told it I would run 3 tests but I ended up only running 2. This type of diagnostic message is invaluable as I will see later, it allows us to pinpoint the problem with my code. I<0x2019>ll add this line <CharStyle:pod-C>is($], 5.008008, <0x2019>Perl version 5.8.8<0x2019>);<CharStyle:> to my test and run it again to get the text in <CharStyle:pod-I>Output Listing 2<CharStyle:>.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   Output 2
+<pSpaceBefore:><pstyle:Feature Code Para>   --------
+<pstyle:Feature Code Para>   1..3
+<pstyle:Feature Code Para>   ok 1 - require Test::More;
+<pstyle:Feature Code Para>   ok 2 - Perl version 5.8.8
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   ok 3 - Operating system is correct	
+<pSpaceAfter:><pstyle:Feature Para>Now that I have fixed my test script, it is time to incorporate some TAP reporting. One incredibly useful TAP parser is located in the Test::Harness module. To get it use whatever method is available for my operating system, for example I recommend using Strawberry Perl[1] if I<0x2019>m using Windows. Since I prefer debian for my operating system, I can just use a command like <CharStyle:pod-C>aptitude install libtest-harness-perl<CharStyle:> and I will get the latest version of the TAP distribution for my current operating system. If I do not have the luxury of debian, I can use the luxurious CPAN thus; <CharStyle:pod-C>cpan Test::Harness<CharStyle:>. This will install all the TAP modules which I use in this article. Note that <CharStyle:pod-C>Test::Harness<CharStyle:> is the old name of the TAP distribution, from the <CharStyle:pod-C>Test::Harness<CharStyle:> documentation; <0x201C>Although, for historical reasons, the <CharStyle:pod-C>Test::Harness<CharStyle:> distribution takes its name from this module, it now exists only to provide <CharStyle:pod-C>TAP::Harness<CharStyle:> with an interface that is somewhat backwards compatible with <CharStyle:pod-C>Test::Harness<CharStyle:> 2.xx. If I<0x2019>m writing new code consider using <CharStyle:pod-C>TAP::Harness<CharStyle:> directly instead.<0x201D>[2]
+<pstyle:Feature Para>I<0x2019>m writing new code so I<0x2019>m going to dive into <CharStyle:pod-C>TAP::Harness<CharStyle:> since I want to create an overview of my tests. I start with a script I call <CharStyle:pod-C>tap_parser.pl<CharStyle:>, in <CharStyle:pod-I>Code Listing 2<CharStyle:>.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   Code sample 2
+<pSpaceBefore:><pstyle:Feature Code Para>   -------------
+<pstyle:Feature Code Para>     1  #!/usr/bin/perl -w
+<pstyle:Feature Code Para>     2
+<pstyle:Feature Code Para>     3  # Name:          tap_parser.pl
+<pstyle:Feature Code Para>     4  # Purpose:       A test scheduler and runner
+<pstyle:Feature Code Para>     5
+<pstyle:Feature Code Para>     6  use strict;
+<pstyle:Feature Code Para>     7  use TAP::Parser qw/all/;
+<pstyle:Feature Code Para>     8  use TAP::Parser::Aggregator qw/all/;
+<pstyle:Feature Code Para>     9
+<pstyle:Feature Code Para>    10  open my $out_file, "\>", "/home/jeremiah/TAP_report.txt"
+<pstyle:Feature Code Para>    11  or die "Cannot open outfile. $!\\n";
+<pstyle:Feature Code Para>    12  printf $out_file "\\nReport %s\\n---\\n", `date +"%D"`;
+<pstyle:Feature Code Para>    13
+<pstyle:Feature Code Para>    14  my @files = qw[
+<pstyle:Feature Code Para>    15                 
+<pstyle:Feature Code Para>    16                 /Users/jeremiah/code/perl/get_os.pl
+<pstyle:Feature Code Para>    17                 ];
+<pstyle:Feature Code Para>    18
+<pstyle:Feature Code Para>    19  foreach my $file (@files) {
+<pstyle:Feature Code Para>    20    my $parser = TAP::Parser-\>new( { source =\> $file } );
+<pstyle:Feature Code Para>    21    print $out_file "$file results:\\n---\\n";
+<pstyle:Feature Code Para>    22
+<pstyle:Feature Code Para>    23    while ( my $result = $parser-\>next ) {
+<pstyle:Feature Code Para>    24      my $out = $result-\>as_string;
+<pstyle:Feature Code Para>    25      print $out_file "$out\\n";
+<pstyle:Feature Code Para>    26    }
+<pstyle:Feature Code Para>    27    my $aggregate = TAP::Parser::Aggregator-\>new;
+<pstyle:Feature Code Para>    28    $aggregate-\>add( 'testcases', $parser );
+<pstyle:Feature Code Para>    29    printf $out_file "\\n\\tPassed: %s\\n\\tFailed: %s\\n\\n", scalar $aggregate-\>passed, scalar $aggregate-\>failed;
+<pstyle:Feature Code Para>    30  }
+<pstyle:Feature Code Para>    31
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    32 1;
+<pSpaceAfter:><pstyle:Feature Para>I<0x2019>ll go through this fairly simple script in chunks to explain what is happening. Firstly, every one of my Perl scripts begin with <CharStyle:pod-C>-w<CharStyle:> for warnings, a little description of what my script does, and use strict. I pull in the <CharStyle:pod-C>TAP::Parser<CharStyle:> and <CharStyle:pod-C>TAP::Parser::Aggregator<CharStyle:> modules for some easier processing of my TAP output. Secondly, beginning on line 10, I create a simple file for my TAP report. I just want an overview of all my tests created nightly from cron, this report is a convenient place for me to hold that data. Next is an array, called my <CharStyle:pod-C>@files<CharStyle:> which holds the test scripts themselves. In the current iteration of this script I have two files: one a simple Perl script and one a test for a module I<0x2019>m working on called 1.module-tests.t. TAP does not care what my tests are called. One line 19 I start to iterate over the files, creating a <CharStyle:pod-C>$parser<CharStyle:> object from the test script, then creating output from the script itself with <CharStyle:pod-C>$result-<CharStyle:>as_string\>, and finally using <CharStyle:pod-C>TAP::Parser::Aggregator<CharStyle:> to collect the data from each test case into my report. When I run the script and concatenate the report file, this is what I see in <CharStyle:pod-C>Output Listing 3<CharStyle:>.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   Output 3
+<pSpaceBefore:><pstyle:Feature Code Para>   --------
+<pstyle:Feature Code Para>   Report 05/05/08
+<pstyle:Feature Code Para>   ---
+<pstyle:Feature Code Para>   /home/jeremiah/code/perl/get_os.pl results:
+<pstyle:Feature Code Para>   ---
+<pstyle:Feature Code Para>   1..2
+<pstyle:Feature Code Para>   ok 1 - require Test::File;
+<pstyle:Feature Code Para>   ok 2 - Operating system is correct
+<pstyle:Feature Code Para>          Passed: 2
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>      	  Failed: 0
+<pSpaceAfter:><pstyle:Feature Para>Now I<0x2019>ll add another test to my TAP parser script; this time I have a test script that is written in shell. All it does is test uptime on my server to make sure there are no anomalies or sudden spikes is processing power without me knowing about it. I can imagine that it runs from <CharStyle:pod-I>cron<CharStyle:> normally and perhaps creates a log file. Inside the shell script I have some TAP outputting functionality which I can create myself or pull from another library, like the <CharStyle:pod-C>tap-functions<CharStyle:> library written by Patrick LeBoutillier. [3] For this article I<0x2019>m going to create the minimal amount of TAP myself, just to keep things as simple as possible, but I can recommend Patrick<0x2019>s library, I use it at work. <CharStyle:pod-I>Code Listing 3<CharStyle:> is is the code for my uptime test.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   Code sample 3
+<pSpaceBefore:><pstyle:Feature Code Para>   -------------
+<pstyle:Feature Code Para>     1	 #!/bin/bash
+<pstyle:Feature Code Para>     2	 
+<pstyle:Feature Code Para>     3	 # Name:          uptime.sh
+<pstyle:Feature Code Para>     4	 # Purpose:       get the uptime of the machine I am running on
+<pstyle:Feature Code Para>     5	 
+<pstyle:Feature Code Para>     6	 # You're required to have a plan
+<pstyle:Feature Code Para>     7	 plan=3
+<pstyle:Feature Code Para>     8	 echo "1..$plan"
+<pstyle:Feature Code Para>     9	 
+<pstyle:Feature Code Para>    10	 LOG=/home/jeremiah/uptime.log
+<pstyle:Feature Code Para>    11	 if [ -e $LOG ]; then 
+<pstyle:Feature Code Para>    12	     echo "ok 1 - file exists"
+<pstyle:Feature Code Para>    13   else
+<pstyle:Feature Code Para>    14       echo "not ok 1 - file does not exist"
+<pstyle:Feature Code Para>    15  fi
+<pstyle:Feature Code Para>    16		 
+<pstyle:Feature Code Para>    17	LOAD=$( uptime )
+<pstyle:Feature Code Para>    18	if [ $? == 0 ]; then
+<pstyle:Feature Code Para>    19	     echo "ok 2 - uptime worked"
+<pstyle:Feature Code Para>    20	fi  
+<pstyle:Feature Code Para>    21		     
+<pstyle:Feature Code Para>    22	echo ${LOAD##*average:} \>\> $LOG
+<pstyle:Feature Code Para>    23	if [ $? == 0 ]; then 
+<pstyle:Feature Code Para>    24	     echo "ok 3 - completed script"
+<pstyle:Feature Code Para>    25	else
+<pstyle:Feature Code Para>    26	     echo "not ok 3 - script failed" # TODO Define failure
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    27	fi
+<pSpaceAfter:><pstyle:Feature Para>On line 7 that I have created the necessary plan. Every test has to have a plan, even if that plan is zero. Then, in lines 11 through 15, I have created the first test. It simply echoes its output based on whether the file exists or not. Running this script on its own produces some useful output now, for example, if I run this script on my machine before I have created the log file, the <CharStyle:pod-I>uptime.sh<CharStyle:> script gives me <CharStyle:pod-I>Output Listing 4<CharStyle:>.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   Output 4
+<pSpaceBefore:><pstyle:Feature Code Para>   --------
+<pstyle:Feature Code Para>   1..2
+<pstyle:Feature Code Para>   not ok 1 - file does not exist
+<pstyle:Feature Code Para>   ok 2 - uptime worked
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   ok 3 - completed script
+<pSpaceAfter:><pstyle:Feature Para>Now I<0x2019>ll simply add the shell script to my TAP parser script. So I change my <CharStyle:pod-I>tap_parser.pl<CharStyle:> script so that line 15 looks like <CharStyle:pod-I>Code Listing 4<CharStyle:>.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   Code sample 4
+<pSpaceBefore:><pstyle:Feature Code Para>   -------------
+<pstyle:Feature Code Para>    14  my @files = qw[
+<pstyle:Feature Code Para>    15                 /home/jeremiah/code/shell/uptime.sh
+<pstyle:Feature Code Para>    16                 /home/jeremiah/code/perl/get_os.pl
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    17                 ];
+<pSpaceAfter:><pstyle:Feature Para>Now when I run my <CharStyle:pod-I>tap_parser.pl<CharStyle:> script I get the output from both tests, shown in <CharStyle:pod-I>Output Listing 5<CharStyle:>.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   Output 5
+<pSpaceBefore:><pstyle:Feature Code Para>   --------
+<pstyle:Feature Code Para>   Report 05/05/08
+<pstyle:Feature Code Para>   ---
+<pstyle:Feature Code Para>   /home/jeremiah/code/shell/uptime.sh results:
+<pstyle:Feature Code Para>   ---
+<pstyle:Feature Code Para>   1..2
+<pstyle:Feature Code Para>   ok 1 - file exists
+<pstyle:Feature Code Para>   ok 2 - uptime worked
+<pstyle:Feature Code Para>   ok 3 - completed script
+<pstyle:Feature Code Para>        Passed: 2
+<pstyle:Feature Code Para>        Failed: 1
+<pstyle:Feature Code Para>   /home/jeremiah/code/perl/get_os.pl results:
+<pstyle:Feature Code Para>   ---
+<pstyle:Feature Code Para>   1..3
+<pstyle:Feature Code Para>   ok 1 - require Test::File;
+<pstyle:Feature Code Para>   ok 2 - Perl version 5.8.8
+<pstyle:Feature Code Para>   ok 3 - Operating system is correct
+<pstyle:Feature Code Para>        Passed: 3
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>        Failed: 0
+<pSpaceAfter:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Conclusion	
+<pstyle:Feature Section Lead>While I have only scraped the surface of what TAP can do, I hope I have presented enough to both pique your interest and get you started using TAP. Surf over to the TAP wiki[4] for more.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> References	
+<pstyle:Feature Section Lead>0 - http://portland.craigslist.org/wsc/sof/650625710.html 1 - http://strawberryperl.com/ 2 - http://search.cpan.org/~petdance/Test-Harness-2.64/lib/Test/Harness/TAP.pod 3 - http://testanything.org/wiki/index.php/Tap-functions 4 - http://testanything.org/wiki/index.php/Main_Page
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> About the author	

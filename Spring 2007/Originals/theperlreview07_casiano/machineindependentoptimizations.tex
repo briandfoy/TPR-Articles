@@ -1,0 +1,123 @@
+Once we have the AST we can transform it
+using the \I{Treeregexp} language.
+The code below (in file \verb|I2PIR.trg|)
+shows a set of algebraic tree transformations
+whose goal is to produce 
+machine independent optimizations.
+\begin{verbatim}
+{ #  Example of support code
+  use List::Util qw(reduce);
+  my %Op = (PLUS=>'+', MINUS => '-',
+            TIMES=>'*', DIV => '/');
+}
+algebra = fold wxz zxw neg;
+
+fold: /TIMES|PLUS|DIV|MINUS/:b(NUM, NUM)
+=> {
+  my $op = $Op{ref($b)};
+  $NUM[0]->{attr} = eval
+  "$NUM[0]->{attr} $op $NUM[1]->{attr}";
+  $_[0] = $NUM[0];
+}
+zxw: TIMES(NUM, .) and {$NUM->{attr}==0}
+=> { $_[0] = $NUM }
+wxz: TIMES(., NUM) and {$NUM->{attr}==0}
+=> { $_[0] = $NUM }
+neg: NEG(NUM)
+=> { $NUM->{attr} = -$NUM->{attr};
+     $_[0] = $NUM }
+\end{verbatim}
+A Treeregexp programs is made of \I{treeregexp} rules
+that describe what subtrees match and how transform them:
+\begin{verbatim}
+wxz: TIMES(., NUM) and {$NUM->{attr}==0}
+=> { $_[0] = $NUM }
+\end{verbatim}
+A rule has a \I{name} (\verb|wxz| in the example), 
+a \I{term} describing
+the shape of the subtree to match \verb|"TIMES(., NUM)"|
+and two optional fields:
+a \I{semantic condition} expliciting
+the attribute constraints (the code after the reserved word
+\verb|and|)
+and some \I{transformation code} that tells how to 
+modify the subtree (the code after the big arrow \verb|=>|).
+Each rule is translated into a subroutine 
+\footnote{The sub must be accessed 
+through a proxy 
+\code{Parse::Eyapp::YATW} object. YATW stands for \I{Yet Another Tree Walker}}
+with name the treerexexp rule \I{name}.
+Therefore, after compilation 
+a subroutine \verb|wxz| will be available.
+The dot in the \I{term} \verb|TIMES(., NUM)| 
+matches any tree. The semantic condition
+states that the \verb|attr| entry of node
+\verb|NUM| must be zero.
+The \I{transformation code} - that will be 
+applied only if the matching succeeded -
+substitutes the whole subtree by its 
+right child.
+
+References to the nodes associated with some
+\verb|CLASS| appearing in the \I{term}
+section can be accessed inside the semantic parts
+through the lexical variable \verb|$CLASS|.
+If there is more than one node the 
+associated variable is \verb|@CLASS|. Variable \verb|$_[0]|
+refers to the root of the subtree that matched.
+
+Nodes inside a \I{term} can be described using linear
+regular expressions like in the \verb|fold| transformation:
+\begin{verbatim}
+/TIMES|PLUS|DIV|MINUS/:b(NUM, NUM)
+\end{verbatim}
+In such cases an optional identifier 
+to later refer the node that matched 
+%within semantic parts 
+can be specified (\verb|b| in the example).
+
+Tree transformations can be grouped in families:
+
+\begin{verbatim}
+algebra = fold wxz zxw neg;
+\end{verbatim}
+
+Such families - and the objects they collect - are 
+available inside the client program (read anew the code
+of the driver in section \ref{section:phases}). Thus,
+if \verb|$t| holds the AST resulting
+from the parsing phase, we can call
+its method \verb|s| (for substitute)
+with args the \verb|@algebra| family:
+\begin{verbatim}
+$t->s(our @algebra);
+\end{verbatim}
+
+The \verb|s| method of 
+\verb|Parse::Eyapp::Node|\footnote{All the classes in the AST
+inherit from \code{Parse::Eyapp::Node}}
+proceeds to apply all the transformation in the family
+\verb|@algebra| to tree \verb|$t|
+until none of them matches. Thus, for input
+\verb|a = 2*(a+b)*(2-4/2)| the parser
+produces the tree:
+\begin{verbatim}
+EXPS(
+  ASSIGN(
+    VAR[a],
+    TIMES(
+      TIMES(NUM[2],PLUS(VAR[a],VAR[b])),
+      MINUS(NUM[2],DIV(NUM[4],NUM[2])
+    )
+  )
+)
+\end{verbatim}
+which is transformed by the call 
+\verb|$t->s(@algebra)| in:
+\begin{verbatim}
+EXPS(ASSIGN(VAR[a],NUM[0]))
+\end{verbatim}
+
+
+
+

@@ -1,0 +1,230 @@
+﻿On December 18, The Perl 5 Porters released Perl 5.10.0 on Perl's 20th birthday. The full details of the changes are in perldelta, but I'm particularly excited about:
+
+    * The regex engine is no longer recursive, so it's faster
+    * The regex syntax now supports grammars, named captures, relative back references, and several other features
+    * Subroutines can have static variables
+    * The smart match operator
+    * The given-when construct that everyone else calls switch
+    * Module::Build is now core
+    * There's a Perl Unicode FAQ added to the standard docs as perlunifaq. 
+
+Ricardo SIGNES put his "Perl 5.10 for People Who Aren't Totally Insane" slides online to show off most of the new language-level features.
+
+On December 18, ActiveState announces that they have a 5.10.0 build of ActivePerl for Windows (including Vista), Linux, Mac OS X, Solaris, AIX, and HP-UX. They still support the 5.8 line of ActivePerl too.
+
+Strawberry Perl has a complete Perl/C Compiler/CPAN solution in a single download for Windows XP and earlier. Strawberry Perl is waiting on the Vista compatibility for the MinGW compiler tools.
+
+Jon Allen updated perldoc.perl.org with the latest Perl 5.10 documentation, although you can still get to the 5.8 documentation
+
+In October, Leon Brocard released the latest Perl 5.005_05, a new maintenance version of Perl 5.005 (Google Code project) that compiles on the latest versions of everything. This release is not yet on CPAN.
+Perl 5 Notables
+
+Throughout the year, Sam Vilain worked on converting the Perforce history of perl commits into a git history of perl, which he discussed in his Use.Perl journal. The Perl preforce repository has been hosted by ActiveState since 1997 when Gurusamy Sarathy chose it during his reign as pumpking.
+
+In January, Bryne Reese, the maintainer of SOAP::Lite, wrote a "State of the SOAP" message to the module's mailing list. He outlined the current situation with development and the technical challenges of keeping up with modern SOAP developments. He's looking for a new maintainer that has more time than he does to devote to the project.
+
+In January, several teams using Perl competed in the 2007 Plat_Forms competition, which tries to compare web development platforms. The official results noted that the three Perl solutions needed less code, and required fewer changes to deal with database changes, but lacked web service functionality and were suspectible to HTTP spoofing. Team 1, using Catalyst, published their post-mortem, noting that their problems came mostly from their unfamiliarity with the tools.
+
+In March, eBay uploaded to CPAN an official eBay Perl developer's kit, called eBay::API.
+
+In March, brian d foy updated Business::ISBN-2.0 to handle the new ISBN-13 format. He was only a couple months late in supporting a format he should have supported a year earlier.
+
+On March 13, Curtis "Ovid" Poe announced that TAPx::Parser, the Perl module to parse the Test Anywhere Protocol (TAP) output, would become TAP::Parser. The new TAP::Parser eventually made it into the Test::Harness 3.0 distribution as the official Perl test output parser.
+
+In April, Chris Dolan received a $2,000 grant from The Perl Foundation to implement the remaining 20 policies needed for Perl::Critic to support all of the recommendations in Damian Conway's Perl Best Practices. In October, he announced that he was finished with all 20 policies.
+
+In April, Michael Peters received a $750 grant from The Perl Foundation to improve Smolder, a web-based test result aggregator, to use the Test Anywhere Protocol.
+
+In June, David Landgren uploaded a new version of Crypt::SSLeay to fix compilation and portability issues. This was the first release of the module in four years. David had taken over maintenance of the module from Joshua Chamas in December 2006.
+
+On June 6, the Open Source Initiative approved the Artistic License 2 for inclusion in its list of approved licenses.
+
+On July 7. Gabor Szabo noted that CPAN::Forum has a tag especially for modules seeking a maintainer.
+
+On July 29, Ricardo SIGNES uploaded MIME::Lite 3.01_06, the first developer release since December 2005, fixing many of the bugs in its RT queue. On August 28th, he uploaded MIME::Lite 3.020, the first user release April 2003. The year ended with MIME::Lite 3.021.
+
+In September, The Linux Foundation added Perl 5.8.8 added to the Linux Standard Base 3.2 after some discussion about the details of its integration. The Linux Foundation initially asked the community about including Perl in June 2003.
+
+In September (and ongoing through the Fall), Perl did very well in Tim Bray's Wide Finder competition to see who can do the best on CPUs with low clock rates and many cores. He wrote about this in Beautiful Code and used Ruby to go through his Apache logfile. For the competition, he thought Erlang was a good place to start. As of Tim's November 19th report, Perl implementations took first and second place, as well as eighth, although all from the same submitter. JoCaml and Erlang were top contenders too.
+
+In October, a team using Perl placed 2nd in the Tenth Annual International Conference on Functional Programming Contest, whose goal it is to give people the chance to show off their favorite language. This year's topic was about modifying alien DNA. The United Coding Team used Perl to take second place, losing to Team Smartass's C++ implementation from four Google employees (who also won in 2006).
+
+In October, Alex Smith, a student at the University of Birmingham, won a $25,000 prize from Wolfram Research for proving that a particular Turing Machine is universal (meaning it can do any calculation) and the simplest one possible. His forty page proof includes quite a bit of Perl.
+
+In November, after a lot of hard work from many people and the perl-qa mailing list, Andy Armstrong released Test::Harness 3.0. It completely redoes the old testing harness to make the internals and the data easier to access programmatically. No more screen scraping test output or results! The distribution contains TAP::Parser, the new module to parse test output. For more information, see the Test Anything wiki.
+
+In November, with Perl 5.10 coming out soon, Michael Schwern, the maintainer of the core modules ExtUtils::MakeMaker and Test::Simple, announced that he won't support Perl 5.005 anymore.
+Perl 6
+
+In March, Pair Networks added official Pugs and parrot support to their web hosting accounts.
+
+On March 23, Jesse Vincent announced that Best Practical would support 10 micro-grants of $500 for Perl 6 projects. The first one was given to (32799) Steve Peters on March 26 to work on the portability of Parrot.
+
+On April 4, Phil Crow received a micro-grant from Best Practical to create a Java-to-Perl 6 API converter. In July, he uploaded Java::Javap to CPAN. It contains the java2perl6 program to turn a Java class into a Perl 6 class.
+
+In June, Flavio Glock laid out the roadmap for KindaPerl6, a project to implement Perl 6 on top of Perl 5. The current roadmap changed names in the repository.
+
+In July, Best Practical awarded three Perl 6 micro-grants. Flavio Glock received a travel grant to attend YAPC::EU, Steve Pritchard received a grant to complete the RPM packaging for Pugs and Parrot, and Juerd Waalboer received a grant to upgrade the hardware for feather.perl6.nl, the Perl 6 Community Development Server.
+
+In September, Allison Randal came up with a schedule and milestones to Parrot completion.
+
+In September, Adriano Ferreira received a micro-grant to write a series of short articles about Perl 6 operators on O'Reilly Media's OnLAMP blog. His initial post contains links to all of the subsequent articles.
+
+In November, The Mozilla Foundation donated $10,000 and The Perl Foundation donated $5,000 to fund Patrick Michaud for four months of work on the Perl 6 compiler. Patrick began work on a set of compiler tools, including one called NPQ (Not Quite Perl), to make it easier for people to work with the compiler. Patrick also created the ROADMAP document that explains the upcoming work.
+
+On December 30, chromatic showed how to create a perl6 binary. That doesn't mean that it runs all of Perl 6, but it's there. It's not relocatable, though, and the Parrot people are working on that.
+CPAN
+
+The Comprehensive Perl Archive Network is getting bigger and bigger. At the end of 2007 there were 6347 authors and 12768 modules taking up 4305 MB, all served by 236 mirrors. BackPAN, the historical collection of everything ever on CPAN, was over 9 GB (and the Perl NOC is still looking for people willing to create their own BackPAN).
+
+CPAN Testers continues to test most Perl modules on every available combination of Perl version and operating system, including the recently released Perl 5.005_05. Barbie set up a special CPAN Testers wiki and publishes monthly statistics about CPAN Testers activity, including report back to August 1999. There were approximately half a million testing reports in 2007. Slaven Rezić set up a way to see the testing results in a matrix by operating system and Perl version.
+
+On January 6, Stefan Müller announced that he'd set up a web interface to the cpants_lint.pl script from Module::CPANTS::Analyse so people did not have to install the module and all of its dependencies.
+
+On January 23, Adam Kennedy uploaded an emergency release of Template Toolkit to get it working on Windows again. Template Toolkit had been failing some tests that prevented its installation with Strawberry Perl.
+
+In February, Tatsuhiko Miyagawa created cpan- ratings.pl to download the latest CPAN Ratings added to any module by a particular CPAN author.
+
+On June 8, karjala set up a way to get RSS feeds for individual modules
+
+On June 25, Barbie announced the CPAN Testers Wiki.
+
+In August, Paul Fenwick created "use.perl.org technorati + digg enabler", a GreaseMonkey script to add Digg and Technorati links to posts in use.perl.org.
+
+In August, Adam Kennedy announced that he hit the 150 module mark.
+
+On August 4, David Cantrell released CPANdeps, a conglomeration of CPAN data to show a module dependency tree along with each module's CPAN Testers results. With a GreaseMonkey script from Andy Armstrong, you can add a link to CPANdeps to a distributions page on CPAN Search.
+
+On August 15, Barbie set up a CPAN Testers discussion list because the flood of tester reports on the main list was swamping any discussion. Now testers can subscribe to the discussion list without getting all of the testing results.
+
+On September 8, Stefan Müller announced that he would clean up the CPAN Modules list by identifying module registrations that never had an uploaded distribution and removing abandoned modules. Stefan contacted all affected authors and did not remove any registrations that the author asked to keep.
+
+On September 10, Graham Barr added gravatars to CPAN Search. CPAN Authors who sign up with Gravator using their cpan.org address have their picture automatically added their module pages. Andy Armstrong created a page showing all the CPAN authors' gravators in one go.
+
+On October 10, David Golden released CPAN Reporter 1.0, his module to submit CPAN Testers results from everyday installation of modules through CPAN.pm.
+
+On October 17, Tatsuhiko Miyagawa set up a new CPAN recent changes feed that extracts the latest additions to the Changes file and displays it with the module release information.
+
+On November 13, Gabor Szabo set up a free Perl Community Ad Server to display geo-specific text advertisements for Perl community services and conferences. You can display these ads on your own Perl pages with a tiny bit of javascript.
+
+On November 26, Yanick Champoux released RtSeverityOrdering, a GreaseMonkey script to sort module tickets in RT.cpan.org by severity. You can also use Terje Bless's custom web interface to RT.
+Conferences and Events
+
+I took the dates and details from The Perl Review Community Calendar. Any conference and event organizers can ask for edit permissions through either brian d foy or Jim Brandt.
+
+To find more papers, aduio, or video from conferences, see "Presentations and Papers" on the Perl 5 Wiki.
+
+    * January
+          o Barbie published the feedback results from YAPC::EU::2006 in Birmingham. 
+    * February
+          o 21-23 German Perl Workshop
+          o 20-22 OSDC Israel 
+    * March
+          o 2-4 European Perl Hackathon
+          o 16 Dutch Perl Workshop (Talks online) 
+    * April
+          o 4-5 YAPC::Asia Toyko (Talks online)
+          o 11–14 Open Source Developer's Conference (OSDC): Taiwan
+          o 11–14 YAPC::SA::2007, Porto Alegre, Brazil
+          o 28–29 Nordic Perl Workshop, Copenhagen (Talks online) 
+    * June
+          o 25-27 Yet Another Perl Conference (YAPC::NA), Houston (Talks online)
+          o 28-29 Hackathon following YAPC::NA 
+    * July
+          o 23-27 O'Reilly Open Source Convention (Talks online) 
+    * August
+          o 28-30 YAPC::EU, Vienna, Austria (Talks online) 
+    * September
+          o 14-16 Frankfurt Perl Workshop 
+    * October
+          o 13-14 Pittsburgh Perl Workshop
+          o 26 Russian Perl Workshop (Talks online)
+          o 27 Belgian Perl Workshop 
+    * November
+          o 2-3 Catalyst Days, Braga, Portugal
+          o 16-17 French Perl Workshop
+          o 26-29 OSDC::AU, Brisbane, Australia 
+    * December
+          o 1 London Perl Workshop (Talks online)
+          o 14-16 Windy City Perl Hackathon
+          o 31 Israeli Perl Workshop 
+
+Community
+
+At the end of 2006 (so close it might as well be 2007), Andy Armstrong set up Perl Co-op, a Google Custom Search Engine, that only uses the big Perl sites, including all of the domains in .perl.org. You can add this special Google search to your Google homepage or your own website.
+
+In February, Mike Hendrickson announced that O'Reilly Media launched , both for job seekers and job offerers. Dave Cross noted that we still have jobs.perl.org, and that he had written a guide for people looking for Perl jobs in London. Unfortunately, Dave's blog suffered a disk crash, so if anyone has that job guide cached, speak up!
+
+The Perl Jobs report as of midnight, January 1, tracking the number of job posts (not correcting for duplicates) to jobs.perl.org:
+
+------------------------------------------------------------------------------------------
+Year | Total |   Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec
+------------------------------------------------------------------------------------------
+2001 |   280 |     0     2     8    21    40    34    33    29    34    30    35    14
+2002 |   413 |    34    33    35    16    45    26    37    46    33    42    31    35
+2003 |   560 |    43    36    56    56    21    39    44    64    53    52    52    44
+2004 |   949 |    75    58    78    88    74    88    82    87    65    87    85    82
+2005 |  1429 |    93   110   120   135   135   125   115   113   106   132   144   101
+2006 |  1857 |   164   138   157   151   166   153   140   176   152   172   179   109
+2007 |  1966 |   182   156   181   190   177   168   176   165   145   179   148    99
+------------------------------------------------------------------------------------------
+Processed 7458 files in 12 seconds, 0.00161 secs/file
+------------------------------------------------------------------------------------------
+
+In May, Andy Armstrong moved the Perl-QA wiki to escape never-ending wiki-spam attacks. The new address is http://perl-qa.hexten.net/.
+
+On June 2, Dave Cross and the London Perl Mongers conducted a free, one-day Perl Teach-In in assocation with BBC Backstage to help fill some of the vacancies for Perl programmers in London. They made the video (audio and slides) available on Blip.tv as well as Google Video, and have a feed for the four segments of the audio.
+
+On July 8, Michael Schwern created the official Perl 5 wiki. Paul Fenwick merged the general Perl information in his PerlNet wiki with the new, official wiki. PerlNet still serves as a Perl portal for Australia and New Zealand.
+
+On July 10, Dave Cross of London.pm announced that he had passed on the role of Chief Perl Monger to José Castro of Lisbon.pm.
+
+On July 26, Kirrily Roberts launched the unscientific Perl Survey, which stayed open until October 1. The survey had 4,575 responses. She published the results, and made the data available to others, who attempted to answer the question put to Babbbage, "if you put into the machine wrong figures, will the right answers come out?".
+
+On July 30, Schwern noted that various blog aggregators don't look at use.perl and gave instructions on how to force them to. Many people followed up with mostly useless posts containing the special Technorati incantanation to show that "Yes, this is really something I can write to".
+
+In August, The Perl Foundation shuffled job titles as part of its bi-annual officer elections. Bill Odom went from President to Chairman, Richard Dice went from Vice President to President, and Jim Brandt went from Conference Committee Chair to Vice President. Kevin Lenzo, the founder of The Perl Foundation and its parent, the Yet Another Society, became a Director Emeritus.
+
+In August, Curtis "Ovid" Poe resigned as Grants Committee Chair, a position he held since 2005. The Perl Foundation replaced him with Alberto Simões, president of the Portuguese Association for Perl Programmers, the leader of Braga.pm, and an organizer of YAPC::EU::Braga in 2005.
+
+In September, Jim Brandt and Joshua Gatcomb redesigned the front page of yapc.org. It now pulls from The Perl Review Community Calendar to display a list of upcoming events.
+
+In November, Thomas Klausner of the Vienna Perl Mongers annouced that they would use the left over money from YAPC::EU::Vienna to fund a Winter of Code.
+
+In November, José Castro, the Community Liaison for Perl Mongers, set up a Perl Mongers group on LinkedIn. An anonymous person also set up a CPAN Authors LinkedIn group. Besides LinkedIn, there is a Perl group on Xing and a Perl group in Second Life.
+
+In December, Greg McCarroll of London.pm declared war on Vienna.pm after learning of a devious secret plot to prevent London.pm from dominating the YAPC::EU attendee statistics. Greg McCarroll will compete with Thomas Klausner in feats of strength and endurance at YAPC::EU::2008 to decide the winner.
+2007 White Camel Awards
+
+On July 24, David H. Adler of Perl Mongers presented the White Camels at the Tenth Annual Perl Conference (aka OSCON):
+
+Allison Randal
+    Allison is at the center of the Perl community. She's been president of The Perl Foundation, a leader and manager of various parts of the Perl 6 and Parrot efforts, as well a Perl author and editor. Her latest contribution to Perl is version 2 of the Artistic License, under which most open source Perl code, and Perl itself, is licensesd "under the terms of Perl itself".
+
+Tim O'Reilly
+    You may think of Tim as the guy who published Programming perl and Learning Perl, but he also kick-started the current form of the Perl community by giving it a place to come to together once a year. O'Reilly & Associates (now O'Reilly Media) started The Perl Conference in 1997. Perl Mongers, the organization that helped start Perl users groups all over the world, started at that first Perl Conference. O'Reilly Media has been incredibly gracious and helpful to the Perl community.
+
+Norbert E. Grüner
+    Norbert help start the German Perl Workshop in 1999 and now is involved in several of the Perl conferences and workshops that take place in Europe. He's the chair of the YAPC::Europe committee. 
+
+Books and Publishing
+
+In January, The Perl Review extended its online-only subscription to US subscribers. That option was formerly only avialable to international subscribers as a stopgap until foreign distribution was secured. The price of any foreign distribution turned out to be the same as the current international price (mostly taken up by postage), but the online-only subcription had already become popular.
+
+In February, Renée Bäcker published the first issue of $foo Magazin, a German language magazine and only the third print magazine devoted to Perl. Renée has published $foo each quarter since then.
+
+In January, brian d foy's Learning Perl Student Workbook, a collection of additional exercises and answers to accompany Learning Perl, 4th Edition, was finally available to the public. Although published by O'Reilly Media, it wasn't available through normal retail channels and brian sold them himself. By March, it was available through Amazon.
+
+In June, Randal Schwartz wrote his last Perl column for Unix Review / SysAdmin. His 71st and last article for that magazine appeared in the August 2007 issue. At the same time, he wrote his 94th Perl article for Linux Magazine. He make all of his articles freely available on his website. All told, by August, Randal had written 255 Perl articles for various print magazines.
+
+In June, Allison Randal created public subversion repositories for Parrot and Perl 6 Essentials after getting the rights to the book from from O'Reilly Media to The Perl Foundation. brian d foy outlines the access details on use.perl.
+
+In July, O'Reilly Media released brian d foy's Mastering Perl, the next book in the Learning Perl series.
+
+On August 23, Simon Cozens loaded his book Beginning Perl into MediaWiki. It's already online for free, and it's also still in Apress's catalog as a second edition by James Lee. Along with that, he's also loaded the material for a three-hour Perl internals training course. He has another link for a yet- untitled Maypole book under the category "Books in Progress".
+
+In the August 6 issue of The New Yorker, Michael Specter quotes Matt Sergeant extensively in "Damn Spam" and mentions SpamAssasin, an anti-spam tool written in Perl.
+
+In August, Onyx Neon Press released mod_perl2 User's Guide, Stas Beckman's book on the latest major version of mod_perl, the embedded Perl interpreter for the Apache Web Server.
+
+In December, Packt Publishing released Catalyst, Jonathan Rockway's book on the popular Perl web framework. 

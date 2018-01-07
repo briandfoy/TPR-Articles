@@ -1,0 +1,104 @@
+<ASCII-MAC>
+<Version:5><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1>>
+<DefineCharStyle:pod-I=<Nextstyle:pod-I><cColor:Black><cTypeface:Italic><cSize:9.500000><cHorizontalScale:1.000000><cTracking:0><cBaselineShift:0.000000><cCase:Normal><cStrokeColor:None><cLanguage:English\: USA><cUnderline:0><cFont:Minion \(T1\)><cPosition:Normal><cStrikethru:0><cColorTint:-1.000000>>
+<DefineCharStyle:pod-C=<Nextstyle:pod-C><cColor:Black><cTypeface:Regular><cSize:9.500000><cHorizontalScale:1.000000><cTracking:0><cBaselineShift:0.000000><cCase:Normal><cStrokeColor:None><cUnderline:0><cFont:Courier New><cPosition:Normal><cStrikethru:0><cColorTint:-1.000000>>
+<DefineCharStyle:pod-B=<Nextstyle:pod-B><cColor:Black><cTypeface:Bold><cSize:9.500000><cHorizontalScale:1.000000><cTracking:0><cBaselineShift:0.000000><cCase:Normal><cStrokeColor:None><cUnderline:0><cFont:Courier New><cPosition:Normal><cStrikethru:0><cColorTint:-1.000000>>
+<DefineParaStyle:NormalParagraphStyle=<Nextstyle:NormalParagraphStyle>>
+<DefineParaStyle:Feature Section=<BasedOn:NormalParagraphStyle><Nextstyle:Feature Section><cTypeface:Bold><cSize:10.000000><pSpaceBefore:4.500000><pTabRuler:20\,Left\,.\,0\,-\;258\,Left\,.\,0\,-\;><cFont:Rockwell><pGridAlign:BaseLine>>
+<DefineParaStyle:Module Author Byline=<Nextstyle:Module Author Byline><cTypeface:Italic><cSize:9.500000><cLigatures:0><pDropCapCharacters:1><pDropCapLines:1><pHyphenationLadderLimit:0><cLanguage:English\: USA><pHyphenation:0><pHyphenationZone:0.000000><cFont:Minion \(T1\)><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pTextAlignment:Right><pGridAlign:BaseLine><bulFont:\<TextFont\>><bulTypeFace:\<TextStyle\>>>
+<DefineParaStyle:Feature Lead=<Nextstyle:Feature Lead><cSize:9.500000><cLigatures:0><cTracking:50><pDropCapCharacters:1><pDropCapLines:3><pHyphenationLadderLimit:0><cLeading:11.400000><cLanguage:English\: USA><pHyphenation:0><pHyphenationZone:0.000000><cFont:Minion \(T1\)><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pTextAlignment:JustifyLeft><pGridAlign:BaseLine>>
+<DefineParaStyle:Feature Para=<BasedOn:Feature Lead><Nextstyle:Feature Para><pDropCapLines:1><pFirstLineIndent:12.024000>>
+<DefineParaStyle:Feature Section Lead=<BasedOn:Feature Para><Nextstyle:Feature Section Lead><pFirstLineIndent:0.000000><cLeading:-1.000000>>
+<DefineParaStyle:Feature Code Para=<Nextstyle:Feature Code Para><cSize:9.500000><cLigatures:0><pHyphenationLadderLimit:0><pLeftIndent:10.799999><cLanguage:English\: USA><pHyphenation:0><pHyphenateCapitals:0><pHyphenationZone:0.000000><pTabRuler:18\,Left\,.\,0\,\;31.5\,Left\,.\,0\,\;45\,Left\,.\,0\,\;58.5\,Left\,.\,0\,\;72\,Left\,.\,0\,\;85.5\,Left\,.\,0\,\;99\,Left\,.\,0\,\;112.5\,Left\,.\,0\,\;126\,Left\,.\,0\,\;139.5\,Left\,.\,0\,\;153\,Left\,.\,0\,\;166.5\,Left\,.\,0\,\;180\,Left\,.\,0\,\;193.5\,Left\,.\,0\,\;207\,Left\,.\,0\,\;220.5\,Left\,.\,0\,\;234\,Left\,.\,0\,\;><cFont:Courier New><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pGridAlign:BaseLine>>
+<DefineParaStyle:Feature Sub Section=<BasedOn:Feature Section><Nextstyle:Feature Sub Section><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:News URL=<BasedOn:NormalParagraphStyle><Nextstyle:News URL><cSize:9.500000><pSpaceAfter:4.500000><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pGridAlign:BaseLine><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:News para=<BasedOn:NormalParagraphStyle><Nextstyle:News para><cSize:9.500000><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pGridAlign:BaseLine><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:News Headline=<BasedOn:NormalParagraphStyle><Nextstyle:News Headline><cTypeface:Bold><cSize:9.500000><pSpaceBefore:4.500000><cFont:Gill Sans \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pGridAlign:BaseLine><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar URL=<Nextstyle:Calendar URL><cTypeface:Italic><cSize:10.000000><cLanguage:English\: USA><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar title=<Nextstyle:Calendar title><cSize:10.000000><cLanguage:English\: USA><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar location=<Nextstyle:Calendar location><cSize:10.000000><cLanguage:English\: USA><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar date=<Nextstyle:Calendar date><cTypeface:Bold><cSize:11.000000><cCase:All Caps><cLanguage:English\: USA><cFont:Gill Sans \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Feature Title=<Nextstyle:Feature Title><cSize:26.500000><cLeading:13.500000><cFont:Rockwell Extra Bold><pTextAlignment:Center>>
+<DefineParaStyle:Feature Byline=<BasedOn:NormalParagraphStyle><Nextstyle:Feature Byline><cTypeface:Italic><cSize:11.000000><cLeading:13.000000><cFont:Gill Sans \(TT\)><pTextAlignment:Right>>
+<DefineParaStyle:Feature Deck=<BasedOn:Feature Byline><Nextstyle:Feature Deck><cTypeface:Regular><pSpaceBefore:4.500000><pTextAlignment:Center>>
+<DefineParaStyle:Normal=<Nextstyle:Normal><KeyboardShortcut:Shift\+Cmd\+Num 6><cSize:11.000000><cLigatures:0><pHyphenationLadderLimit:0><cLeading:13.000000><cLanguage:English\: USA><pHyphenation:0><pHyphenationZone:0.000000><pSpaceBefore:4.500000><pSpaceAfter:4.500000><cFont:Arial \(TT\)><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pTextAlignment:JustifyLeft>>
+<DefineParaStyle:Body Copy=<BasedOn:Normal><Nextstyle:Body Copy><cSize:9.500000><pFirstLineIndent:12.024000><cLeading:-1.000000><pSpaceBefore:0.000000><pSpaceAfter:0.000000><cFont:Minion \(T1\)><pGridAlign:BaseLine><bulFont:\<TextFont\>><bulTypeFace:\<TextStyle\>>>
+<DefineParaStyle:author byline=<BasedOn:Feature Para><Nextstyle:author byline><cTypeface:Italic><bulFont:\<TextFont\>><bulTypeFace:\<TextStyle\>>>
+<DefineParaStyle:article head=<BasedOn:Normal><Nextstyle:Normal><KeyboardShortcut:Shift\+Cmd\+Num 1><cSize:14.000000><cHorizontalScale:1.100000><pSpaceBefore:13.500000><pSpaceAfter:0.000000><cFont:Arial Black><pKeepWithNext:4><cSkew:15.000000><pRuleBelowColor:Black><pRuleBelowTint:100.000000><pRuleBelowOffset:9.000000>>
+<DefineParaStyle:article subhead=<BasedOn:article head><Nextstyle:article subhead><KeyboardShortcut:Shift\+Cmd\+Num 2><cSize:11.000000><pSpaceBefore:18.000000>>
+<pstyle:Feature Lead>Imagine having to change the password on hundreds of servers. I could log in to each one individually and hope to get done before I retire, or I could use Perl with <CharStyle:pod-C>Expect.pm<CharStyle:> to accomplish this very quickly, with less error, by automating it. Anything I can manually do on the command line I can automate with the <CharStyle:pod-C>Expect<CharStyle:> module.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Introduction	
+<pstyle:Feature Section Lead>Expect was originally a little language written for TCL to pretend to be be someone. From the TCL website:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    Expect is a tool primarily for automating interactive applications such as telnet, ftp, passwd, fsck, rlogin, tip, etc.<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>For this article, I won<0x2019>t be using TCL, but Perl with <CharStyle:pod-C>Expect.pm<CharStyle:>. Perl and Expect.pm make a powerful combination to automate the interaction, data collection and modification of servers, switches, routers, on just about any network device that has a commandline interface and remote access.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Getting Started	
+<pstyle:Feature Section Lead>As an example, imagine me as a new system administrator tasked with inventorying every one of these servers. Of course, my predecessor didn<0x2019>t keep any inventory, and I only have hostnames and passwords. I have to figure out what distribution and kernel version of each server. Perl with <CharStyle:pod-C>Expect.pm<CharStyle:> to the rescue!
+<pstyle:Feature Para>Expect simulates the human interaction, so it<0x2019>s very important to know the command line interface of my system. As an example, when I use ssh to login to a server, I<0x2019>m expecting a password prompt (unless I<0x2019>m using RSA/DSA key pair). <CharStyle:pod-C>Expect.pm<CharStyle:> sends commands to the system and expects data to come back. It<0x2019>s best to manually try all the commands you want to automate before developing your <CharStyle:pod-C>Expect.pm<CharStyle:> based program. When I do this first, I mostly eliminate command errors when developing my Expect script.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Installing Expect	
+<pstyle:Feature Section Lead><CharStyle:pod-C>Bundle::Expect<CharStyle:> is the easiest way to install the Expect and required modules. It installs all of the modules I need:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    shell\> cpan Bundle::Expect<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Connecting and Logging In	
+<pstyle:Feature Section Lead>I can connect to my target system in several ways, including various Perl modules such as <CharStyle:pod-C>Net::SSH<CharStyle:>, <CharStyle:pod-C>Net::SSH::Expect<CharStyle:>, or <CharStyle:pod-C>Net::Telnet<CharStyle:>, <CharStyle:pod-I>etc<CharStyle:>. SSH is installed on my systems, so I use that directly. I construct a command, just like I would if I were doing this myself. I execute that command with the <CharStyle:pod-C>spawn<CharStyle:> method:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>use Expect;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>my $expect = Expect-\>new;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $login = "/usr/local/bin/ssh $user\\@$host";
+<pstyle:Feature Code Para>    my $expect = Expect-\>spawn($login) or die
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>        "Can't login to $host as $user, error is $!\\n"
+<pSpaceAfter:><pstyle:Feature Para>Where $host and $user are valid host and user names. If this method call dies, I won<0x2019>t be able to send any commands to the host. To help in debugging my Expect scripts, I enable logging by setting <CharStyle:pod-C>$Expect::Exp_Interval<CharStyle:> to a true value:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>#Enables internal debugging
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>$expect-\>exp_Interval( 1 ); 
+<pSpaceAfter:><pstyle:Feature Para>Additionally, I can redirect the logging output to a file:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>#Record all communication to logfile.
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>    $expect-\>log_file("$host.log"); 
+<pSpaceAfter:><pstyle:Feature Para>The logfile will contain all communication between my script and the device. I watch this file to see what<0x2019>s going on with my program. I can use the tail command to watch the file as it<0x2019>s updated:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>shell\> tail example.com.log<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>If this is the first time I<0x2019>ll be logging into a system using SSH, I<0x2019>ll have to deal with the authenticity banner that tells me I<0x2019>m connecting to a new host:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>The authenticity of host ' 192.168.0.1 (192.168.0.1)' can't be established
+<pSpaceBefore:><pstyle:Feature Code Para>RSA key fingerprint is 84:36:d7:18:09:ec:84:04:a7:ca:78:49:0d:68:39:b0.
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>Are you sure you want to continue connecting (yes/no)?
+<pSpaceAfter:><pstyle:Feature Para>I use the <CharStyle:pod-C>expect<CharStyle:> method with a regular expression to attempt to match this text:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    $expect-\>expect(5, '-re', '(RSA)');<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>The <CharStyle:pod-C>expect<CharStyle:> method can take several parameters. In the example, <CharStyle:pod-C>expect<CharStyle:> times out after 5 seconds, uses a regular expression since I used <CharStyle:pod-C>-re<CharStyle:>, and looks for <CharStyle:pod-C>RSA<CharStyle:> in the text it gets. It will store <CharStyle:pod-C>RSA<CharStyle:> in an array that I can access with the <CharStyle:pod-C>matchlist<CharStyle:> method. The parentheses in my regular expression work like those in a Perl regular expression and capture what they enclose. I<0x2019>ll find what the regular expression captured in the list that <CharStyle:pod-C>matchlist()<CharStyle:> returns:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>my @matchlist = $expect-\>matchlist;<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>I can use the standard regex character classes such as <CharStyle:pod-C>\\d<CharStyle:> and <CharStyle:pod-C>\\w<CharStyle:>: I can use any valid Perl regular expression.
+<pstyle:Feature Para>If I saw that authenticity banner, I need to respond to it to go onto the next step. I need to send <CharStyle:pod-C>yes<CharStyle:> back to the server to continue connecting, but only if I matched something:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    $expect-\>send("yes\\n") if( ($expect-\>matchlist)[0] );<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>The send method will send yes back to the server. This normally won<0x2019>t show up in the log file, but if my server echos commands, it might appear in the log. I have to remember not to forget the newline, <CharStyle:pod-C>\\n<CharStyle:>. Sending <CharStyle:pod-C>yes<CharStyle:> back to the server isn<0x2019>t enough; it would sit there waiting for the newline (it<0x2019>s actually waiting for a carriage return, but Expect handles the translation).
+<pstyle:Feature Para>The next piece of data I expect is the password prompt, which I treat like I handled the authenticity banner earlier:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    $expect-\>expect(5, "password: ");<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>This is slightly different than above since I<0x2019>m searching for an exact string instead of using a regex. I don<0x2019>t need to capture anything; I just need to respond to it. I send the password using the <CharStyle:pod-C>send<CharStyle:> method, and remember to include the newline:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    $expect-\>send("JaPh2007!\\n");<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>Note that putting passwords in scripts is not good security practice and I only did it for a demonstration. I can also configure <CharStyle:pod-C>ssh<CharStyle:> to use shared keys.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Additional Matching	
+<pstyle:Feature Section Lead>Expect provides additional before and after matching using the \<before()\> and <CharStyle:pod-C>after()<CharStyle:> methods. These are just like <CharStyle:pod-C>$`<CharStyle:> and <CharStyle:pod-C>$<0x2019><CharStyle:> variables that give the parts of the strings before and after the matched portion. This can come in handy if I need all the text up to a certain point. In the authenticity banner example earlier, I could have looked for <CharStyle:pod-C><0x201C>key<0x201D><CharStyle:> and saved all the text leading up to that:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>$expect-\>send( "some command" );
+<pSpaceBefore:><pstyle:Feature Code Para>$expect-\>expect(5, "-re", "key");
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>my $before = $expect-\>before();
+<pSpaceAfter:><pstyle:Feature Para>If the regex fails to match, <CharStyle:pod-C>before<CharStyle:> returns all the text.
+<pstyle:Feature Para>$expect-\>after() method matches all the text after <0x2019>key<0x2019> until the end of the output. If this match fails, it<0x2019>ll return <CharStyle:pod-C>undef<CharStyle:>. All matched text can be found in <CharStyle:pod-C>($expect-<CharStyle:>matchlist)[0]\>.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Putting Expect to Work	
+<pstyle:Feature Section Lead>Now that I can login to the server, it<0x2019>s a matter of using the same techniques to record the Linux distribution and kernel version that<0x2019>s running. I look in the <CharStyle:pod-C>/etc/lsb-release<CharStyle:> file, which looks similar to this:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>DISTRIB_ID=Ubuntu
+<pSpaceBefore:><pstyle:Feature Code Para>DISTRIB_RELEASE= 7.10
+<pstyle:Feature Code Para>DISTRIB_CODENAME=gutsy
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>DISTRIB_DESCRIPTION="Ubuntu 7.10"
+<pSpaceAfter:><pstyle:Feature Para>I<0x2019>ll get that by sending the <CharStyle:pod-C>cat<CharStyle:> command:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000> $expect-\>send("cat /etc/lsb-release\\n");<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>I want to capture the <0x201C>Ubuntu 7.10<0x201D>. Since it<0x2019>s the only line with double-quotes, it<0x2019>ll be easy enough to capture with:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>$expect-\>expect(5, "\\"(.*)\\"");<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>This capture can then be save using:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>my $distro = ( $expect-\>matchlist )[0];<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>To get the kernel version:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>$expect-\>send("uname -r\\n");
+<pSpaceBefore:><pstyle:Feature Code Para>$expect-\>expect(5, "(.*)");
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>my $kernel = ( $expect-\>matchlist )[0];
+<pSpaceAfter:><pstyle:Feature Para>Now that I<0x2019>ve extracted the description, I can store that in a database, a file for my inventory, or do anything else with it I like. With a little bit of Perl I<0x2019>ve finished my task before lunch!
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Conclusion	
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> References	
+<pstyle:Feature Section Lead>The original expect by Don Libes, <CharStyle:pod-I>http://expect.nist.gov/<CharStyle:>
+<pstyle:Feature Para>Expect Perl Module, <CharStyle:pod-I>http://search.cpan.org/dist/Expect/<CharStyle:>
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> About the Author	
+<pstyle:Feature Section Lead>Mark Schoonover lives near San Diego, California with his wife, three boys, a neurotic cat, and a retired Greyhound. He<0x2019>s experienced as a DBA, system administrator, network engineer and web developer. He enjoys Amateur Radio, running marathons and cycling. He can also be found coaching youth soccer, and getting yelled at as a referee on the weekends.

@@ -1,0 +1,159 @@
+ADOBE INDESIGN PRINTING INSTRUCTIONS FOR SERVICE PROVIDER REPORT
+
+PUBLICATION NAME: Fall2008.indb
+Pagination Options : Continue from Previous Document
+
+Number of Documents :11
+
+PACKAGE DATE: 9/23/08 2:39 AM
+Creation Date: 
+Modification Date: 9/22/08
+
+CONTACT INFORMATION
+
+Company Name: The Perl Review
+Contact: brian d foy
+Address: 
+1751-D W. Howard #111
+Chicago, IL 60626
+
+
+
+Phone: 312 492 4513
+Fax: 
+Email: brian.d.foy@gmail.com
+
+SPECIAL INSTRUCTIONS AND OTHER NOTES
+
+
+
+
+
+
+External Plug-ins 1
+
+InBooklet SE.4x.pln.framework
+Non Opaque Objects :On 5 Document(s)
+
+FONTS
+27 Fonts Used; 0 Missing, 0 Embedded, 0 Incomplete, 0 Protected
+
+Fonts Packaged
+- Name: ArialMT; Type: TrueType, Status: OK
+- Name: CourierNewPS-BoldMT; Type: TrueType, Status: OK
+- Name: CourierNewPS-ItalicMT; Type: TrueType, Status: OK
+- Name: CourierNewPSMT; Type: TrueType, Status: OK
+- Name: Futura-Medium; Type: TrueType, Status: OK
+- Name: Futura-MediumItalic; Type: TrueType, Status: OK
+- Name: GillSans; Type: TrueType, Status: OK
+- Name: GillSans-Bold; Type: TrueType, Status: OK
+- Name: GillSans-Italic; Type: TrueType, Status: OK
+- Name: GillSans-Light; Type: TrueType, Status: OK
+- Name: Minion-BoldItalic; Type: Type 1, Status: OK
+- Name: Minion-Italic; Type: Type 1, Status: OK
+- Name: Minion-Regular; Type: Type 1, Status: OK
+- Name: MinionPro-Bold; Type: OpenType Type 1, Status: OK
+- Name: MinionPro-BoldIt; Type: OpenType Type 1, Status: OK
+- Name: MinionPro-It; Type: OpenType Type 1, Status: OK
+- Name: MinionPro-SemiboldIt; Type: OpenType Type 1, Status: OK
+- Name: Rockwell; Type: OpenType TrueType, Status: OK
+- Name: Rockwell-Bold; Type: OpenType TrueType, Status: OK
+- Name: Rockwell-BoldItalic; Type: OpenType TrueType, Status: OK
+- Name: Rockwell-ExtraBold; Type: OpenType TrueType, Status: OK
+- Name: Times-Bold; Type: TrueType, Status: OK
+- Name: Times-Roman; Type: TrueType, Status: OK
+- Name: TimesNewRomanPS-ItalicMT; Type: TrueType, Status: OK
+- Name: TimesNewRomanPSMT; Type: TrueType, Status: OK
+- Name: Verdana-BoldItalic; Type: TrueType, Status: OK
+- Name: Wingdings; Type: OpenType TrueType, Status: OK
+
+
+COLORS AND INKS
+4 Process Inks; 0 Spot Inks
+
+- Name and Type: Process Cyan; Angle: 75.000; Lines/Inch: 70.000
+- Name and Type: Process Magenta; Angle: 15.000; Lines/Inch: 70.000
+- Name and Type: Process Yellow; Angle: 0.000; Lines/Inch: 70.000
+- Name and Type: Process Black; Angle: 45.000; Lines/Inch: 70.000
+
+
+LINKS AND IMAGES
+(Missing & Embedded Links Only)
+Links and Images: 32 Links Found; 0 Modified, 1 Missing
+Images: 0 Embedded, 25 use RGB color space
+
+- Name: minesweeper.gif; Type: CompuServe GIF RGB; Status: Missing
+
+PRINT SETTINGS
+PPD: Generic PostScript Printer, (10.140.101.73)
+Printing To: Printer
+Number of Copies: 1
+Reader Spreads: No
+Even/Odd Pages: Both
+Pages: All
+Proof: No
+Tiling: None
+Scale: 100%, 100%
+Page Position: Center
+Print Layers: Visible & Printable Layers
+Printer's Marks: None
+Bleed: 0 in, 0 in, 0 in, 0 in
+Color: Composite CMYK
+Trapping Mode: None
+Send Image Data: Optimized Subsampling
+OPI/DCS Image Replacement: No
+Page Size: Letter
+Paper Dimensions: 8.5 in x 11 in
+Orientation: Portrait
+Negative: No
+Flip Mode: Off
+
+
+FILE PACKAGE LIST
+
+1. Fall2008.indb; type: Adobe InDesign publication; size: 80K
+2. Publishers Letter.indd; 1808K
+3. TOC.indd; 2374K
+4. Commentary.indd; 1597K
+5. book_review.indd; 1665K
+6. rice.indd; 2027K
+7. prove.indd; 2123K
+8. News.indd; 1618K
+9. sweeperbot.indd; 2364K
+10. new_modules.indd; 1423K
+11. netflix.indd; 2183K
+12. proxy.indd; 2105K
+13. Arial; type: Font file; size: 309K
+14. Courier New; type: Font file; size: 362K
+15. Futura.dfont; type: Font file; size: 293K
+16. GillSans.dfont; type: Font file; size: 555K
+17. MinioBolIta; type: Font file; size: 40K
+18. Minion-1; type: Font file; size: 91K
+19. MinioIta; type: Font file; size: 40K
+20. MinioReg; type: Font file; size: 37K
+21. MinionPro-Bold.otf; type: Font file; size: 205K
+22. MinionPro-BoldIt.otf; type: Font file; size: 244K
+23. MinionPro-It.otf; type: Font file; size: 244K
+24. MinionPro-SemiboldIt.otf; type: Font file; size: 244K
+25. Rockwell; type: Font file; size: 291K
+26. Rockwell Extra Bold; type: Font file; size: 50K
+27. Times.dfont; type: Font file; size: 1722K
+28. Times New Roman; type: Font file; size: 367K
+29. Verdana; type: Font file; size: 222K
+30. Wingdings.ttf; type: Font file; size: 84K
+31. louie.jpg; type: Linked file; size: 846K
+32. brians-signature.png; type: Linked file; size: 318K
+33. brian-author.tif; type: Linked file; size: 157K
+34. Cover-small.pdf; type: Linked file; size: 3318K
+35. paul_miller.jpg; type: Linked file; size: 125K
+36. Jeffrey_Kegler.png; type: Linked file; size: 270K
+37. andy-armstrong.jpg; type: Linked file; size: 177K
+38. paul_j_fenwick.jpg; type: Linked file; size: 14K
+39. brian_d_foy.jpg; type: Linked file; size: 107K
+40. joshua_mcadams.png; type: Linked file; size: 83K
+41. nadim_headshot.jpg; type: Linked file; size: 22K
+42. productive_programmer.jpg; type: Linked file; size: 365K
+43. alberto.tif; type: Linked file; size: 111K
+44. unknown.png; type: Linked file; size: 88K
+45. Perl quarter ad.pdf; type: Linked file; size: 46K
+46. minesweeper-basic.png; type: Linked file; size: 8K

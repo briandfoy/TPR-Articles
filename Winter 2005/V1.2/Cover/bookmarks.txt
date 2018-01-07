@@ -1,0 +1,52 @@
+InfoKey: Creator
+InfoValue: Adobe InDesign 2.0
+InfoKey: Title
+InfoValue: v1i2.book
+InfoKey: Producer
+InfoValue: Adobe PDF Library 5.0
+InfoKey: ModDate
+InfoValue: D:20050429174726-05'00'
+InfoKey: CreationDate
+InfoValue: D:20050221071330Z
+PdfID0: f86d72bce2c988b24446d5ede6fadb6
+PdfID1: 48fea2b2c7e9f171726477903f707fc2
+NumberOfPages: 28
+BookmarkTitle: Perl Mongers News
+BookmarkLevel: 1
+BookmarkPageNumber: 5
+BookmarkTitle: Perl Foundation News
+BookmarkLevel: 1
+BookmarkPageNumber: 5
+BookmarkTitle: Book Review
+BookmarkLevel: 1
+BookmarkPageNumber: 6
+BookmarkTitle: Book Review
+BookmarkLevel: 1
+BookmarkPageNumber: 7
+BookmarkTitle: Test::Number::Delta
+BookmarkLevel: 1
+BookmarkPageNumber: 8
+BookmarkTitle: Foo, Bar
+BookmarkLevel: 1
+BookmarkPageNumber: 9
+BookmarkTitle: Serious Perl: The Absolute Minimum You Need To Know
+BookmarkLevel: 1
+BookmarkPageNumber: 10
+BookmarkTitle: 9-Block Quilt Patterns in Perl
+BookmarkLevel: 1
+BookmarkPageNumber: 12
+BookmarkTitle: Perl Calendar
+BookmarkLevel: 1
+BookmarkPageNumber: 16
+BookmarkTitle: Perl News
+BookmarkLevel: 1
+BookmarkPageNumber: 16
+BookmarkTitle: New Modules
+BookmarkLevel: 1
+BookmarkPageNumber: 17
+BookmarkTitle: Perl Packet Sniffing
+BookmarkLevel: 1
+BookmarkPageNumber: 18
+BookmarkTitle: Hashes with history
+BookmarkLevel: 1
+BookmarkPageNumber: 27

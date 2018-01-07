@@ -1,0 +1,24 @@
+=head2 Perl on a Stick
+
+Adam Kennedy, $3,000
+http://news.perlfoundation.org/2008/05/2008q2_grant_proposal_perl_on.html
+
+=head2 Test::Builder 2.0
+
+Michael Schwern, $3,000
+http://news.perlfoundation.org/2008/05/2008q2_grant_proposal_fixing_b.html
+
+=head2 Make localtime() and gmtime() Work Past 2038
+
+Michael Schwern, $1,500
+http://news.perlfoundation.org/2008/05/2008q2_grant_proposal_make_loc.html
+
+=head2 Fixing Archive::Zip
+
+Alan Haggai Alavi, $3,000
+http://news.perlfoundation.org/2008/05/2008q2_grant_proposal_fixing_b.html
+
+=head2 Simple Meta Object Programming
+
+Daniel Ruoso, $2,500
+http://news.perlfoundation.org/2008/05/2008q2_grant_proposal_smop_sim.html

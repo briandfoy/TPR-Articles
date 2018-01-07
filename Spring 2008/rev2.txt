@@ -1,0 +1,107 @@
+
+* Page 23, column 1, graf 7, line 6.  Change "then halt effectively
+runs my_function with the rest of" to "then the test case is
+my_function with the rest of".  "effectively runs" is incorrect.
+What is done with the test case is up to the halt function, but
+effectively running the test case is not a viable choice.
+
+
+* Page 23, column 2, Table 1, top left cell.  "halt()" should be
+in constant width font.  
+
+* Page 23, column 2, Table 1, top middle cell.  "line 24" should be "line 7".
+Clearly a typo.
+
+* Page 24, column 1, graf 3, line 1.  "As noted in Table 1, If"
+should be "As noted in Table 1, if".  Capitalization of "if".  Typo.
+
+* Page 24, column 1, graf 3, line 3.  Change "c<test case>" to
+"test_case" in constant width format.  Leftover POD formatting?
+
+* Page 25, column 1, graf 5, line 2.  Change "when a brilliant idea
+occurs to me" to "when an idea occurs to me".  Leave it to the
+reader to decide whether the idea is brilliant or not.
+
+* Page 25, column 1, graf 6, lines 3-4.  Change "Remember that
+thought problems can be far-fetched!" to "(Remember that thought
+problems can be far-fetched.)".  Restore parentheses, drop exclamation
+point.  The remark comments on the narrative, so parentheses are
+warranted.  I intended humorous understatement, and your rewrite
+is better than my original on that score, but the exclamation point
+defeats the purpose.
+
+* Page 25, column 1, graf 7, lines 1-2.  Change "He some lines from
+one of her poems:" to "He recited some lines from one of her poems:"
+Fix missing verb, a typo from my original.
+
+* Page 25, column 2, graf 2, line 1.  Change "In math, it's often
+the case that I'm trying to prove something" to "It's often the
+case that a mathematician is trying to prove something".  The idea
+was to state how math works in general, not any special technique
+of my own.
+
+* Page 25, column 2, graf 4, line 2.  Change "it seems backwards,
+but they use this sort of logic" back to "it seems backwards, but
+we use this sort of logic".  Going to the third person ("we") changed
+the meaning from "people in general" to "mathematicians", which
+destroys the point of the sentence.  Especially now that the thought
+problem is told in the first person, the pronoun needs to be "we"
+to connect up the line of thought.
+
+* Page 25, column 2, display 1, line 1.  Change "A: Assume that
+scheme in the infomercial is a" to "Assume A: Assume that scheme
+in the infomercial is a" with boldface "Assume A".
+
+In all 3 repetitions of the reduction to absurdity pattern, I'd
+like to change the initial "A." to "Assume A.", to reinforce the
+point that I'm assuming A, not asserting it as a proven fact.  I
+hope that's already clear, but I'd like to make it even more obvious.
+
+* Page 25, column 2, display 2, line 1.  Change "A." to "Assume A."
+As explained above.
+
+* Page 26, column 1, graf 1, line 2.  Change "night scams, and
+admiring my own brilliance, when the solution" to "night scams,
+when the solution".  OOOOOH MY GOD.  I mean, like, really, please
+change this!
+
+* Page 26, column 1, graf 3, line 1.  Put "Acme::Halt::halt" into
+constant width font.  For consistency.
+
+* Page 26, column 1, graf 4, line 4.  Change "reductio ad absurdam"
+to "reduction to absurdity" and drop the italics.  My mistake.  I'm
+trying to keep things simple, so why am I speaking Latin?
+
+* Page 26, column 1, display 1, line 1.  Change "A: Assume that
+Acme::Halt::halt finds infinite" to "Assume A: Assume that
+Acme::Halt::halt finds infinite" Boldface "Assume A", retain
+constant width font for "Acme::Halt::halt".  As explained above.
+
+* Page 26, column 1, graf 7, lines 1-2.  Change "A program might
+also be able to figure out this loops forever:" to "A program could
+also figure out that this loops forever:".  Eliminate weak wording.
+My mistake.
+
+* Page 26, column 1, last graf, lines 2-3.  Change "It might be
+possible to detect a module which" to "It might be possible to write
+a module that".  Changes "detect" to "write" and "which" to "that".
+My mistakes.
+
+* Page 26, column 2, graf 5, line 1.  Change "In fact, I tell the
+HRPF board, that these restrictions forced" to "In fact, I tell the
+HRPF board that these restrictions forced".  Eliminate misplaced
+comma.  My mistake.
+
+* Page 27, column 1, graf 3, line 5.  Change "the Turing machines
+and the Halting Problem aren't adequate," to "Turing machines and
+the Halting Problem aren't adequate,".  The "the" was my typo.
+
+* Page 27.  Add Reference: http://en.wikipedia.org/wiki/Halting_problem
+
+* Page 27, "About the Author".  Add at end of first paragraph:
+"Jeffrey is the author the of Test::Weaken and Parse::Marpa CPAN
+modules." Font "Test::Weaken" and "Parse::Marpa" should be as per
+TPR style for module names.
+
+* Page 27, "About the Author", last 3 lines.  One URL is in regular
+font, the second is in italics.  Change so both follow TPR style.

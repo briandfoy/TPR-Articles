@@ -1,0 +1,99 @@
+I can write 2 or three module reviews if It can help
+
+sub::name
+text editor easy
+data::visitor
+file::stream
+mvalve
+use Syntax::Highlight::Engine::Simple;
+Parallel-MapReduce-0.09
+UML::Class::Simple
+pogl
+	
+---------------------------------------------------------------------------------------------------------------
+Commentary
+
+The road is long
+
+Developing with Perl feels like beating the tracks of a remote region of Sulawesi. You're, mostly, going to meet
+nice people but you're still going to curse and cry and mosquitoes will suck you dry after they've made you crazy.
+
+"Why Perl?". I think I'll loose my sanity if I hear that question one more time. 
+
+Every time the word "Perl" pops up, body core temperatures go up, fingers point everywhere, some critical mass is
+closed to being reached and overload is imminent. You can avoid all this by keeping clear from language zealots, 
+incompetent people and just meet Perl geeks like yourself; with the risk of reducing your social live to irc chating and mongers meetings. 
+
+I think most Perl developers know at least one or two other programing languages
+
+That makes Perl developers a threat because they are knowledgeable. 
+Taking in consideration experience, the average age for a Perl developer must be around 40+, 
+we simply qualify for the nerd-knows_what_a_linker_is-has_no_life-runs_a_cluster_at_home-owns_two_amigas-geek.
+
+Those are dangerous people because they can not only make things work they can even make them work efficiently, quickly, and
+cheaper than other without any micro-management overhead or latest smoke-and-mirrors  methodology. 
+
+Have you noticed that all the  hyped development methodologies are more about management than development? This may sounds surprising
+coming from a manager, but not all managers are alike and some even know what they are talking about (which they achieve by listening).
+
+"Why Perl?" is a question I had to seriously answer at least 5 time in the last 6 month.
+That would be OK if it wasn't for exactly the _same_ project that is replacing another, successful, Perl project.
+
+The world runs on Perl but no one knows it except when things go bad. And then It's never the sub optimal conditions, the non-existent budget, the 50%
+time spend in meetings or the lack of interred that is the source of the failure, it's Perl and all those line noise writing weirdos (you can't be
+normal and use Perl it seems). I doesn't matter if you put up a solution for a third of the price and didn't get a decent raise for two years.
+
+When did you last hear that a java project went bad? How often do you hear a Perl project goes well? At YAPC:EU 2007 I tried to explain
+what I believe every Perl developer should do to make Perl  'main stream' ('main stream' is not when you use it everywhere to save the 
+world again and nobody notices, so 'no', Perl is not main stream, it's just invaluable, which is bad enough in itself).
+
+I started asking myself "why people don't know how good Perl is?". Is it the fault of his gentle mannered creator? Is it the fault of
+his low profile followers? Is it the TPF's fault? Is it my fault (arff, that can't be I'm just a nobody, we're all just simple people right?)? 
+I don't know but things are getting seriously difficult in the real world (which just outside the cave where you retire to do line noise incantations).
+The real world is the one paying your salary.  I just want to be able to develop in Perl in 5 years without having to be compared to a COBOL developer.
+
+Sure, l want to have a rich development ecosystem, 
+
+I welcomed java even if I though it crippled C++ and lobotomized developers, but after consideration it did fill a need, application 
+development by almost anyone who couldn't handle a pointer properly. But hold on, we could already do that. 
+
+I also welcomed Python, it did even do something for me that I couldn't do easily with Perl, embedding easily in an application. Right, that can be done with
+Perl without cursing too much these days.
+
+I still haven't understand the use of PHP but that doesn't matter because other fellow programmers think it's good and it does the work they expect
+it to do. So I'm happy for them although I recommend them to get a grip.
+
+perl5 is not bad, not at all (except threading but that will be the subject of another article). 
+
+The Perl community has _a_ great plan to fix all the flows that the current Perl has. It's called perl6. I'm sure perl6 will be great because our community is 
+a great one but I very seriously doubt it's going to be any good if it is used in caves.
+
+I still haven't find out "why?". I probably should go fix the problems I have in my modules instead for writing this philosophical article or open
+a window (Sweden is a country where caves have windows) an profit of the last days of summer.
+
+I've got it!
+
+Like all other Perl developers I like development so much that I never take time advertize Perl. Perl is the duct tape of the Internet I read. That's
+not completely right, it's the duct tape of the world. My company is asking me to explain why we should use Perl (which is an excellent question) instead for another language
+for which good developers are easier to find (and I thought good developers have nothing to do with the language they use). Maybe I should ask the company why 40%
+of the developers know a little bit of Perl and use it in their daily work (some write horribly crappy perl though) and they are never send to any Perl 
+education or even a cool Perl conference.
+
+The reason why Perl does not have the consideration it deserves is extremely simple. We're cheap, cheap like duct tape. 
+
+Perl costs nothing, educating Perl developers costs nothing (they do it for fun), The license doesn't oblige you to pay astronomic fees because you simply 
+downloaded the SDK and happened to put in in you product. Nobody sells companies expensive libraries or modules because they are all free with a great distribution
+environment. No big corporation stands behind Perl (Microsoft did pay for porting perl to Win32, right?), no flashy web sites, no expensive conference, no certification programs (lol),
+no "our lawyer will contact you". Yeah, we're definitely cheap.
+
+Take a product, change the box, multiply the price by 5 and it's suddenly a much better product (ever bought stainless steel screws in a boat shop?).
+The real world is, well, strange. It wants packaging, commercial support, certification, white papers, a list great project success 
+(and excellent hiding mecanism of the bad ones), methodologies  and reassurance that they will find developers in five year. A language that is tought at university and
+schools not something you rapidly pick up to fix the flaws of the languages that you learned.
+
+If you believe we have all that, then brother write it down and give the rest of the community the URL so we can finish the work together.
+
+Now I'll go and heal my end of summer blues and prepare for a great time at YAPC with a nice song. The Hollies - The Road is Long, he's my brother - 1969.
+
+
+---------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,117 @@
+<ASCII-MAC>
+<Version:5><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1>>
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Refactoring Factorial	
+<pstyle:Feature Section Lead>You probably know the factorial function. It is a common mathematical function defined for the integer <CharStyle:pod-I>n<CharStyle:> as the product of all the integers in the range <CharStyle:pod-I>[1..n]<CharStyle:>. Looking on common algorithms books it is easy to find one or two different algorithms to compute the factorial.
+<pstyle:Feature Para>In this article I present different solutions to compute the factorial function using different aspects of the Perl language, but also talk about the performance.
+<pstyle:Feature Sub Section>Solution 1: Recursive is beautiful
+<pstyle:Feature Para>The factorial function is habitually defined recursively. The idea is easy: if <CharStyle:pod-I>n = 1<CharStyle:> return 1, else, return the product of <CharStyle:pod-I>n<CharStyle:> with the factorial of <CharStyle:pod-I>n-1<CharStyle:>:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   sub factorial {
+<pSpaceBefore:><pstyle:Feature Code Para>       my $v = shift;
+<pstyle:Feature Code Para>       if ($v \> 1) {
+<pstyle:Feature Code Para>           return $v * factorial($v-1);
+<pstyle:Feature Code Para>       } else {
+<pstyle:Feature Code Para>           return 1;
+<pstyle:Feature Code Para>       }
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   }
+<pSpaceAfter:><pstyle:Feature Para>Some Perl linguists would prefer a solution that is easier to read in English. Instead of the C-like if-else, I use separate statements:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>       sub factorial {
+<pSpaceBefore:><pstyle:Feature Code Para>           my $v = shift;
+<pstyle:Feature Code Para>           return 1 if $v == 1;
+<pstyle:Feature Code Para>           return $v * factorial($v-1);
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>       }
+<pSpaceAfter:><pstyle:Feature Para>Being written in Perl I can remove the return statements, and get a more functional-like solution:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   sub factorial {
+<pSpaceBefore:><pstyle:Feature Code Para>       my $v = shift;
+<pstyle:Feature Code Para>       if ($v \> 1) {
+<pstyle:Feature Code Para>               $v * factorial($v-1)
+<pstyle:Feature Code Para>       } else {
+<pstyle:Feature Code Para>           1
+<pstyle:Feature Code Para>       }
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   }
+<pSpaceAfter:><pstyle:Feature Para>Also, the ternary operator can my life easier:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   sub factorial {
+<pSpaceBefore:><pstyle:Feature Code Para>       my $v = shift;
+<pstyle:Feature Code Para>       return $v \> 1 ? $v * factorial($v-1) : 1;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   }
+<pSpaceAfter:><pstyle:Feature Para>This can be a very slow operation though. To compute the factorial of N, I have to make N-1 subroutine calls, and I have to do that every time I want to make the computation.
+<pstyle:Feature Sub Section>Solution 2: Iterative is faster
+<pstyle:Feature Para>When discussing the benefits of iterative or functional programming languages, it is commonly said that the recursive solution is slower than the iterative one, so reducing the number of function calls should make it faster:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  sub factorial {
+<pSpaceBefore:><pstyle:Feature Code Para>      my $v = shift;
+<pstyle:Feature Code Para>      my $res = 1;
+<pstyle:Feature Code Para>      while ($v \> 1) {
+<pstyle:Feature Code Para>           $res *= $v;
+<pstyle:Feature Code Para>           $v--;
+<pstyle:Feature Code Para>      }
+<pstyle:Feature Code Para>      return $res;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   }
+<pSpaceAfter:><pstyle:Feature Para>Other languages might be able to optimize code written in a recursive fashion to make it iterative, which is why recursion appears faster in other languages.
+<pstyle:Feature Para>Again, Perl linguists have their own preferences. Instead of a while loop maybe they want to use a for loop:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   sub factorial {
+<pSpaceBefore:><pstyle:Feature Code Para>       my $v = shift;
+<pstyle:Feature Code Para>       my $res = 1;
+<pstyle:Feature Code Para>       $res *= $_ for (2 .. $v);
+<pstyle:Feature Code Para>      	return $res;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   }
+<pSpaceAfter:><pstyle:Feature Para>In the other side, there are Perl golfers and obsfuscators who like to iterate using different approaches. They might use grep to control a loop, even though it isn<0x2019>t designed for that:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>       sub factorial {
+<pSpaceBefore:><pstyle:Feature Code Para>           my $v = shift;
+<pstyle:Feature Code Para>           my $res = 1;
+<pstyle:Feature Code Para>           grep { $res *= $_ } (2 .. $v);
+<pstyle:Feature Code Para>           return $res;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>       }
+<pSpaceAfter:><pstyle:Feature Para>Yes, I can do the same with <CharStyle:pod-C>map<CharStyle:>:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>       sub factorial {
+<pSpaceBefore:><pstyle:Feature Code Para>           my $v = shift;
+<pstyle:Feature Code Para>           my $res = 1;
+<pstyle:Feature Code Para>           map { $res *= $_ } (2 .. $v);
+<pstyle:Feature Code Para>           return $res;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>       }
+<pSpaceAfter:><pstyle:Feature Para>Other people might get rid of the variable:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>       sub factorial {
+<pSpaceBefore:><pstyle:Feature Code Para>           my $res = 1;
+<pstyle:Feature Code Para>           grep { $res *= $_ } (2 .. $_[0]);
+<pstyle:Feature Code Para>           return $res;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>       }
+<pSpaceAfter:><pstyle:Feature Para>Even though these are iterative solutions, they still have a performance problem that I will fix later.
+<pstyle:Feature Sub Section>Solution 3: Haskell programmers learn Perl
+<pstyle:Feature Para>There are some commands that should be added directly to the Perl core. I can probably convince the Perl pumplings Nicholas or Rafael to add one of these, but until then I can use the <CharStyle:pod-C>List::Util<CharStyle:> module, and the <CharStyle:pod-C>reduce<CharStyle:> method:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>       use List::Util qw(reduce);
+<pSpaceBefore:><pstyle:Feature Code Para>       sub factorial {
+<pstyle:Feature Code Para>           my $v = shift;
+<pstyle:Feature Code Para>           return reduce { $a * $b } (2 .. $v);
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>       }
+<pSpaceAfter:><pstyle:Feature Para>The reduce method has the same syntax as sort. It takes a code block as its first argument, and then a list. It takes the first two values of the list and puts them in $a and $b, then executes the block of code. Whatever the result of the code is goes back onto the list as the first element. reduce does that until it ends up with one element.
+<pstyle:Feature Para>If I do not like to use external modules, I can try to mimic it. What reduce does is to multiply all values from 1 to <CharStyle:pod-C>$v<CharStyle:>. This can be done creating a string where values are separated by the multiplication operator. Then, this string can be evaluated to return the value we are expecting:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>   sub factorial {
+<pSpaceBefore:><pstyle:Feature Code Para>       my $v = shift;
+<pstyle:Feature Code Para>       return eval join "*", (2 .. $v);
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>   }
+<pSpaceAfter:><pstyle:Feature Para>This form of string eval is only of academic interest though and I shouldn<0x2019>t do this in real code.
+<pstyle:Feature Sub Section>The future of factorial
+<pstyle:Feature Para>When Perl 6 is ready for the public, I can use its built-in reduction operator, [ ]. Inside the brackets I put the operator I want applied to each successive pair. It<0x2019>s just like the reduce from List::Util, but it<0x2019>s part of the language syntax now and I don<0x2019>t even need a function call:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000># Perl 6
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>my $factorial = [ * ] 2 .. $n;
+<pSpaceAfter:><pstyle:Feature Para>Even better, Perl 6 has lazy lists, which means it won<0x2019>t have to create all of the values in the list to do the operation. It creates the values as it needs them.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Better performance	
+<pstyle:Feature Section Lead>In Perl, the iterative solution was better than the recursive one because it didn<0x2019>t make a lot of useless function calls. That is only a good solution if I have to call the subroutine once in my program. If I have to call it multiple times, I have to repeat a lot of work. If I want to compute the factorial of 10,000, I do that, but when I want to compute the factorial of 10,001, I have to repeat all the work I just did along with one more multiplication.
+<pstyle:Feature Para>Instead of repeating all of the work, I can save the result of all of my previous work so I can reuse it. In @cache I save what I<0x2019>ve done before, and if I have to compute something bigger than that I start where I left off:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>my @cache = ( 1, 1 );
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>sub factorial {
+<pstyle:Feature Code Para>    my $v = shift;
+<pstyle:Feature Code Para>    return $cache[$v] if defined $cache[$v];
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    for my $i ( @cache .. $v ) {
+<pstyle:Feature Code Para>        $cache[$i] = $cache[$i-1] * $i;
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>}
+<pSpaceAfter:><pstyle:Feature Para>I don<0x2019>t have to do that work myself though. The Memoize module does it for me, no matter which factorial implementation I want to use:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>use Memoize;
+<pSpaceBefore:><pstyle:Feature Code Para>memoize('factorial');
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>sub factorial { ... }
+<pSpaceAfter:><pstyle:Feature Para>Now, when I use this is real code, I don<0x2019>t have to repeat work. Of course, this is a silly example, but it shows that optimixing just one call doesn<0x2019>t mean I<0x2019>ve optimized my program.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> About the author	
+<pstyle:Feature Section Lead>Thanks for contributions from brian d foy, Aristotle Pagaltzis, Bart Lateur, dug and Peter Sinnott.

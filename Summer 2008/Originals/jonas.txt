@@ -1,0 +1,100 @@
+<ASCII-MAC>
+<Version:5><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1>>
+<pstyle:Feature Lead>Only very late in my career I learned the meaning of the term <CharStyle:pod-I>syntactic sugar<CharStyle:>, . Now I am writing an article where the main thread is about writing a Perl test module and this is actually about syntactic sugar.
+<pstyle:Feature Para>So what is syntactic sugar? Syntactic sugar is computer language constructs, which present a certain syntax in an more readable and understandable manner, but really add anything new to the language.
+<pstyle:Feature Para>Most statements and programs can be written in numerous ways, some more obscure than others. Some programming languages then offer constructs to increase readability. This is often referred to as syntactic sugar.
+<pstyle:Feature Para>Perl can be extended with modules, many of these are available with the core distribution and others as CPAN distributions. These extend the capabilities of Perl to solve all sort of problems. Most of the modules on CPAN do as such not solve a problem, which cannot be solved using the basic language constructs of Perl and many of the test modules fall in this category.
+<pstyle:Feature Para>These modules work in a way by extending and specializing the actual language in such way that cumbersome bodies of code or obscure snippets can be written out in a simple manner, sweetening the experience for the programmer, and enhancing the Perl code with syntactic sugar. Complex tasks become simple subroutine calls.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Test Modules	
+<pstyle:Feature Section Lead>The focus of this article is on test modules and writing your own. I will base the examples in this article on my own fairly new module, <CharStyle:pod-C>Test::Timer<CharStyle:>, which tests that a certain operation does not take over a specified amount of time. The development of this module sparked the idea of writing this article based on my experiences with writing a test module for use with Perl.
+<pstyle:Feature Para>The Perl test modules all work in a similar manner because most of them rely on the <CharStyle:pod-C>Test::Builder<CharStyle:> module to handle most of the hard work. Of existing test modules I can mention
+<pstyle:Feature Para>Test::Simple Test::More Test::Benchmark
+<pstyle:Feature Para>And there are plenty others. But perhaps you work with a special domain or the general test modules does not address your particular problem area.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Test::Timer	
+<pstyle:Feature Section Lead><CharStyle:pod-C>Test::Timer<CharStyle:> came to be for scratching an itch I had with some work done with a client. Using Perl to develop a web-based front-end utilizing a web service like layer of XML over HTTP to communicate with some diverse telco and back-office back-ends.
+<pstyle:Feature Para>These back-ends however did not always respond within the expected timeframe and instead of spending time in a terminal timing tests or small scripts I implemented Test::Timer. The goal was to simply define some response times and if the back-ends did not respond within these, the test would fail.
+<pstyle:Feature Para>So I had a look at a module, which looked a lot like what I wanted to accomplish (See Test::Benchmark). I wanted to use the same scheme to accomplish my goal, but with a slight difference. The code should still be benchmarked and the result of the benchmark would be used in comparison to the thresholds specified by the test author.
+<pstyle:Feature Para>As for as many of the other test modules, I would also need to be able to invert the tests, since these are simple assertions and sometimes the need arises where you have to check that your tests does not behave normally, thinking these scenarios can sometimes be hard and inverting the assertions can be easy, but not always.
+<pstyle:Feature Para>So I could write my stuff up using, normal components from CPAN and Perl, putting the timing aspects directly in my test file. I just have to record the start time and the end time, then use <CharStyle:pod-C>Test::More<CharStyle:><0x2019>s <CharStyle:pod-C>ok<CharStyle:> function to see if the difference is less than what I wanted:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>use Benchmark;
+<pSpaceBefore:><pstyle:Feature Code Para>use Test::More tests =\> 1;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>#Testing that we at-most take 3 seconds
+<pstyle:Feature Code Para>{
+<pstyle:Feature Code Para>    my $t0 = new Benchmark;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    #my code sleeping here
+<pstyle:Feature Code Para>    sleep(2);
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    my $t1 = new Benchmark;
+<pstyle:Feature Code Para>    my $td = timediff($t1, $t0);
+<pstyle:Feature Code Para>    print timestr($td)."\\n";
+<pstyle:Feature Code Para>    my ($time) = timestr($td) =~ m/^(\\d+)/;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    ok($time \< 3);
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>}
+<pSpaceAfter:><pstyle:Feature Para>This is, however, a lot of code to do very little and I would like to reusability instead of code duplication. If I wanted to do this same task again, I<0x2019>d have to redo all of the code. Code reuse in Perl-land lives in modules, so I need a module;p specifically a test module.
+<pstyle:Feature Para>Before <CharStyle:pod-C>Test::Timer<CharStyle:>, I had never written a test module. A test module has to adhere to the standards of the test modules so it can work with <CharStyle:pod-C>Test::More<CharStyle:>, <CharStyle:pod-C>Test::Harness<CharStyle:>, and other test modules. That<0x2019>s where <CharStyle:pod-C>Test::Builder<CharStyle:> comes in.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Test::Builder	
+<pstyle:Feature Section Lead>Luckily some help is available, in the marvelous CPAN distribution <CharStyle:pod-C>Test::Builder<CharStyle:>, which helps me to easily comply with the test standards used by Perl test tools.
+<pstyle:Feature Para><CharStyle:pod-C>Test::Builder<CharStyle:> gives me a framework to develop my test module, so rewriting the above example, I end up with module in <CharStyle:pod-I>Code Listing 1<CharStyle:>, which I<0x2019>m simplified a bit from the actual module to just show the important parts.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>  1 package Test::Timer;
+<pSpaceBefore:><pstyle:Feature Code Para>  2 
+<pstyle:Feature Code Para>  3 use Test::Builder;
+<pstyle:Feature Code Para>  4 my $test  = Test::Builder-\>new;
+<pstyle:Feature Code Para>  5 
+<pstyle:Feature Code Para>  6 sub time_atmost {
+<pstyle:Feature Code Para>  7     my ( $code, $upperthreshold, $name ) = @_;
+<pstyle:Feature Code Para>  8 
+<pstyle:Feature Code Para>  9     my $ok = _runtest( $code, 0, $upperthreshold, $name );
+<pstyle:Feature Code Para> 10      
+<pstyle:Feature Code Para> 11     if ($ok == 1) {
+<pstyle:Feature Code Para> 12         $test-\>ok( $ok, $name );
+<pstyle:Feature Code Para> 13     } else {
+<pstyle:Feature Code Para> 14         $test-\>ok( $ok, $name );
+<pstyle:Feature Code Para> 15         $test-\>diag( 'Test exceeded specified threshold' );        
+<pstyle:Feature Code Para> 16     }
+<pstyle:Feature Code Para> 17     
+<pstyle:Feature Code Para> 18     return $ok;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000> 19 }
+<pSpaceAfter:><pstyle:Feature Para>Now I can reuse my testing code in other tests by using <CharStyle:pod-C>Test::Timer<CharStyle:>. I can use assert times for bodies of code and I can distribute my module to my friends and colleagues, or even the world via CPAN.
+<pstyle:Feature Para>So lets go over the code line by line. On my first pass, I did things in more steps than I really needed, but that makes it a bit easier to see some of the inner workings.
+<pstyle:Feature Para>Line 1 is my package definition; I need this to define a module in its own namespace.
+<pstyle:Feature Para>On line 3, I use <CharStyle:pod-C>Test::Builder<CharStyle:> which helps me create a test module compliant with Perl test tools and formats. It handles the test output, counting the test number, and all of the other details.
+<pstyle:Feature Para>On line 4, I create the <CharStyle:pod-C>Test::Builder<CharStyle:> object, which I name <CharStyle:pod-C>$test<CharStyle:>. It<0x2019>s scoped to the entire file so I can use <CharStyle:pod-C>$test<CharStyle:> everywhere in my module.
+<pstyle:Feature Para>On line 6 I start a test method, <CharStyle:pod-C>time_atmost<CharStyle:>, which will do the main work of <CharStyle:pod-C>Test::Timer<CharStyle:>. The purpose of the method is to ensure that the code I want to test takes at most what the use defines as threshold.
+<pstyle:Feature Para>On line 7, I take the parameters off the argument list. They are a code reference for the code I want to benchmarked, then an upper threshold for the run time, in seconds, and finally a label for the test.
+<pstyle:Feature Para>On line 9, I do the actual benchmark of the code in <CharStyle:pod-C>$code<CharStyle:>. This has been isolated is a subroutine <CharStyle:pod-C>_runtest<CharStyle:> since I<0x2019>ll use it in many of the methods and the whole examination and processing of the benchmark result is not relevant. It<0x2019>s the same thing I showed earlier. The benchmarked time is compared to the threshold specified. If it exceeds the threshold, the returned value is 0 indicating the test failed, and otherwise the returned value is 1 indicating the code ran under the threshhold time.
+<pstyle:Feature Para>On lines 11 and 12, I examine the return value from <CharStyle:pod-C>_runtest<CharStyle:>. If is it true, I use an <CharStyle:pod-C>ok<CharStyle:> method from <CharStyle:pod-C>Test::Builder<CharStyle:> to indicate a successful test.
+<pstyle:Feature Para>On lines 13 to 15, I handle the case where the test failes. I again call <CharStyle:pod-C>Test::Builder<CharStyle:><0x2019>s <CharStyle:pod-C>ok<CharStyle:> method in this case however with a false value. In addition I call <CharStyle:pod-C>Test::Builder<CharStyle:><0x2019>s <CharStyle:pod-C>diag<CharStyle:> with an explanation. Anything I put in <CharStyle:pod-C>diag<CharStyle:> shows up as a comment in the test output and is usually shown to the user so he knows what happened.
+<pstyle:Feature Para>On line 18, I reuse the return value from the test to indicate the result of my own method <CharStyle:pod-C>time_atmost<CharStyle:>. I have to remember that even though <CharStyle:pod-C>Test::Builder<CharStyle:> handles the test output, the programmer still might want to use the return value of <CharStyle:pod-C>time_atmost<CharStyle:> to see from inside the test script if the test passed.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Using time_atmost	
+<pstyle:Feature Section Lead><CharStyle:pod-C>Test::Tester<CharStyle:> scratched my itch, so now I can use my syntactic sugar instead of the complicated code that I hade before. I<0x2019>ll create a test script that has two tests. Each test wants its code to finish in two seconds. One has a subroutine that just returns 1, so should take almost no time and it should pass. The other one has a subroutine that sleeps for four seconds, so it should fail:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>use Test::More tests =\> 1;
+<pSpaceBefore:><pstyle:Feature Code Para>use Test::Timer;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>time_atmost( 
+<pstyle:Feature Code Para>    sub { 1; },  # less than two seconds
+<pstyle:Feature Code Para>    2, 
+<pstyle:Feature Code Para>    'Passing test' 
+<pstyle:Feature Code Para>    );
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>time_atmost( 
+<pstyle:Feature Code Para>    sub { sleep 4; },  # more than two seconds
+<pstyle:Feature Code Para>    2, 
+<pstyle:Feature Code Para>    'Failing test' 
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    );
+<pSpaceAfter:><pstyle:Feature Para>When I run my script, I see that the first test passes and the second fails, just like I wanted. I also see that when the test fails, I see my message from <CharStyle:pod-C>diag<CharStyle:> shows up with the usual <CharStyle:pod-C>Test::More<CharStyle:> output:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>$ perl time_atmost.t
+<pSpaceBefore:><pstyle:Feature Code Para>1..2
+<pstyle:Feature Code Para>ok 1 - Passing test
+<pstyle:Feature Code Para>not ok 2 - Failing test
+<pstyle:Feature Code Para>#   Failed test 'Failing test'
+<pstyle:Feature Code Para>#   at time_atmost.t line 14.
+<pstyle:Feature Code Para># Test exceeded specified threshold
+<pstyle:Feature Code Para><pSpaceAfter:4.500000># Looks like you failed 1 test of 2.
+<pSpaceAfter:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Conclusion	
+<pstyle:Feature Section Lead>There are so many test modules and the basic test methods can be utilized to test and assert most scenarios. So why should you write your own? The answer is obvious, for the sake of your sanity and the clarity of your code base. Add a little syntactic sugar and everything seems sweeter. Apart from the syntactic sugar a test module is very similar to a regular module and addresses the same issues that a module addresses, like code duplication and generality.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> References	
+<pstyle:Feature Section Lead>This is a list of references to resources used in this article. Test::Builder, http://search.cpan.org/~mschwern/Test-Simple/lib/Test/Builder.pm Test::Timer, http://search.cpan.org/~jonasbn/Test-Timer/lib/Test/Timer.pm Test::Harness, http://search.cpan.org/~petdance/Test-Harness/lib/Test/Harness.pm Test::More, http://search.cpan.org/~mschwern/Test-Simple/lib/Test/More.pm Test::Benchmark, http://search.cpan.org/~fdaly/Test-Benchmark/lib/Test/Benchmark.pm Benchmark, http://search.cpan.org/~nwclark/perl-5.8.8/lib/Benchmark.pm Module-Authors mailing list, http://lists.cpan.org/showlist.cgi?name=module-authors
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> About the author	

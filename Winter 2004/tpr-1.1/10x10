@@ -1,0 +1,26 @@
+#!/usr/bin/perl
+use strict;
+
+use LWP::Simple;
+use Template;
+
+my( $year, $month, $day, $hour ) = (localtime)[5,4,3,2];
+
+my $url = sprintf "http://tenbyten.org/Data/%4d/%02d/%02d/%02d/words.txt", 
+	$year + 1900, $month + 1, $day, $hour;
+	
+my @words = sort split /[\r\n]+/m, get( $url );
+
+my $tt = Template->new();
+
+$tt->process(
+	'10x10.tt',
+	{ 
+	year  => $year + 1900,
+	month => $month + 1,
+	day   => $day,
+	hour  => $hour,
+	words => \@words } 
+	);
+	
+print $tt->error if $tt->error;

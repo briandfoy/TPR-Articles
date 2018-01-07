@@ -1,0 +1,37 @@
+
+[steal graphic from http://pm.org/]
+
+Perl Mongers News
+by Dave Adler
+
+To start things off, we have two brand new groups of Mongers: Aarau.pm
+in Switzerland and Cascais.pm in Portugal. Also, ThousandOaks.pm is
+resuming regular monthly meetings as of December and Jacksonville.pm has
+requested that I tell you that they're still there.
+
+A number of Perl Monger groups are getting Perl workshops up and running
+in their area. London and Melbourne are having theirs in December while
+Israel, Holland and Germany each have one scheduled for February. Thomas
+Klausner is keeping up with these - or at least trying to, as more keep
+popping up all the time - at http://www.yapceurope.org/workshops.html
+
+Perl Seminar New York (aka perlsemny) will work on testing
+Text::Template, joining Chicago.pm, SouthFlorida.pm and London.pm in
+working on the Phalanx testing project. Details on the Phalanx Kwiki at
+http://phalanx.kwiki.org/
+
+On the international relations front, Paris.pm seems to be having a
+large number of foreign vistiors, SaoPaulo.pm is entertaining a member
+of Rio.pm for the bulk of November and NY.pm may be getting a brief
+visit from London.
+
+Finally, Mark Jason Dominus' long-awaited book is almost in physical
+form, and Philadelphia.pm is going to be helping him put together a book
+signing. No details yet, but when they arrive, phl.pm will surely
+announce them.
+
+Happy Mongering.
+
+[ Dave Adler is a Perl Mongers Charter Member and is the
+leader of NY.pm (http://ny.pm.org).  He is perhaps the
+nation's leading authority on Monty Python. ]

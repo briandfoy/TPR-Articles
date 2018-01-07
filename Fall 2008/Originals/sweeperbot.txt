@@ -1,0 +1,125 @@
+<ASCII-MAC>
+<Version:5><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1>>
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> App::SweeperBot - Play Minesweeper, automatically!	
+<pstyle:Feature Section Lead>You sit down at the machine, it<0x2019>s running Windows. Those other operating systems are pretty good, but they<0x2019>re lacking that one killer app, the one reason why Windows still has market dominance.
+<pstyle:Feature Para>Minesweeper.
+<pstyle:Feature Para>Yes, good old Minesweeper! You<0x2019>ll just play one game, on intermediate, and then start on your real work. Just a little morsel of relaxation. Three hours later, you<0x2019>re wondering what happened to your day.
+<pstyle:Feature Para>Does this story sound familiar, or have you a friend or work-mate who<0x2019>s in the jaws of the Minesweeper vice? I know that I was, so one day, I decided to do something about it.
+<pstyle:Feature Para>I<0x2019>d program my machine to play Minesweeper for me.
+<pstyle:Feature Para>I<0x2019>d automated the rest of my life; I have programs to read my mail, to plan my exercise, and to pay my bills. Automating my leisure time was the obvious next step. Having a program to play Minesweeper for me would give me more time for the more important things in life... like Solitaire.
+<pstyle:Feature Para>It was from this realisation that <CharStyle:pod-C>App::SweeperBot<CharStyle:> was born.
+<pstyle:Feature Sub Section>Why a Minesweeper bot?
+<pstyle:Feature Para>I<0x2019>m a lazy person. I hate having to do things myself, and I really hate having to write my own code. Indeed, one of the motivating factors for writing <CharStyle:pod-C>App::SweeperBot<CharStyle:> is that much of the hard work had already been done for me.
+<pstyle:Feature Para>Matt Sparks (http://www.f0rked.com) had already written an almost complete Minesweeper bot, doing what I had considered all the <0x201C>hard parts<0x201D>. Matt<0x2019>s code was able to locate the board, start a new game, and identify the contents of various squares. All I had to do was to write an algorithm to get it to play.
+<pstyle:Feature Para>Of course, when asked by serious professionals with lots of money why I wrote <CharStyle:pod-C>App::SweeperBot<CharStyle:>, I claim it<0x2019>s because it provides an excellent working example of being able to examine and control GUI applications using Perl. These techniques can be a great advantage in testing and automation.
+<pstyle:Feature Sub Section>Locating Minesweeper
+<pstyle:Feature Para>The first step for SweeperBot in playing Minesweeper is to locate the game on the screen. SweeperBot uses the <CharStyle:pod-C>Win32::GuiTest<CharStyle:> module for GUI manipulation, and this also makes locating the Minesweeper board easy:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    use Win32::GuiTest qw(FindWindowLike);
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    my ($window_id) = FindWindowLike(0, '^Minesweeper');
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-C>FindWindowLike<CharStyle:> returns a list of matching windows, but I<0x2019>m only interested in the first one. The first argument to <CharStyle:pod-C>FindWindowLike<CharStyle:> is the root of our window search; it can be an existing window if we<0x2019>re looking for a dialog box or similar window spawned by an application, but for SweeperBot we<0x2019>re using <CharStyle:pod-C>0<CharStyle:>, to look for any window that matches our criteria.
+<pstyle:Feature Para>The second argument is a regexp that matches our window name. In the case of SweeperBot, I<0x2019>m simply looking for any window that starts with <CharStyle:pod-C>Minesweeper<CharStyle:>.
+<pstyle:Feature Para>Once we<0x2019>ve found our window, the next task is to determine how large it is; SweeperBot needs this information to determine the size of the Minesweeper grid, and to locate the all-important smiley face that<0x2019>s used to determine our game state (won/lost/playing) and to reset the game.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    use Win32::GuiTest qw(GetWindowRect);
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my ($left, $top, $right, $bottom) = GetWindowRect($window_id);
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $width  = $right - $left;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    my $height = $bottom - $top;
+<pSpaceAfter:><pstyle:Feature Para>The <CharStyle:pod-C>GetWindowRect<CharStyle:> function returns the window location, with the top-left of the entire display being considered pixel (0,0).
+<pstyle:Feature Para>The calculations for determining the size of the grid and the position of the smiley are not shown, but they mostly consist of basic arithmetic (each square is 16 x 16 pixels, and the smiley is always in the centre-top part of the window).
+<pstyle:Feature Sub Section>Reading the screen
+<pstyle:Feature Para>To actually read the screen I use another module, <CharStyle:pod-C>Win32::Screenshot<CharStyle:>, which provides a <CharStyle:pod-C>CaptureRect<CharStyle:> function for capturing parts of the screen:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    use Win32::Screenshot;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $image = CaptureRect(
+<pstyle:Feature Code Para>        $left + $LEFT_OFFSET + $sx * SQUARE_WIDTH,
+<pstyle:Feature Code Para>        $top  + $TOP_OFFSET  + $sy * SQUARE_HEIGHT,
+<pstyle:Feature Code Para>        SQUARE_WIDTH,
+<pstyle:Feature Code Para>        SQUARE_HEIGHT
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    );
+<pSpaceAfter:><pstyle:Feature Para>The <CharStyle:pod-C>CaptureRect<CharStyle:> function takes an X,Y offset to the top-left of the rectangle desired, and the desired width and height of the rectangle.
+<pstyle:Feature Para>In the code above, <CharStyle:pod-C>$LEFT_OFFSET<CharStyle:> and <CharStyle:pod-C>$TOP_OFFSET<CharStyle:> are values that take us to the top-left of the Minesweeper grid, past any window decorations. <CharStyle:pod-C>$sx<CharStyle:> and <CharStyle:pod-C>$sy<CharStyle:> are the square SweeperBot wishes to sample, and <CharStyle:pod-C>SQUARE_WIDTH<CharStyle:> and <CharStyle:pod-C>SQUARE_HEIGHT<CharStyle:> are constants containing the width and height of a Minesweeper square; in this case they<0x2019>re 16 pixels each.
+<pstyle:Feature Para>As a convention, I use <CharStyle:pod-C>$sx<CharStyle:> and <CharStyle:pod-C>$sy<CharStyle:> when measuring an offset in Minesweeper squares, and <CharStyle:pod-C>$x<CharStyle:> and <CharStyle:pod-C>$y<CharStyle:> when measuring in pixels. Without this convention, parts of the application code would be significantly more difficult to understand.
+<pstyle:Feature Para>The resulting <CharStyle:pod-C>$image<CharStyle:> is actually an <CharStyle:pod-C>Image::Magick<CharStyle:> object, which are extremely versatile, and therefore provide a great amount of flexibility in how we can analyse the information contained within.
+<pstyle:Feature Sub Section>What<0x2019>s in that square?
+<pstyle:Feature Para>SweeperBot takes a very simple approach to determining the contents of each square; it simply takes a SHA-256 digest of the image (a fingerprint) and looks that up in a hash of known values:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    my $signature = $image-\>Get("signature");
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    my $contents = $contents_of_square{$signature};
+<pSpaceAfter:><pstyle:Feature Para>This works admirably, but as I discovered somewhat later is not particularly portable. The results of <CharStyle:pod-C>Get(<0x201C>signature<0x201D>)<CharStyle:> can vary depending upon the version of <CharStyle:pod-C>Image::Magick<CharStyle:> installed, so SweeperBot needs to contain multiple signatures to cover all of them.
+<pstyle:Feature Sub Section>Manipulating the mouse
+<pstyle:Feature Para>The <CharStyle:pod-C>Win32::GuiTest<CharStyle:> module provides a way both to move the mouse and press buttons, and using this we can construct a simple subroutine to click on an arbitrary part of the display:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    use Win32::GuiTest qw(MouseMoveAbsPix SendMouse);
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    sub click {
+<pstyle:Feature Code Para>        my ($this, $x, $y, $button) = @_;
+<pstyle:Feature Code Para>        $button ||= '{LEFTCLICK}';
+<pstyle:Feature Code Para>        MouseMoveAbsPix($x, $y);
+<pstyle:Feature Code Para>        SendMouse($button);
+<pstyle:Feature Code Para>        return;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Para>However we don<0x2019>t want to be clicking anywhere on our display, we specifically want to be clicking on Minesweeper squares. Luckily, we already know the size of them, and the position of our Minesweeper window, so writing a subroutine to do this becomes easy:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    sub press {
+<pSpaceBefore:><pstyle:Feature Code Para>        my ($this, $sx, $sy, $button) = @_;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>        $this-\>click(
+<pstyle:Feature Code Para>            $left + $LEFT_OFFSET + $sx * SQUARE_WIDTH  + SQUARE_WIDTH/2,
+<pstyle:Feature Code Para>            $top  + $TOP_OFFSET  + $sy * SQUARE_HEIGHT + SQUARE_HEIGHT/2,
+<pstyle:Feature Code Para>            $button
+<pstyle:Feature Code Para>        );
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>        return;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Para>The <CharStyle:pod-C>SQUARE_WIDTH/2<CharStyle:> and <CharStyle:pod-C>SQUARE_HEIGHT/2<CharStyle:> terms ensure we<0x2019>re clicking on the middle of each square.
+<pstyle:Feature Para>We can now use <CharStyle:pod-C>press<CharStyle:> to easily define subroutines that flag a mine (right-click) or pressing all squares adjacent to it (middle-click, what I call a <0x201C>stomp<0x201D>).
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    sub flag_mine {
+<pSpaceBefore:><pstyle:Feature Code Para>        my ($this, $sx, $sy) = @_;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>        return $this-\>press($sx, $sy, '{RIGHTCLICK}');
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    sub stomp {
+<pstyle:Feature Code Para>        my ($this, $sx, $sy) = @_;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>        return $this-\>press($sx, $sy, '{MIDDLECLICK}');
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Sub Section>Putting it all together
+<pstyle:Feature Para>With the techniques seen, it<0x2019>s now possible to play a basic game of Minesweeper. We have code to locate the window, sample the contents, and manipulate controls.
+<pstyle:Feature Para>In <CharStyle:pod-C>App::SweeperBot<CharStyle:>, the algorithm to actually play is found in <CharStyle:pod-C>make_move<CharStyle:>, which I won<0x2019>t reproduce here. Put simply, it walks through every square and looks at all the adjacent squares at each point. If by examining just those adjacent square it can determine that a square is a mine or safe, then it flags or presses the square as appropriate. If SweeperBot walks through the entire board without flagging or pressing any squares, it takes a guess and steps on a random covered square.
+<pstyle:Feature Para>This isn<0x2019>t an optimal Minesweeper strategy, since looking further than just the adjacent squares can reveal more information about each square. Likewise, when guessing, it should be possible to use the information available to determine the safest guesses and try those first. Presently, SweeperBot does neither.
+<pstyle:Feature Para>Luckily, you can write your own algorithm for playing by sub-classing <CharStyle:pod-C>App::SweeperBot<CharStyle:>:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    package My::SweeperBot;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    use base qw(App::SweeperBot);
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    sub make_move {
+<pstyle:Feature Code Para>        my ($this, $state) = @_;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>        # Make your moves here.  When this subroutine is exited,
+<pstyle:Feature Code Para>        # App::SweeperBot will check the game state, and if we haven't
+<pstyle:Feature Code Para>        # won or lost, it will re-sample the board and call
+<pstyle:Feature Code Para>        # make_move again.
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Para>The <CharStyle:pod-C>$state<CharStyle:> variable is a reference to an array of arrays which represent the board. The top-left square is <CharStyle:pod-C>[1,1]<CharStyle:> (and not <CharStyle:pod-C>[0,0]<CharStyle:>), since that<0x2019>s what Matt<0x2019>s original code used.
+<pstyle:Feature Sub Section>Cheating
+<pstyle:Feature Para>Because my algorithm for playing Minesweeper isn<0x2019>t very good, SweeperBot can also be run using the xyzzy cheat, that reveals information about the contents of each mine by changing the colour of top-left pixel of the entire display. If cheating is enabled (it is by default) then SweeperBot will reconsider if picking a square at random would result in hitting a mine.
+<pstyle:Feature Para>I have Audrey Tang to thank for information about the xyzzy cheat; having a bot that wins every time is much more impressive than one that wins only some of the time.
+<pstyle:Feature Sub Section>Packaging
+<pstyle:Feature Para>An application isn<0x2019>t any good unless people actually use it. However for a typical Windows user, installing Perl can seem like quite a bit of effort, let alone installing a set of custom modules and their dependencies. In fact, just getting <CharStyle:pod-C>Win32::Screenshot<CharStyle:>, <CharStyle:pod-C>Image::Magick<CharStyle:> and <CharStyle:pod-C>Win32::GuiTest<CharStyle:> working together on my own system required more work than I had expected.
+<pstyle:Feature Para>Luckily, packaging stand-alone applications on Windows becomes much easier with the use of PAR, the Perl Archiver. Put simply, PAR allows a Perl program, its associated modules, and any other files it depends upon to be bundled up into a single file. Under the hood, it uses the excellent Module::ScanDeps to determine what additional modules should be included; so for more programs it works right out of the box.
+<pstyle:Feature Para>I used <CharStyle:pod-C>PAR::Packer<CharStyle:>, or more specifically its command-line <CharStyle:pod-C>pp<CharStyle:> program, to create my stand-alone application. Because it needed to contain my code, a perl interpreter, supporting modules, and a number of <CharStyle:pod-C>Image::Magick<CharStyle:> DLL files, the resulting program is seven megabytes in size. Despite the large size, I now had something that could be dropped onto a virgin Windows system and work with nothing more than the user double-clicking the icon.
+<pstyle:Feature Para>One particular challenge was finding a portable version of Image::Magick that does not depend upon local registry settings, which PAR cannot bundle. Luckily, J-L Morel has a pre-built Image::Magick distribution at http://bribes.org/perl/ppmdir.html which doesn<0x2019>t use the Windows registry settings at all. As advertised, it<0x2019>s completely compatible with PAR.
+<pstyle:Feature Para>To see the complete build script that produces the executable, check out <CharStyle:pod-C>MakeExe.pl<CharStyle:> that comes with the <CharStyle:pod-C>App::SweeperBot<CharStyle:> distribution. This file can also be found at http://github.com/pfenwick/sweeperbot/tree/master/MakeExe.pl.
+<pstyle:Feature Sub Section>Improvements
+<pstyle:Feature Para>SweeperBot has ample room for improvement. The current method of sampling each square individually, computing an SHA-256 hash of the contents, and using the result to determine the square contents is extremely slow, although it was the <0x201C>lazy<0x201D> option that allowed me to re-use the largest amount of Matt<0x2019>s original code. A better way would be to sample the entire board at once. Since each numbered square uses a different colour, individual pixels could be examined to determine the board configuration. I imagine such an improvement would increase SweeperBot<0x2019>s speed by an order of magnitude or more.
+<pstyle:Feature Para>Changing the methods for sampling the board also provides for the potential to remove the dependency on <CharStyle:pod-C>Image::Magick<CharStyle:>, which is responsible for a significant portion of the final executable.
+<pstyle:Feature Para>Much of the code in <CharStyle:pod-C>App::SweeperBot<CharStyle:> reflects its history of being a stand-alone script. As such, it<0x2019>s not possible to create multiple SweeperBot objects for playing multiple games of Minesweeper simultaneously, since too much information is read from package variables. This information should be moved to be internal to each individual <CharStyle:pod-C>App::SweeperBot<CharStyle:> object.
+<pstyle:Feature Para>The other obvious flaw with SweeperBot is that it plays Minesweeper only about as well as I do. Luckily this can easily be changed by sub-classing and writing a new <CharStyle:pod-C>make_move<CharStyle:> method, as described earlier in this article.
+<pstyle:Feature Sub Section>Further Information
+<pstyle:Feature Para>SweeperBot has its own webpage at http://sweeperbot.org/, which includes an FAQ, links to the source code, and a promotional video explaining why SweeperBot is an excellent productivity tool.
+<pstyle:Feature Para>The SweeperBot code repository is managed with git. Even if you<0x2019>ve never used git before, you can still obtain a copy of the source with:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>    git clone git://github.com/pfenwick/sweeperbot.git<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>You can also browse the source and its history on-line at http://github.com/pfenwick/sweeperbot.
+<pstyle:Feature Para>Perl Training Australia (http://perltraining.com.au) has written a short tutorial on PAR, which also contains links to other resources. It can be found at http://perltraining.com.au/tips/2008-05-23.html

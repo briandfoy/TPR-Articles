@@ -1,0 +1,103 @@
+Maptastic,
+	module by Sam Vilain, sam@vilain.net
+	
+	Maptastic implements lispy variations of map. Read your way through the short documentation (warning, mapweird vocabulary ahead) to the lisp-like and iterator functionality you need .
+	
+	 use Maptastic qw(:perly);
+
+	@spliced = map_shift { [ @_ ] } (\@a, \@b, \@c);
+	@mixed  = map_for { [ @_ ] } (\@a, \@b, \@c);
+
+	Other modules offering lispy functionality, List::Util, List::MoreUtils, List::Tuples
+
+Sub::Name,
+	module by Matthijs van Duin, xmath@cpan.org
+	
+	This module will assign a name information to a sub reference (but you won't be able to call it by that name as stated in the documentation). This module is very valuable if you have a lot of calls from anonymous subs and you want to assign them names you can see with caller.
+
+	use Sub::Name;
+	
+	$subref->() ;
+	
+	# Call stack reported by caller:
+	# `- main::__ANON__ 	
+	 
+	subname 'given_name', $subref;
+	$subref->() ;
+
+	# Call stack reported by caller:
+	#  `- main::given_name 
+
+	If you want to inject subs, I'd recommend to look at the excellent Sub::Install.
+
+Devel::Sub::Which,
+	module by Yuval Kogman, nothingmuch@woobling.org
+	
+	This module lets you find out the name of the sub that will implement a specific method
+	
+	use Devel::Sub::Which ;
+
+	sub do_something {} ;
+	*another_name = \&do_something ;
+
+	my $obj = bless {}, __PACKAGE__ ;
+		
+	print Devel::Sub::Which::which( $obj, 'another_name');
+	# prints __PACKAGE__::do_something
+	
+	Also look at Sub::Identify which can return the name associated with a sub reference and works nicely with Sub::Name too.
+
+IPC::System::Simple,
+	Paul Jamieson Fenwick  , pjf@perltraining.com.au
+	
+	Run commands like the built-in 'system' with bells and whistles. On advantage it that invalid exit codes are transformed into exception. You can either accept 0 (zero) as the only 'success' code or give a list of valid exit codes.
+	
+	use IPC::System::Simple qw(system systemx capture capturex);
+	systemx("some_command",@args); # Succeeds or dies, systemxNEVER uses the shell
+	
+	In case of failure, the generated exception the module provides a simple diagnostic like "rm /this_test_file_belong_to_root" unexpectedly returned exit value 1 at sytemx.pl line 7
+
+PerlIO::Util,
+	module by GFUJI, gfuji@cpan.org
+	
+	PerlIO::Util is a collection of IO layers that build on top of PerlIO. I'll describe the layer that I have found to be the most useful, ':tee'. Ever had to log information in different files but still want the information in a scalar so you can manipulate it?
+	
+        PerlIO::Util ;
+	open my $out, '>>:tee', $file, @sources;
+	
+	# add sources to the tee
+        $out->push_layer(tee => \$scalar);
+        $out->push_layer(tee => \*FILEHANDLE);	
+	
+	See also the File::Tee module.
+	
+Test::GlassBox::Heavy,
+	module by Oliver Gorwits, oliver.gorwits@oucs.ox.ac.uk
+	
+	If you have to add test to a spaghetti code application and you don't know where to start, this module may provide the help you need. It main function is to allow you to load a perl file and call parts of it.
+	
+	use Test::GlassBox::Heavy qw(load_subs);
+	load_subs( '/usr/bin/myperlapp' );
+	$retval = &myperlapp_sub($a,$b);
+
+	Read the CAVEATS and have a look at the Code::Splice module too.
+
+Devel::CallStack,
+	module by Jarkko Hietaniemi, jhi@iki.fi
+	
+	An excellent complement to profiling modules, this module will get you statistics per call stack instead for statistics per subroutine. This will allow you to profile based on the execution paths your application uses.
+	
+	perl -d:CallStack ...
+	
+	Unfortunately the installation sometimes fails. The error happens when the module is passed arguments on the command line. The problem may be fixed as you read this.
+
+FindBin,
+	module by Rafaël Garcia-Suarez, rgarciasuarez@gmail.com
+	
+	Very useful module if you create quick an dirty modules to use with a script and don't want to create real 'CPAN' worthy modules. The module will locate your script in the file system and let you setup a library path relative to that position.
+	
+	use FindBin qw($Bin);
+	use lib "$Bin/../lib";	
+	
+	See also the 'scriptname' module for similar but slightly different functionality
+

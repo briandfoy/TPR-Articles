@@ -1,0 +1,257 @@
+<ASCII-MAC>
+<Version:5><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1>>
+<DefineCharStyle:pod-I=<Nextstyle:pod-I><cColor:Black><cTypeface:Italic><cSize:9.500000><cHorizontalScale:1.000000><cTracking:0><cBaselineShift:0.000000><cCase:Normal><cStrokeColor:None><cLanguage:English\: USA><cUnderline:0><cFont:Minion \(T1\)><cPosition:Normal><cStrikethru:0><cColorTint:-1.000000>>
+<DefineCharStyle:pod-C=<Nextstyle:pod-C><cColor:Black><cTypeface:Regular><cSize:9.500000><cHorizontalScale:1.000000><cTracking:0><cBaselineShift:0.000000><cCase:Normal><cStrokeColor:None><cUnderline:0><cFont:Courier New><cPosition:Normal><cStrikethru:0><cColorTint:-1.000000>>
+<DefineCharStyle:pod-B=<Nextstyle:pod-B><cColor:Black><cTypeface:Bold><cSize:9.500000><cHorizontalScale:1.000000><cTracking:0><cBaselineShift:0.000000><cCase:Normal><cStrokeColor:None><cUnderline:0><cFont:Courier New><cPosition:Normal><cStrikethru:0><cColorTint:-1.000000>>
+<DefineParaStyle:NormalParagraphStyle=<Nextstyle:NormalParagraphStyle>>
+<DefineParaStyle:Feature Section=<BasedOn:NormalParagraphStyle><Nextstyle:Feature Section><cTypeface:Bold><cSize:10.000000><pSpaceBefore:4.500000><pTabRuler:20\,Left\,.\,0\,-\;258\,Left\,.\,0\,-\;><cFont:Rockwell><pGridAlign:BaseLine>>
+<DefineParaStyle:Module Author Byline=<Nextstyle:Module Author Byline><cTypeface:Italic><cSize:9.500000><cLigatures:0><pDropCapCharacters:1><pDropCapLines:1><pHyphenationLadderLimit:0><cLanguage:English\: USA><pHyphenation:0><pHyphenationZone:0.000000><cFont:Minion \(T1\)><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pTextAlignment:Right><pGridAlign:BaseLine><bulFont:\<TextFont\>><bulTypeFace:\<TextStyle\>>>
+<DefineParaStyle:Feature Lead=<Nextstyle:Feature Lead><cSize:9.500000><cLigatures:0><cTracking:50><pDropCapCharacters:1><pDropCapLines:3><pHyphenationLadderLimit:0><cLeading:11.400000><cLanguage:English\: USA><pHyphenation:0><pHyphenationZone:0.000000><cFont:Minion \(T1\)><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pTextAlignment:JustifyLeft><pGridAlign:BaseLine>>
+<DefineParaStyle:Feature Para=<BasedOn:Feature Lead><Nextstyle:Feature Para><pDropCapLines:1><pFirstLineIndent:12.024000>>
+<DefineParaStyle:Feature Section Lead=<BasedOn:Feature Para><Nextstyle:Feature Section Lead><pFirstLineIndent:0.000000><cLeading:-1.000000>>
+<DefineParaStyle:Feature Code Para=<Nextstyle:Feature Code Para><cSize:9.500000><cLigatures:0><pHyphenationLadderLimit:0><pLeftIndent:10.799999><cLanguage:English\: USA><pHyphenation:0><pHyphenateCapitals:0><pHyphenationZone:0.000000><pTabRuler:18\,Left\,.\,0\,\;31.5\,Left\,.\,0\,\;45\,Left\,.\,0\,\;58.5\,Left\,.\,0\,\;72\,Left\,.\,0\,\;85.5\,Left\,.\,0\,\;99\,Left\,.\,0\,\;112.5\,Left\,.\,0\,\;126\,Left\,.\,0\,\;139.5\,Left\,.\,0\,\;153\,Left\,.\,0\,\;166.5\,Left\,.\,0\,\;180\,Left\,.\,0\,\;193.5\,Left\,.\,0\,\;207\,Left\,.\,0\,\;220.5\,Left\,.\,0\,\;234\,Left\,.\,0\,\;><cFont:Courier New><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pGridAlign:BaseLine>>
+<DefineParaStyle:Feature Sub Section=<BasedOn:Feature Section><Nextstyle:Feature Sub Section><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:News URL=<BasedOn:NormalParagraphStyle><Nextstyle:News URL><cSize:9.500000><pSpaceAfter:4.500000><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pGridAlign:BaseLine><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:News para=<BasedOn:NormalParagraphStyle><Nextstyle:News para><cSize:9.500000><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pGridAlign:BaseLine><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:News Headline=<BasedOn:NormalParagraphStyle><Nextstyle:News Headline><cTypeface:Bold><cSize:9.500000><pSpaceBefore:4.500000><cFont:Gill Sans \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pGridAlign:BaseLine><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar URL=<Nextstyle:Calendar URL><cTypeface:Italic><cSize:10.000000><cLanguage:English\: USA><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar title=<Nextstyle:Calendar title><cSize:10.000000><cLanguage:English\: USA><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar location=<Nextstyle:Calendar location><cSize:10.000000><cLanguage:English\: USA><cFont:Minion \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Calendar date=<Nextstyle:Calendar date><cTypeface:Bold><cSize:11.000000><cCase:All Caps><cLanguage:English\: USA><cFont:Gill Sans \(T1\)><pRuleAboveGapColor:None><pRuleBelowGapColor:None><pTextAlignment:Center><cUnderlineGapColor:None><cStrikeThroughGapColor:None><pWarichuAlignment:Left><rUseOTProGlyph:1><cRubyEdgeSpace:1>>
+<DefineParaStyle:Feature Title=<Nextstyle:Feature Title><cSize:26.500000><cLeading:13.500000><cFont:Rockwell Extra Bold><pTextAlignment:Center>>
+<DefineParaStyle:Feature Byline=<BasedOn:NormalParagraphStyle><Nextstyle:Feature Byline><cTypeface:Italic><cSize:11.000000><cLeading:13.000000><cFont:Gill Sans \(TT\)><pTextAlignment:Right>>
+<DefineParaStyle:Feature Deck=<BasedOn:Feature Byline><Nextstyle:Feature Deck><cTypeface:Regular><pSpaceBefore:4.500000><pTextAlignment:Center>>
+<DefineParaStyle:Normal=<Nextstyle:Normal><KeyboardShortcut:Shift\+Cmd\+Num 6><cSize:11.000000><cLigatures:0><pHyphenationLadderLimit:0><cLeading:13.000000><cLanguage:English\: USA><pHyphenation:0><pHyphenationZone:0.000000><pSpaceBefore:4.500000><pSpaceAfter:4.500000><cFont:Arial \(TT\)><pMaxLetterspace:0.050000><pMinLetterspace:-0.020000><pMaxGlyphScale:1.050000><pMinGlyphScale:0.950000><cHang:Baseline><pSingleWordAlignment:Left><pTextAlignment:JustifyLeft>>
+<DefineParaStyle:Body Copy=<BasedOn:Normal><Nextstyle:Body Copy><cSize:9.500000><pFirstLineIndent:12.024000><cLeading:-1.000000><pSpaceBefore:0.000000><pSpaceAfter:0.000000><cFont:Minion \(T1\)><pGridAlign:BaseLine><bulFont:\<TextFont\>><bulTypeFace:\<TextStyle\>>>
+<DefineParaStyle:author byline=<BasedOn:Feature Para><Nextstyle:author byline><cTypeface:Italic><bulFont:\<TextFont\>><bulTypeFace:\<TextStyle\>>>
+<DefineParaStyle:article head=<BasedOn:Normal><Nextstyle:Normal><KeyboardShortcut:Shift\+Cmd\+Num 1><cSize:14.000000><cHorizontalScale:1.100000><pSpaceBefore:13.500000><pSpaceAfter:0.000000><cFont:Arial Black><pKeepWithNext:4><cSkew:15.000000><pRuleBelowColor:Black><pRuleBelowTint:100.000000><pRuleBelowOffset:9.000000>>
+<DefineParaStyle:article subhead=<BasedOn:article head><Nextstyle:article subhead><KeyboardShortcut:Shift\+Cmd\+Num 2><cSize:11.000000><pSpaceBefore:18.000000>>
+<pstyle:Feature Lead>In this document I<0x2019>ll cover the subject of Perl closures far more than I ever wanted to. I should say that I<0x2019>m doing this from a user perspective. I<0x2019>m not a perl5 porter, I have very limited experiences with the internals of perl, and may be just plain wrong on some things in this document. Don<0x2019>t trust this document if what it says sound too weird. Corrections are most welcome and so is other feedback.
+<pstyle:Feature Para>I will focus on how closures act under different circumstances in Perl. This is not a closure tutorial and I will not elaborate on how to use closures in different situation and as a programming technique to write better code. There are other documents for that.
+<pstyle:Feature Para>This document assumes that the reader understands the difference between dynamical and lexical variables and scope, the concepts of compile-time and run-time, Perl references and Perl<0x2019>s garbage collection, and a some general Perl knowledge.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> What<0x2019>s a closure?	
+<pstyle:Feature Section Lead>There are different ideas of what a closure actually is. The most common definition is that it<0x2019>s a function that has deep bindings to its lexical context. A broader definition is that it<0x2019>s any data structure that has deep bindings to its lexical context. For instance an inner class (in languages that support that) may be a closure using that definition.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> A brief introduction	
+<pstyle:Feature Section Lead>In Perl, the subroutine is the only data type that deeply binds its lexical context. I can define a subroutine in the same scope as a lexical variable. When the lexical variable goes out of scope, the subroutine still binds to it:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    {
+<pSpaceBefore:><pstyle:Feature Code Para>        my $x = 1;
+<pstyle:Feature Code Para>        sub f {
+<pstyle:Feature Code Para>            my ($y) = @_;
+<pstyle:Feature Code Para>            return $x + $y;
+<pstyle:Feature Code Para>        }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>        print f(4); # 5
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    print f(4); $ 5
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-C>f()<CharStyle:> is a named closure that deeply binds the lexical variable <CharStyle:pod-C>$x<CharStyle:>. When I call <CharStyle:pod-C>f()<CharStyle:> from anywhere in you program, it returns the value given to it plus 1. This is true even if the variable <CharStyle:pod-C>$x<CharStyle:> isn<0x2019>t in scope where I call <CharStyle:pod-C>f()<CharStyle:>, or even if nothing else is holding a reference to <CharStyle:pod-C>$x<CharStyle:>.
+<pstyle:Feature Para>A typical example of this is a counter subroutine that remembers its starting value:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    {
+<pSpaceBefore:><pstyle:Feature Code Para>        my $c = 0;
+<pstyle:Feature Code Para>        sub counter {
+<pstyle:Feature Code Para>            return ++$c;
+<pstyle:Feature Code Para>        }
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    print counter();   # 1
+<pstyle:Feature Code Para>    print counter();   # 2
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    print counter();   # 3
+<pSpaceAfter:><pstyle:Feature Para><CharStyle:pod-C>counter<CharStyle:> is a named closure that deeply binds the lexical variable <CharStyle:pod-C>$c<CharStyle:>. Even though <CharStyle:pod-C>$c<CharStyle:> has gone out of scope, <CharStyle:pod-C>counter<CharStyle:> has a reference to <CharStyle:pod-C>$c<CharStyle:>, so Perl does not garbage collect <CharStyle:pod-C>$c<CharStyle:>.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> References	
+<pstyle:Feature Section Lead>It<0x2019>s important to realize that a variable represents more than just a value. A variable is an instance of a data structure behind the scenes, and one of the bits of information in it is the value I get when I print the variable:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    my $foo = 1;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $r;
+<pstyle:Feature Code Para>    {
+<pstyle:Feature Code Para>        my $foo = 2;
+<pstyle:Feature Code Para>        $r = \\$foo;    # make $r a reference to $foo
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    print $$r;         # 2
+<pSpaceAfter:><pstyle:Feature Para>The <CharStyle:pod-C>print<CharStyle:> statement outputs 2 instead of 1 because it sees the inner <CharStyle:pod-C>$foo<CharStyle:> instead of the one in scope when I call <CharStyle:pod-C>print<CharStyle:>. <CharStyle:pod-C>$foo<CharStyle:> is just a name and the underlying data structure it represents is the thing of interest. The <CharStyle:pod-C>\\<CharStyle:> operator returns a reference to that very instance and doesn<0x2019>t much care what the actual name is.
+<pstyle:Feature Para>When I declared <CharStyle:pod-C>$foo<CharStyle:> the second time with <CharStyle:pod-C>my<CharStyle:>, I masked the old <CharStyle:pod-C>$foo<CharStyle:> definition, including its value. Understanding this is crucial for understanding the more esoteric cases for Perl closures. For more about this, see the perlref documentation.
+<pstyle:Feature Para><CharStyle:pod-C>my<CharStyle:> has both compile time and runtime behaviour. <CharStyle:pod-C>my<CharStyle:> creates a new instance for a variable when its surrounding is defined and when it is executed (except for the first time (for which it reuses the instance created as its surroundings definition time)). Without this, the whole reference system in Perl wouldn<0x2019>t work.
+<pstyle:Feature Para>Compare the following, in which I create a new <CharStyle:pod-C>$bar<CharStyle:> in every iteration of the <CharStyle:pod-C>for<CharStyle:>, and I get what I expect, which is each number as an element of <CharStyle:pod-C>@foo<CharStyle:>:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    my @foo;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    for (1 .. 3) {
+<pstyle:Feature Code Para>        my $bar = $_;
+<pstyle:Feature Code Para>        push @foo, \\$bar;
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    print join ' ', map { $$_ } @foo;   # 1 2 3
+<pSpaceAfter:><pstyle:Feature Para>That worked as I wanted, but the next doesn<0x2019>t. If I declare <CharStyle:pod-C>$bar<CharStyle:> outside the loop, when I take a reference to it in each iteration of the loop, I<0x2019>m actually getting the same reference over and over again:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    my @foo;
+<pSpaceBefore:><pstyle:Feature Code Para>    my $bar;
+<pstyle:Feature Code Para> 
+<pstyle:Feature Code Para> 	for (1 .. 3) {
+<pstyle:Feature Code Para>        $bar = $_;
+<pstyle:Feature Code Para>        push @foo, \\$bar;
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    print join ' ', map { $$_ } @foo;   # 3 3 3
+<pSpaceAfter:><pstyle:Feature Para>This time I get the wrong output. Since <CharStyle:pod-C>@foo<CharStyle:> has three copies of the reference the same variable, I get the same value bck for each element.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Anonymous closures	
+<pstyle:Feature Section Lead>A closure can be anonymous just as any subroutine can. I can modify the earlier <CharStyle:pod-C>counter<CharStyle:> subroutine so that it can count in specified steps. I<0x2019>ll make a generator function I<0x2019>ll call <CharStyle:pod-C>make_counter<CharStyle:> that takes the step value as its argument (defaulting to 1):
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    sub make_counter {
+<pSpaceBefore:><pstyle:Feature Code Para>        my( $step ) = shift || 1;
+<pstyle:Feature Code Para>        my $x = 0;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>        return sub {
+<pstyle:Feature Code Para>            $x += $step;
+<pstyle:Feature Code Para>            return $x;
+<pstyle:Feature Code Para>        };
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Para>Notice the close similarity between the named and the anonymous counters. The bare block from before has become the subroutine <CharStyle:pod-C>make_counter<CharStyle:>. The assignment to <CharStyle:pod-C>$x<CharStyle:> now gets its value from my call to <CharStyle:pod-C>make_counter<CharStyle:>, and I return the anonymous subroutine instead of using a named subroutine.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    my $counter = make_counter(3);
+<pSpaceBefore:><pstyle:Feature Code Para>    print $counter-\>();    # 3
+<pstyle:Feature Code Para>    print $counter-\>();    # 6
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    print $counter-\>();    # 9
+<pSpaceAfter:><pstyle:Feature Para>The anonymous subroutine in <CharStyle:pod-C>make_counter<CharStyle:> binds (references) a new instance of <CharStyle:pod-C>$x<CharStyle:> each time I call <CharStyle:pod-C>make_counter<CharStyle:>. This means that I can get separate counters that operate independently:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    my $counter0 = make_counter(1);
+<pSpaceBefore:><pstyle:Feature Code Para>    my $counter7 = make_counter(7);
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    print $counter0-\>();    #  1
+<pstyle:Feature Code Para>    print $counter7-\>();    #  7
+<pstyle:Feature Code Para>    print $counter0-\>();    #  2
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    print $counter7-\>();    # 14
+<pSpaceAfter:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Nested, named subroutines	
+<pstyle:Feature Section Lead>When I have nested, named subroutines, I need to take into account the runtime effect of <CharStyle:pod-C>my<CharStyle:> and the time of definition of the subroutines. Will the variables I reference already have a value when I define my subroutine. Here<0x2019>s a subroutine <CharStyle:pod-C>foo<CharStyle:> in which I define another subroutine, <CharStyle:pod-C>bar<CharStyle:>. What happens if I call <CharStyle:pod-C>bar()<CharStyle:> before <CharStyle:pod-C>foo()<CharStyle:>?
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    sub prettify { defined $_[0] ? $_[0] : 'undefined' }
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $x = 'initial';
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    sub foo {
+<pstyle:Feature Code Para>        my $val = $x;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>        print prettify($val), "\\n";
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>        sub bar {
+<pstyle:Feature Code Para>            print prettify($val), "\\n";
+<pstyle:Feature Code Para>        }
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Para>With tthat code there are a couple of scenarios. I could call <CharStyle:pod-C>bar()<CharStyle:> before I call <CharStyle:pod-C>foo()<CharStyle:>. Since I<0x2019>ve set <CharStyle:pod-C>$x<CharStyle:> to <CharStyle:pod-C>initial<CharStyle:>, that<0x2019>s what I expect <CharStyle:pod-C>bar()<CharStyle:> to output, although it doesn<0x2019>t do that until I call <CharStyle:pod-C>foo()<CharStyle:> first:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    bar();          # undefined
+<pSpaceBefore:><pstyle:Feature Code Para>    foo();          # initial
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    bar();          # initial
+<pSpaceAfter:><pstyle:Feature Para>The value of <CharStyle:pod-C>$val<CharStyle:> in <CharStyle:pod-C>bar()<CharStyle:> isn<0x2019>t defined in the first call to <CharStyle:pod-C>bar()<CharStyle:> since the assignment of <CharStyle:pod-C>$val<CharStyle:> doesn<0x2019>t happen until I call <CharStyle:pod-C>foo<CharStyle:>, at which point <CharStyle:pod-C>$val<CharStyle:> gets its value. When I call <CharStyle:pod-C>foo<CharStyle:>, <CharStyle:pod-C>$val<CharStyle:> in <CharStyle:pod-C>bar<CharStyle:> gets defined. So far so good. This is comparable to trying to use a variable in a <CharStyle:pod-C>BEGIN<CharStyle:> block, which runs at compile time, but not defining it until runtime:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    my $foo = 1;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    BEGIN {
+<pstyle:Feature Code Para>        print $foo ? 'true' : 'false';  # false
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    print $foo ? 'true' : 'false';      # true
+<pSpaceAfter:><pstyle:Feature Para>Now, I continue the <CharStyle:pod-C>foo<CharStyle:>/<CharStyle:pod-C>bar<CharStyle:> example by changing <CharStyle:pod-C>$x<CharStyle:> and calling <CharStyle:pod-C>foo()<CharStyle:> and <CharStyle:pod-C>bar()<CharStyle:> again. <CharStyle:pod-C>foo()<CharStyle:> recognizes the change in <CharStyle:pod-C>$x<CharStyle:>, but <CharStyle:pod-C>bar()<CharStyle:> doesn<0x2019>t:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    $x = 'second';
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    foo();          # second
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    bar();          # initial \<--- Unchanged!
+<pSpaceAfter:><pstyle:Feature Para>The value of <CharStyle:pod-C>$val<CharStyle:> in <CharStyle:pod-C>bar()<CharStyle:> doesn<0x2019>t change because <CharStyle:pod-C>bar()<CharStyle:> is defined once and only once. When I call <CharStyle:pod-C>foo()<CharStyle:> the second time, Perl creates a new <CharStyle:pod-C>$val<CharStyle:>, but only for that call to <CharStyle:pod-C>foo()<CharStyle:>. <CharStyle:pod-C>bar()<CharStyle:> already is defined and <CharStyle:pod-C>bar()<CharStyle:><0x2019>s binding to <CharStyle:pod-C>$val<CharStyle:> was done when <CharStyle:pod-C>bar<CharStyle:> is defined.
+<pstyle:Feature Para>Another illustration of this idea is using a <CharStyle:pod-C>BEGIN<CharStyle:> block inside the subroutine. The <CharStyle:pod-C>BEGIN<CharStyle:> block is like <CharStyle:pod-C>bar()<CharStyle:> in that it binds only to the first definition of <CharStyle:pod-C>$x<CharStyle:>:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    my @all;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    sub foo {
+<pstyle:Feature Code Para>        my $x;
+<pstyle:Feature Code Para> 
+<pstyle:Feature Code Para> 		print "runtime:      ", \\$x, "\\n";
+<pstyle:Feature Code Para> 
+<pstyle:Feature Code Para> 		push @all, \\$x;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>        BEGIN { print "compile time: ", \\$x, "\\n" }
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    foo() for 1 .. 4;
+<pSpaceAfter:><pstyle:Feature Para>The output show that the <CharStyle:pod-C>BEGIN<CharStyle:> block connects with the first definition of <CharStyle:pod-C>$x<CharStyle:> that the runtime sees, but every other call to <CharStyle:pod-C>foo()<CharStyle:> creates another variable which each has a different reference address:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    compile time: SCALAR(0x18241a0)
+<pSpaceBefore:><pstyle:Feature Code Para>    runtime:      SCALAR(0x18241a0)
+<pstyle:Feature Code Para>    runtime:      SCALAR(0x274ff4)
+<pstyle:Feature Code Para>    runtime:      SCALAR(0x275018)
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    runtime:      SCALAR(0x27503c)
+<pSpaceAfter:><pstyle:Feature Para>Note that I used <CharStyle:pod-C>@all<CharStyle:> just to prevent Perl from using an optimization that allows it to reuse memory slots. Since each of the references sticks around as an element of <CharStyle:pod-C>@all<CharStyle:>. Otherwise, Perl might reuse the same memory and I wouldn<0x2019>t be able to see the effect with this trick.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Named closures in anonymous subroutines	
+<pstyle:Feature Section Lead>I change the example from the last section to make <CharStyle:pod-C>foo()<CharStyle:> an anonymous subroutine instead, and assign it to <CharStyle:pod-C>$foo<CharStyle:>. Everything else is the same:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    sub prettify { defined $_[0] ? $_[0] : 'undefined' }
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $x = 'initial';
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $foo = sub {
+<pstyle:Feature Code Para>        my $val = $x;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>        print prettify($val), "\\n";
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>        sub bar {
+<pstyle:Feature Code Para>            print prettify($val), "\\n";
+<pstyle:Feature Code Para>        }
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    };
+<pSpaceAfter:><pstyle:Feature Para>First, I call it in the same sequence that I did before. I<0x2019>ll call <CharStyle:pod-C>bar()<CharStyle:> first, and I expect it to output <CharStyle:pod-C>undefined<CharStyle:> just as it did before. Then I<0x2019>ll dereference <CharStyle:pod-C>$foo<CharStyle:>, and call <CharStyle:pod-C>bar()<CharStyle:> again:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    bar();          # undefined
+<pSpaceBefore:><pstyle:Feature Code Para>    $foo-\>();       # initial
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    bar();          # undefined
+<pSpaceAfter:><pstyle:Feature Para>This time <CharStyle:pod-C>bar()<CharStyle:> outputs <CharStyle:pod-C>undefined<CharStyle:> again! The anonymous subroutine is defined at runtime (instead of compile time for named subroutines) which means that the scope of <CharStyle:pod-C>$val<CharStyle:> is <CharStyle:pod-B>redefined<CharStyle:> at runtime, and thus creates a new instance of <CharStyle:pod-C>$val<CharStyle:> the first time it<0x2019>s executed. This is different from <CharStyle:pod-C>foo()<CharStyle:> which reused the <CharStyle:pod-C>$val<CharStyle:> defined at compile time. This time, dereferencing <CharStyle:pod-C>$foo<CharStyle:> creates a different <CharStyle:pod-C>$val<CharStyle:> so I don<0x2019>t have a chance to assign a value to the <CharStyle:pod-C>$val<CharStyle:> that <CharStyle:pod-C>bar()<CharStyle:> can see. <CharStyle:pod-C>&$foo<CharStyle:> and <CharStyle:pod-C>bar<CharStyle:> will therefore <CharStyle:pod-B>never<CharStyle:> share <CharStyle:pod-C>$val<CharStyle:>.
+<pstyle:Feature Para>I can see this by using the same <CharStyle:pod-C>BEGIN<CharStyle:> block trick I used in the previous section:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    my @all;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $foo = sub {
+<pstyle:Feature Code Para>        my $x;
+<pstyle:Feature Code Para>        print "runtime:      ", \\$x, "\\n";
+<pstyle:Feature Code Para>        push @all, \\$x;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>        BEGIN { print "compile time: ", \\$x, "\\n" }
+<pstyle:Feature Code Para>    };
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    $foo-\>() for 1 .. 4;
+<pSpaceAfter:><pstyle:Feature Para>This time, none of the output lines show the same reference address:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    compile time: SCALAR(0x1824230)
+<pSpaceBefore:><pstyle:Feature Code Para>    runtime:      SCALAR(0x275060)
+<pstyle:Feature Code Para>    runtime:      SCALAR(0x18313a0)
+<pstyle:Feature Code Para>    runtime:      SCALAR(0x18313d0)
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    runtime:      SCALAR(0x18313e8)
+<pSpaceAfter:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Recursive, lexical anonymous closures	
+<pstyle:Feature Section Lead>With <0x201C>recursive lexical<0x201D>, I mean that the reference to an anonymous subroutine is stored in a lexical variable, and I use that variable to call the subroutine from within itself. If I have a lexical anonymous subroutine that I want to make recurse I might write it like this:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    my $fac; # The factorial of a non-negative integer.
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    $fac = sub {
+<pstyle:Feature Code Para>        my ($n) = @_;
+<pstyle:Feature Code Para>        return 0 if $n \<= 1;
+<pstyle:Feature Code Para>        return $n * $fac-\>($n - 1);
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    };
+<pSpaceAfter:><pstyle:Feature Para>Typically I want to do this because the anonymous subroutine already is a closure and not suited for moving out to the global namespace.
+<pstyle:Feature Para>This, however, creates a closure that is a circular reference. <CharStyle:pod-C>$fac<CharStyle:> references the closure which references <CharStyle:pod-C>$fac<CharStyle:>. This particular circular reference will undoubtfully be a memory leak if inside something that executes more than once. A fix for this is to not have a lexical variable to hold the subroutine for the recursive call:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    use vars qw/ $REC /;
+<pSpaceBefore:><pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    my $_fac = sub {
+<pstyle:Feature Code Para>        my ($n) = @_;
+<pstyle:Feature Code Para>        return 0 if $n \<= 1;
+<pstyle:Feature Code Para>        return $n * $REC-\>($n - 1); # \<--- $REC instead of $fac
+<pstyle:Feature Code Para>    };
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $fac = sub {
+<pstyle:Feature Code Para>        local $REC = $_fac;
+<pstyle:Feature Code Para>        $_fac-\>(@_);
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    };
+<pSpaceAfter:><pstyle:Feature Para>This solution solves the memory leak issue and is functionally equivalent to the leaking solution except for stack traces due to the extra initial call in <CharStyle:pod-C>&$fac<CharStyle:>. It is, however, slightly overkill if I<0x2019>m not going to use the subroutine outside its lexical scope. For that, a simple localization will fix this:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    use vars qw/ $fac /;
+<pSpaceBefore:><pstyle:Feature Code Para> 
+<pstyle:Feature Code Para> 	local $fac = sub {
+<pstyle:Feature Code Para>        my ($n) = @_;
+<pstyle:Feature Code Para>        return 0 if $n \<= 1;
+<pstyle:Feature Code Para>        return $n * $fac-\>($n - 1);
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    };
+<pSpaceAfter:><pstyle:Feature Para>This assumes I don<0x2019>t use <CharStyle:pod-C>$fac<CharStyle:> anywhere else in the dynamic scope (<CharStyle:pod-I>i.e.<CharStyle:> in the closure directly or indirectly by a subroutine call).
+<pstyle:Feature Para>I<0x2019>ve written the <CharStyle:pod-C>Sub::Recursive<CharStyle:> module to provide an convenient work-around. Using that I simply replace <CharStyle:pod-C>sub<CharStyle:> with <CharStyle:pod-C>recursive<CharStyle:> and use <CharStyle:pod-C>$REC<CharStyle:> for the recursive call:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>    use Sub::Recursive;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $fac = recursive {
+<pstyle:Feature Code Para>        my ($n) = @_;
+<pstyle:Feature Code Para>        return 0 if $n \<= 1;
+<pstyle:Feature Code Para>        return $n * $REC-\>($n - 1); # \<--- $REC instead of $fac
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    };
+<pSpaceAfter:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Conculsion	
+<pstyle:Feature Section Lead>The more esoteric uses of Perl<0x2019>s closures are as you see full of pitfalls. Hopefully I<0x2019>ve helped you avoid them. Don<0x2019>t let this scare you away from closures. They<0x2019>re wonderful and can improve your code quality in many ways.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> References	
+<pstyle:Feature Section Lead>perlref, perlsub, perlfaq7 <0x201C>What is a closure?<0x201D>, http://en.wikipedia.org/wiki/Closure_%28computer_science%29
+<pstyle:Feature Para>[1] <0x201C>Closures, eval and lexicals<0x201D> in perl581delta
+<pstyle:Feature Para><CharStyle:pod-C>Sub::Recursive<CharStyle:> is available at CPAN, http://search.cpan.org/dist/Sub-Recursive/.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> About the author	
+<pstyle:Feature Section Lead>Johan Lodin \<lodin@cpan.org\>

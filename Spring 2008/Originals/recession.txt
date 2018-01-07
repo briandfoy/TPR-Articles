@@ -1,0 +1,20 @@
+The Geek's Guide to Surviving a Recession
+edited by chromatic
+O'Reilly
+2008
+0-771-02715-X
+
+It was inevitable that the expansion of O'Reilly OmniMedia's hegemony would end up here.  When a publisher of computer books branched out into territory like "Running a Band as a Business", "The Cult of iPod", and Wil Wheaton's autobiography ("Dancing Barefoot"), you knew that they were testing the waters of the mainstream.  And now they've dived in, er, head first, with a populist and topical fiscal how-to that debuted at #17 on the New York Times trade paperback non-fiction bestseller list.
+
+The production of this book was shrouded in secrecy.  If you've talked to some author friends lately and they cagily referred to being engaged in "Project Q", this is what they meant but couldn't tell you. O'Reilly has engaged its best minds, mostly from the Perl world, to bring its foray into finance to market.  Although no one's publically admitting to it, this has to be the real reason that the release of Perl 6 was delayed.  How chromatic found any time for Parrot regression testing while editing this book I<and> penning its chapter on biodiesel fermentation is beyond me.  And TPR's own brian d foy's chapter analysing the credit crisis - written I<before> the major media outlets had any inkling of it, I might add - is a tour de force exposE<eacute> of how the derivative market brought us to the brink of disaster.  You'll never look at a credit default swap or a collateralized debt obligation the same way again.
+
+O'Reilly has clearly discovered a link between geekness and personal thrift that few would have guessed at - after all, aren't geeks the quintessential toy gatherers, filling basements with the Apple Newtons and GPS coffee makers of Consumer Electronics Show visits and excusing themselves with the sophisticated title of "early adopters"?  The question begs an answer, and Kathy Sierra takes a crack at it in the introduction, "Passionate and Parsimonious": Geeks have a natural aversion to waste - witness how any discussion on code turns into a fevered debate on improving performance - and this carries over to their domestic life.  Save a few cycles in a tight loop, save the planet.  And what could be greener than a testing bar when everything is working?  In retrospect the connection with Perl geeks is not so surprising given that many of them are concentrated around the notoriously hippie Mecca of Portland, Oregon, so Schwern's chapter on homespun textiles and the virtues of nudism comes as no surprise.
+
+Some of the other chapters were also predictable - Randal Schwartz's treatise on home microbrewing comes to mind - but others were delightfully surprising.  Who would have pegged Nat Torkington as a gold bug, laying up a store of bullion in his nuclear fallout shelter in New Zealand?  (The threat of radioactive Armageddon may have dissipated, but his Krugerrands and Maple Leafs will still come in handy when paper currency is being used to stock outhouses.  Make sure you have enough rounds for the M16, Gnat.)
+
+Speaking of the Antipodes, as you might expect, Damian Conway contributes the most chapters to the book, from the prosaic "Fat Pipes are for Networks" (how to be self sufficient in water in the face of global climate change) to a roadkill recipe list heavy on marsupials - this one reads as tongue in cheek but many people will inevitably take it seriously.  Expect to see this chapter repurposed for a keynote during the Tuesday night extravaganza at this year's OSCON, hopefully without some of the more gruesome pictures.
+
+O'Reilly's prescient timing couldn't have been better - clearly they have some boffo macroeconomic forecasting tools, given the long lead time for a book like this - and I strongly recommend it to everyone, whether you're a homeowner facing a balloon reset on a subprime no-doc or just trying to keep up a Starbucks habit in the face of skyrocketing coffee bean futures.
+
+
+Peter Scott is the author of "Perl Medic", "Perl Debugged", and is currently following Larry Wall's instructions on microfarming to raise ibex on his hillside property.

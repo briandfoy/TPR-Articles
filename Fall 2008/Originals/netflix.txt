@@ -1,0 +1,281 @@
+<ASCII-MAC>
+<Version:5><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1>>
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> 	
+<pstyle:Feature Section Lead>Is there a way that I can figure out which movies in my Netflix (<CharStyle:pod-I>http://www.netflix.com<CharStyle:>) queue will be on cable so I can schedule TiVo (<CharStyle:pod-I>http://www.tivo.com<CharStyle:>) to record them? Why waste the money to use up some of my Netflix bandwidth if I can get it otherwise?
+<pstyle:Feature Para>I could go through the list of all movies through my TiVo box<0x2019>s <0x201C>Find a program<0x201D> interface, but that<0x2019>s tedious. When something is tedious, I reach for Perl so I can automate it. I wrote <CharStyle:pod-C>netflix2tivo<CharStyle:> to do this, and the programming was a snap to write. It was figuring out what I needed to do which took up most of the time.
+<pstyle:Feature Para>My basic solution involves getting the titles from my Netflix queue, then going through each title to find in TiVo Central Online (TCO) (<CharStyle:pod-I>tivo.com/tivo-tco/index.do<CharStyle:>) service. TCO is an online service and is not directly connected to my TiVo hardware in my home. I can search for shows and schedule recordings in TCO, but my actual TiVo hardware doesn<0x2019>t find out about any of this until it talks to the TiVo mothership again.
+<pstyle:Feature Para>To get this done, I use a combination of the Perl modules WWW::Mechanize (<CharStyle:pod-I>http://search.cpan.org/dist/WWW-Mechanize<CharStyle:>) and CGI (<CharStyle:pod-I>http://search.cpan.org/dist/CGI<CharStyle:>) for a program I run from the command line. I<0x2019>ll login to both my Netflix and TCO accounts, extract the information I need, then match up the titles that are on both sides.
+<pstyle:Feature Para>Here<0x2019>s the program I want, before I implement anything. This is the basic setup for a modulino, which I go through in Chapter 18, <0x201C>Modules as Programs<0x201D>, of Mastering Perl (<CharStyle:pod-I>http://www.oreilly.com/catalog/9780596527242/<CharStyle:>), as well as a How a script becomes a module (<CharStyle:pod-I>http://www.perlmonks.org/index.pl?node_id=396759<CharStyle:>) on Perlmonks (<CharStyle:pod-I>http://www.perlmonks.org<CharStyle:>). I write the program as a module and include a <CharStyle:pod-C>run<CharStyle:> method that puts the module parts together to do what I need. If I use this file like a program, <CharStyle:pod-C>caller<CharStyle:> is false and I invoke <CharStyle:pod-C>run<CharStyle:> (otherwise, if I use this file as a module, like in a test script, <CharStyle:pod-C>run<CharStyle:> doesn<0x2019>t execute but I can test the subroutines): #!/usr/bin/perl use strict; use warnings;
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>package App::Netflix2TiVo;
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>$|++;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>__PACKAGE__-\>run() unless caller;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>sub run {
+<pstyle:Feature Code Para>    my $app = __PACKAGE__-\>init;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    my $titles = $app-\>get_netflix_titles;
+<pstyle:Feature Code Para>    die "Found no titles in the Netflix RSS\\n" unless keys %$titles;	
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    foreach my $show ( sort keys %$titles )
+<pstyle:Feature Code Para>        {
+<pstyle:Feature Code Para>        my $q = $app-\>tivo_show_search( $show, $titles-\>{$show}{year} );
+<pstyle:Feature Code Para>        
+<pstyle:Feature Code Para>        print "$show ($titles-\>{$show}{year})\\n" if defined $q;
+<pstyle:Feature Code Para>        
+<pstyle:Feature Code Para>        foreach my $q ( @$q )
+<pstyle:Feature Code Para>            {
+<pstyle:Feature Code Para>            printf "\\t%3d  %-25s\\n", 
+<pstyle:Feature Code Para>                $q-\>param( 'channelNum' ), 
+<pstyle:Feature Code Para>                scalar localtime $q-\>param( 'requested_showing_start' );
+<pstyle:Feature Code Para>            }
+<pstyle:Feature Code Para>        
+<pstyle:Feature Code Para>        }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    
+<pSpaceAfter:><pstyle:Feature Para>Inside <CharStyle:pod-C>run<CharStyle:>, I first initialize that application, which I<0x2019>ll show in a moment. Once I set up everything and have my application object (<CharStyle:pod-C>$app<CharStyle:>), I call <CharStyle:pod-C>get_netflix_titles<CharStyle:> to get my Netflix queue. After I have the queue, I go through each of the titles and look for them through TCO.
+<pstyle:Feature Para>When I went through the Netflix queue, I remembered the production year for each title so I could distinguish between different shows with the same title. I<0x2019>ll show how I did that later. My solution looks easy now, but it really took me a while to figure out. This doesn<0x2019>t completely solve the problem though, because the 2006 movie Curious George (<CharStyle:pod-I>http://imdb.com/title/tt0381971/<CharStyle:>) still matches the ongoing TV show of the same title, which also produced episodes that year. I could do a bit more work to figure out the show duration and compare those, but it<0x2019>s not that annoying yet.
+<pstyle:Feature Para>In <CharStyle:pod-C>init<CharStyle:>, I gather the login details I<0x2019>ll need for both Netflix and TCO. I take the easy way out and set the details as environment variables, although there are many different ways I could configure the program (Chapter 11, <0x201C>Configuring Perl Programs<0x201D>, of Mastering Perl (<CharStyle:pod-I>http://www.oreilly.com/catalog/9780596527242/<CharStyle:>)). I<0x2019>ve isolated this design decision in <CharStyle:pod-C>init<CharStyle:>, though, so if I change it later I only have to update this method. No matter how I get the information, I make hash keys for them.
+<pstyle:Feature Para>I also use an <CharStyle:pod-C>AUTOLOAD<CharStyle:> routine (Chapter 9, <0x201C>Dynamic Subroutines<0x201D> in Mastering Perl (<CharStyle:pod-I>http://www.oreilly.com/catalog/9780596527242/<CharStyle:>)) to provide easy access to the hash keys as methods. If I ever want to change the way I store the data or do something more complicated to access them, I don<0x2019>t have to change the way I use them elsewhere in the program. That<0x2019>s a goal of maudlinness: design programs as modules to isolate the various parts for easy maintenance and extension.
+<pstyle:Feature Para>One of the hash keys holds a WWW::Mechanize (<CharStyle:pod-I>http://search.cpan.org/dist/WWW-Mechanize<CharStyle:>) object, which I<0x2019>ll use to interact with the Netflix and TCO websites and deal with the dull details of their forms without much programming work on my part:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>sub init
+<pSpaceBefore:><pstyle:Feature Code Para>    {
+<pstyle:Feature Code Para>    my( $class ) = shift;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    my $app = {};
+<pstyle:Feature Code Para>    bless $app, $class;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    require WWW::Mechanize;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    $app-\>{mech} = WWW::Mechanize-\>new or die "Could not make Mech object";
+<pstyle:Feature Code Para>        
+<pstyle:Feature Code Para>    $app-\>{Netflix_user}      = $ENV{NETFLIX_USER}         or die "Set NETFLIX_USER";
+<pstyle:Feature Code Para>    $app-\>{Netflix_password}  = $ENV{NETFLIX_PASSWORD}     or die "Set NETFLIX_PASSWORD";
+<pstyle:Feature Code Para>    $app-\>{TiVo_user}         = $ENV{TIVO_ONLINE_ID}       or die "Set TIVO_ONLINE_ID";
+<pstyle:Feature Code Para>    $app-\>{TiVo_password}     = $ENV{TIVO_ONLINE_PASSWORD} or die "Set TIVO_ONLINE_PASSWORD";
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    $app-\>netflix_login or die "Could not login to Netflix!\\n";
+<pstyle:Feature Code Para>    $app-\>{Netflix_rss_id}    = $app-\>get_netflix_rss_id;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    $app-\>tivo_login    or die "Could not login to TiVo Online\\n";
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    $app;
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>sub AUTOLOAD
+<pstyle:Feature Code Para>    {
+<pstyle:Feature Code Para>    my $app = shift;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    require Carp;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    our $AUTOLOAD;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    my( $method ) = $AUTOLOAD =~ m/.*::(\\w+)$/g;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    if( exists $app-\>{$method} ) { return $app-\>{$method} }
+<pstyle:Feature Code Para>    else { Carp::croak( "No method $method" ) }
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    
+<pSpaceAfter:><pstyle:Feature Para>That<0x2019>s the boring stuff, so now I<0x2019>ll get to the details of interacting with the websites and matching up the data. I<0x2019>ve done the hard work to figure out what to do, then put it together in Perl.
+<pstyle:Feature Para>I start with the Netflix queue. This is fairly easy since Netflix provides an RSS feed of each profile<0x2019>s queue (among the several other Netflix RSS feeds (<CharStyle:pod-I>http://www.netflix.com/RSSFeeds<CharStyle:>)). I do need to get the right URL for that though. Once I login to my Netflix account, I grab the RSS page and look for the link that has <CharStyle:pod-C>QueueRSS<CharStyle:> in the URL. What I really need is the value for the CGI parameter <CharStyle:pod-C>id<CharStyle:>. I could simply grab the entire URL, I suppose, but I can use the <CharStyle:pod-C>id<CharStyle:> value for other things I might do with the script later.
+<pstyle:Feature Para>Back in <CharStyle:pod-C>init<CharStyle:>, once I call <CharStyle:pod-C>netflix_login<CharStyle:>, I can call <CharStyle:pod-C>get_netflix_rss_id<CharStyle:>to get the <CharStyle:pod-C>id<CharStyle:> value. WWW::Mechanize (<CharStyle:pod-I>http://search.cpan.org/dist/WWW-Mechanize<CharStyle:>) handles all of the access, form submission, cookies, and state maintenance details for me. To find out more about WWW::Mechanize (<CharStyle:pod-I>http://search.cpan.org/dist/WWW-Mechanize<CharStyle:>), check out Spidering Hacks (<CharStyle:pod-I>http://www.oreilly.com/catalog/spiderhks/<CharStyle:>).
+<pstyle:Feature Para>After I login to Netflix, I do the same for TCO. WWW::Mechanize (<CharStyle:pod-I>http://search.cpan.org/dist/WWW-Mechanize<CharStyle:>) maintains all of the details for each of the websites that I visit, so the order I do some things doesn<0x2019>t necessarily matter:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>sub netflix_login
+<pSpaceBefore:><pstyle:Feature Code Para>    {
+<pstyle:Feature Code Para>    print "Logging into Netflix\\n";
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    my( $app ) = shift;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    $app-\>mech-\>get( "http://www.netflix.com/Login" );
+<pstyle:Feature Code Para>    $app-\>mech-\>form_number(1);
+<pstyle:Feature Code Para>    $app-\>mech-\>field( 'email',     $app-\>Netflix_user     );
+<pstyle:Feature Code Para>    $app-\>mech-\>field( 'password1', $app-\>Netflix_password );
+<pstyle:Feature Code Para>    $app-\>mech-\>submit;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    $app-\>mech-\>get( "http://www.netflix.com/" );
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    #print $app-\>content;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    return unless $app-\>mech-\>content =~ m/your account/i;
+<pstyle:Feature Code Para>        
+<pstyle:Feature Code Para>    return 1;
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>sub get_netflix_rss_id
+<pstyle:Feature Code Para>    {
+<pstyle:Feature Code Para>    my( $app ) = shift;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    $app-\>mech-\>get( "http://www.netflix.com/RSSFeeds" );
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    my( $id ) = 
+<pstyle:Feature Code Para>        $app-\>mech-\>content =~ m|\\Qhttp://rss.netflix.com/QueueRSS?id=\\E([A-Z0-9]+)|g;
+<pstyle:Feature Code Para>        
+<pstyle:Feature Code Para>    print "Got Netflix RSS ID [$id]\\n";
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    $id;
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>sub tivo_login
+<pstyle:Feature Code Para>    {
+<pstyle:Feature Code Para>    print "Logging into TiVo\\n";
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $app = shift;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    $app-\>mech-\>get( "http://www3.tivo.com/tivo-tco/login/show.do" );
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    $app-\>mech-\>form_number(1);
+<pstyle:Feature Code Para>    $app-\>mech-\>field( "cams_cb_username", $app-\>TiVo_user     );
+<pstyle:Feature Code Para>    $app-\>mech-\>field( "cams_cb_password", $app-\>TiVo_password );
+<pstyle:Feature Code Para>    $app-\>mech-\>submit;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    return 1 if $app-\>mech-\>content =~ m/Sign Out/i;	
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    return;
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    
+<pSpaceAfter:><pstyle:Feature Para>Once I have the information I need, I fetch the RSS feed (this time using LWP::Simple (<CharStyle:pod-I>http://search.cpan.org/dist/LWP-Simple<CharStyle:>)). I grab the data then pass it to <CharStyle:pod-C>parse_netflix_titles<CharStyle:> to create the data structure that I need back in <CharStyle:pod-C>run<CharStyle:>. I could do some fancy HTML parsing, but a simple regular expression works just fine so far:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>sub get_netflix_titles
+<pSpaceBefore:><pstyle:Feature Code Para>    {
+<pstyle:Feature Code Para>    print "Getting Netflix titles\\n";
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my( $app ) = shift;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    require LWP::Simple;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $id = $app-\>Netflix_rss_id;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    my $rss = LWP::Simple::get( "http://rss.netflix.com/QueueRSS?id=$id" );
+<pstyle:Feature Code Para>            
+<pstyle:Feature Code Para>    my $titles = $app-\>parse_netflix_titles( \\$rss );
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>sub parse_netflix_titles
+<pstyle:Feature Code Para>    {
+<pstyle:Feature Code Para>    my( $app, $rss_ref ) = @_;
+<pstyle:Feature Code Para>    require HTML::Entities;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    my %titles;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    #\<link\>http://www.netflix.com/Movie/Hellfighters/582854?trkid=134852\</link\>
+<pstyle:Feature Code Para>    while( $$rss_ref =~ m|\<title\>\\d+\\s*-\\s*(.*?)\</title\>\\s*\<link\>(.*?)\</link\>|g )
+<pstyle:Feature Code Para>        {
+<pstyle:Feature Code Para>        print ".";
+<pstyle:Feature Code Para>        print "\\n" if( keys %titles and ! keys( %titles ) % 50 );
+<pstyle:Feature Code Para>        
+<pstyle:Feature Code Para>        my( $title, $link ) = 
+<pstyle:Feature Code Para>            map { my $t = $_; HTML::Entities::decode_entities($t); $t }
+<pstyle:Feature Code Para>            ( $1, $2 );
+<pstyle:Feature Code Para>        
+<pstyle:Feature Code Para>        my $hash = $app-\>get_netflix_title_info( $link, $title );
+<pstyle:Feature Code Para>        
+<pstyle:Feature Code Para>        $titles{$title} = $hash;
+<pstyle:Feature Code Para>        }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    print "\\nFound " . keys( %titles ) . " titles in queue\\n";
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    \\%titles;
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    
+<pSpaceAfter:><pstyle:Feature Para>Each link I find in the Netflix feed has a link to its page on their website. I want to get the year of production for each title, as I mentioned earlier. I need to grab that page and look for the year. Fortunately, Netflix tags the year inside a <CharStyle:pod-C>&lt;span&gt;<CharStyle:> tag that makes it easy to extract. Once I have the year, I return a little hash that keeps the title and the year together. This will be the value in the top-level hash I use in <CharStyle:pod-C>run<CharStyle:>:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>sub get_netflix_title_info
+<pSpaceBefore:><pstyle:Feature Code Para>    {
+<pstyle:Feature Code Para>    my( $app, $link, $title ) = @_;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    $app-\>mech-\>get( $link );
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my( $year ) = 
+<pstyle:Feature Code Para>        $app-\>mech-\>content =~ m|\<div class="title".*?\>.*?\<span class="year"\>\\((\\d+)\\)\</span\>|sg;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    # this is fine if $year is undef
+<pstyle:Feature Code Para>    return { year =\> $year, 'link' =\> $link };
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    
+<pSpaceAfter:><pstyle:Feature Para>Once I have the Netflix data, I want to search TCO, which knows about my local cable provider already. I already went through the login step in <CharStyle:pod-C>init<CharStyle:>, so in the <CharStyle:pod-C>foreach<CharStyle:> loop in <CharStyle:pod-C>run<CharStyle:> I can call <CharStyle:pod-C>tivo_show_search<CharStyle:> with the title and the year directly.
+<pstyle:Feature Para>In <CharStyle:pod-C>tivo_show_search<CharStyle:>, I pass the title to the TCO search page. Here it gets a bit tricky. The search result page shows a link for the program (if it gets a result), but I really want the page behind that link that displays the upcoming broadcast times. Complicating it further are fuzzy matches, so I only want to follow the link that exactly matches the title for which I searched. All of that is the <CharStyle:pod-C>if<CharStyle:> condition. Inside the <CharStyle:pod-C>if<CharStyle:> block I deal with another complication. If the regular expression worked, there might be a year value in <CharStyle:pod-C>$3<CharStyle:>. That year value sometimes doesn<0x2019>t agree with the one in Netflix, although I<0x2019>ve manually verified in those cases that they are really the same title. It seems that TiVo is sometimes off by a couple of years.
+<pstyle:Feature Para>I add the data for the second page to the first, and then extract all the links that match <CharStyle:pod-C>&lt;a href=<0x201C>(/tivo-tco/program/show.do\\?.*?)<0x201D>&gt;(.*?)&lt;/a&gt;<CharStyle:>. The link with all of its specific CGI parameters show up in <CharStyle:pod-C>$1<CharStyle:> and the show title ends up in <CharStyle:pod-C>$2<CharStyle:>, and I keep doing this as long as I can make matches. If the show title I found in TCO matches the once I had in my Netflix queue, I put the link into <CharStyle:pod-C>@links<CharStyle:>.
+<pstyle:Feature Para>Those links from TCO have all the information I need. I<0x2019>ll send the <CharStyle:pod-C>@links<CharStyle:> through a <CharStyle:pod-C>map<CharStyle:> that calls <CharStyle:pod-C>parse_tivo_show_link<CharStyle:>, which turns the link into a CGI object. That<0x2019>s convenient for parsing the link and giving me easy access to the parameters. Out of the <CharStyle:pod-C>map<CharStyle:> comes a list of CGI objects, which I then sort by the value in the <CharStyle:pod-C>requested_showing_start<CharStyle:>, a unix epoch value. That sorted list of CGI objects ends up as the return value:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>sub tivo_show_search
+<pSpaceBefore:><pstyle:Feature Code Para>    {
+<pstyle:Feature Code Para>    my( $app, $show, $year ) = @_;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    $app-\>mech-\>get( "https://www3.tivo.com/tivo-tco/search.do" );
+<pstyle:Feature Code Para>    $app-\>mech-\>form_number( 1 );
+<pstyle:Feature Code Para>    $app-\>mech-\>field( "searchFor", $show );
+<pstyle:Feature Code Para>    $app-\>mech-\>submit;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    my @links = ();
+<pstyle:Feature Code Para>    my $count = 0;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    my $data = $app-\>mech-\>content;
+<pstyle:Feature Code Para>    # the first page is search results for titles, 
+<pstyle:Feature Code Para>    # but I want to page behind that
+<pstyle:Feature Code Para>    # the next page has all of the upcoming shows
+<pstyle:Feature Code Para>    if( $data =~ m|(.*?) (I\<(/tivo-tco/program/show.do\\?.*?)\>)(?:\\s+\\((\\d+)\\))?|ig 
+<pstyle:Feature Code Para>        and lc $2 eq lc $show )
+<pstyle:Feature Code Para>        {
+<pstyle:Feature Code Para>        #print "$show: TiVo year is $3: Netflix year is $year\\n" if defined $3;
+<pstyle:Feature Code Para>        return unless ( ! defined $3 or abs($3-$year) \< 3 );
+<pstyle:Feature Code Para>        
+<pstyle:Feature Code Para>        my $n = $1;
+<pstyle:Feature Code Para>        HTML::Entities::decode_entities($n);
+<pstyle:Feature Code Para>        $app-\>mech-\>get( "https://www3.tivo.com$n" );
+<pstyle:Feature Code Para>        $data .= $app-\>mech-\>content;
+<pstyle:Feature Code Para>        }
+<pstyle:Feature Code Para>    else
+<pstyle:Feature Code Para>        {
+<pstyle:Feature Code Para>        return;
+<pstyle:Feature Code Para>        }
+<pstyle:Feature Code Para>        
+<pstyle:Feature Code Para>    while( $data =~ m|(.*?) (I\<(/tivo-tco/program/show.do\\?.*?)\>)|ig )
+<pstyle:Feature Code Para>        {
+<pstyle:Feature Code Para>        last if $count++ \> 10;
+<pstyle:Feature Code Para>        my( $link, $title ) = ( $1, $2 );
+<pstyle:Feature Code Para>        push @links, $link if lc $title eq lc $show;
+<pstyle:Feature Code Para>        }
+<pstyle:Feature Code Para>        
+<pstyle:Feature Code Para>    my @q = 
+<pstyle:Feature Code Para>        sort { $a-\>param( 'requested_showing_start' )
+<pstyle:Feature Code Para>            \<=\> $b-\>param( 'requested_showing_start' ) }
+<pstyle:Feature Code Para>        map { $app-\>parse_tivo_show_link( $_ ) } 
+<pstyle:Feature Code Para>        @inks;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    scalar @q ? \\@q : ();
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>sub parse_tivo_show_link
+<pstyle:Feature Code Para>    {
+<pstyle:Feature Code Para>    my( $app, $link ) = @_;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    require CGI;
+<pstyle:Feature Code Para>        
+<pstyle:Feature Code Para>    $link =~ s/.*show\\.do\\?//;
+<pstyle:Feature Code Para>    
+<pstyle:Feature Code Para>    my $q = CGI-\>new( $link );
+<pstyle:Feature Code Para>    }
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    
+<pSpaceAfter:><pstyle:Feature Para>Back in <CharStyle:pod-C>run<CharStyle:>, I store the return value of <CharStyle:pod-C>tivo_show_search<CharStyle:> in <CharStyle:pod-C>$q<CharStyle:> (an array reference). Anything in that array is a title that is both in my Netflix queue and on cable TV soon. All I have left is the output of my report, which looks something like this:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>Logging into Netflix
+<pSpaceBefore:><pstyle:Feature Code Para>Got Netflix RSS ID [....]
+<pstyle:Feature Code Para>Logging into TiVo
+<pstyle:Feature Code Para>Getting Netflix titles
+<pstyle:Feature Code Para>.......................................................
+<pstyle:Feature Code Para>Found 55 titles in queue
+<pstyle:Feature Code Para>...And Justice for All (1979)
+<pstyle:Feature Code Para>         67  Thu Jul 12 02:30:00 2007 
+<pstyle:Feature Code Para>Curious George (2006)
+<pstyle:Feature Code Para>         11  Wed Jul  4 15:30:00 2007 
+<pstyle:Feature Code Para>         11  Thu Jul  5 08:00:00 2007 
+<pstyle:Feature Code Para>        744  Thu Jul  5 08:45:00 2007 
+<pstyle:Feature Code Para>         59  Thu Jul  5 10:00:00 2007 
+<pstyle:Feature Code Para>         11  Thu Jul  5 15:30:00 2007 
+<pstyle:Feature Code Para>         11  Fri Jul  6 08:00:00 2007 
+<pstyle:Feature Code Para>        221  Sat Jul  7 07:50:00 2007 
+<pstyle:Feature Code Para>Sorry, Wrong Number (1948)
+<pstyle:Feature Code Para>         70  Sat Jul 14 19:00:00 2007 
+<pstyle:Feature Code Para>The Flight of the Phoenix (1965)
+<pstyle:Feature Code Para>         71  Fri Jul 13 14:30:00 2007 
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>         
+<pSpaceAfter:><pstyle:Feature Para>So far this little script has been pretty handy, and I<0x2019>ve been able to take a couple of entries off of my Netflix queue each week. There<0x2019>s more that I could do with the script too; TCO allows me to schedule programs to record remotely, although my TiVo box only finds out about it during its nightly update, and it won<0x2019>t record the new show if it conflicts with a previously scheduled show. Eventually, I<0x2019>d like to add support of the list of channels I show in my channel listing. My results so far list the shows on any station, but I don<0x2019>t want to record a show that<0x2019>s been edited to include commericials or on a channel not in my cable service. Once I decide to add those features, my script makes the Perl parts easy once I figure out how to get the data.

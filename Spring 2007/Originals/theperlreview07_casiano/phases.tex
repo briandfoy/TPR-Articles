@@ -1,0 +1,67 @@
+The code below 
+(file \verb|examples/infix2pir.pl|) %
+displays
+the stages of the translator: \emph{Lexical
+and syntax analysis, tree transformations
+and decorations,
+address assignments, code generation
+and peephole optimization}. The simplicity of the 
+considered language (no types, no control structures) 
+permits the skipping of 
+\emph{context handling} (also called \emph{semantic analysis}).
+Context handling includes jobs like \emph{type checking}, 
+\emph{live analysis}, etc.
+Don't get overflowed for so much terminology:
+The incoming sections will
+explain in more detail each of these phases.
+\begin{verbatim}
+my $parser = Infix->new();
+# Set input 
+$parser->YYData->{INPUT} 
+  = slurp_file($filename, 'inf');
+
+# Lexical and syntax analysis
+my $t = $parser->YYParse(
+ yylex => \&Infix::Lex, 
+ yyerror => \&Infix::Err);
+
+# Tree transformations
+$t->s(our @algebra);
+
+# Address assignment
+our $reg_assign;
+$reg_assign->s($t);
+
+# Code generation
+$t->bud(our @translation);
+my $dec = build_dec();
+
+peephole_optimization($t->{tr});
+
+output_code(\$t->{tr}, \$dec);
+\end{verbatim}
+
+The compiler uses the parser for infix expressions
+that was generated from the Eyapp grammar  \verb|Infix.eyp|
+(see section \ref{section:syntacticanalysis})
+using the command:
+\begin{verbatim}
+$ eyapp Infix.eyp
+$ ls -tr | tail -1
+Infix.pm
+\end{verbatim}
+It also uses the module containing different families of tree
+transformations that are described in the \verb|I2PIR.trg| file 
+(explained in 
+sections \ref{section:machineindependentoptimizations} and \ref{section:codegeneration}): 
+\begin{verbatim}
+$ treereg -m main I2PIR.trg
+$ ls -tr | tail -1
+I2PIR.pm
+$ head -1 I2PIR.pm
+package main;
+\end{verbatim}
+The option \verb|-m main| tells \verb|treereg|
+to place the transformations inside the \verb|main|
+namespace. 
+% Make a makefile! or make a dist with the example and put it in CPAN

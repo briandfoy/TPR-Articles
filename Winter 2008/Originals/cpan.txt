@@ -1,0 +1,271 @@
+<ASCII-MAC>
+<Version:5><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1>>
+<pstyle:Feature Lead>Anyone can easily make their own tools to deal with the Comprehensive Perl Archive Network. Instead of relying on the the tools that make other people<0x2019>s life easier, I can make a tool that does exactly what I need to do. Not every tool has to install modules, either.
+<pstyle:Feature Para>I<0x2019>m the author of the <CharStyle:pod-C>cpan<CharStyle:> script that comes with <CharStyle:pod-C>CPAN.pm<CharStyle:> (and hence with <CharStyle:pod-C>perl<CharStyle:> too), and examples in this article are also features of <CharStyle:pod-C>cpan<CharStyle:>. However, if my tool doesn<0x2019>t do the job you need, I<0x2019>m not going to feel bad if you create your own. And, even though I use <CharStyle:pod-C>CPAN.pm<CharStyle:>, it<0x2019>s just as easy to create tools with <CharStyle:pod-C>CPANPLUS<CharStyle:>.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> A note on terms	
+<pstyle:Feature Section Lead>In talking about CPAN and its ecosystem has a problem: everything is called something that is pronounced alike. For this article, CPAN in all capital letters and no special formatting refers to the archive network itself. I<0x2019>ll always say <CharStyle:pod-C>CPAN.pm<CharStyle:> with the code font to refer to the module, and when I want to talk about my script that comes with <CharStyle:pod-C>CPAN.pm<CharStyle:>, I<0x2019>ll use the lowercase <CharStyle:pod-C>cpan<CharStyle:> in the code font. If you<0x2019>re reading this aloud to your kids at bedtime, make up special voices for each.
+<pstyle:Feature Para>Also note, that certain filesystems have made odd choices. I<0x2019>m not going to single out the case-insensitive <CharStyle:pod-I>but case preserving<CharStyle:> Mac OS X filesystem because I am sure there are others, but its something I have to remember when I use <CharStyle:pod-C>perldoc<CharStyle:>. When I tell <CharStyle:pod-C>perldoc<CharStyle:> to find something, it stops at the first thing it finds. For modules, it allows an extra <CharStyle:pod-I>.pm<CharStyle:> or <CharStyle:pod-I>.pod<CharStyle:> at the end of my term. However, in this case, <CharStyle:pod-C>cpan<CharStyle:> can match different things. Try these variations of perldoc to see what you get:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>% perldoc cpan
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>% perldoc CPAN
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>% perldoc cPaN
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>% perldoc CPAN.pm
+<pSpaceAfter:><pstyle:Feature Para>On my Mac, the first three bring up the documentation for my <CharStyle:pod-C>cpan<CharStyle:> script, although the various other BSDs I use handle the case as most people would expect. The filesystem is mostly to blame for this. I could choose to use UFS on my Mac, but then I<0x2019>d have to do work. Just remember that you might have to tack on the extra <CharStyle:pod-C>.pm<CharStyle:> to look at the actual CPAN module.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> The old way	
+<pstyle:Feature Section Lead>The old <CharStyle:pod-C>CPAN.pm<CharStyle:> way involved starting a shell and issuing interactive commands. From the command line, I could include the <CharStyle:pod-C>CPAN.pm<CharStyle:> module with the <CharStyle:pod-C>-M<CharStyle:> switch:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>% perl -MCPAN -e shell<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>Once I ran that, I had a prompt where I would have to tell <CharStyle:pod-C>CPAN.pm<CharStyle:> to do something.
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>cpan\> install Business::ISBN Tie::Cycle<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> The new way	
+<pstyle:Feature Section Lead>Although the interactive prompt is adequate, it<0x2019>s just a little bit too much work for me. I don<0x2019>t like all of that typing on the command line just to start it, so I created my own bash alias for it and put it in my <CharStyle:pod-C>.bash_profile<CharStyle:>:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>alias cpan 'perl -MCPAN -e shell'<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>Now I just needed to type five characters (don<0x2019>t forget to count that newline that everyone ignores!) to start the shell:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>% cpan
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>cpan[1]\>
+<pSpaceAfter:><pstyle:Feature Para>But then, I needed to type a lot more to install a module. The shell expects a command first then the arguments that go with that command:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>% cpan
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>cpan[1]\> install Set::CrossProduct
+<pSpaceAfter:><pstyle:Feature Para>I got rid of my bash alias and created a Perl program instead. With arguments, it installed the name modules, and without arguments, it started the shell.
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>% cpan HTML::SimpleLinkExtor
+<pSpaceBefore:><pstyle:Feature Code Para>% cpan
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>cpan[1]\>
+<pSpaceAfter:><pstyle:Feature Para>From there, I started to add other features to make things more convenient for me, Andreas included it in <CharStyle:pod-C>CPAN.pm<CharStyle:> so other people started to use it, and other people have contributed features they found convenient. Although my initial features were really shortcuts into <CharStyle:pod-C>CPAN.pm<CharStyle:>, when I decided to make it a full program, I was really thinking about enhancing the things that <CharStyle:pod-C>CPAN.pm<CharStyle:> could do.
+<pstyle:Feature Para>I won<0x2019>t go through all of the features of <CharStyle:pod-C>cpan<CharStyle:>, but here are a few interesting ones that have helped me, and which you<0x2019>ll be able to program yourself by the end of this article.
+<pstyle:Feature Para>Often, I want to write to the module author, and although I know who the authors of the big modules are, I haven<0x2019>t memorizd the authors of all 15,000 distributions yet. With the <CharStyle:pod-C>-A<CharStyle:> switch, <CharStyle:pod-C>cpan<CharStyle:> tells me which author goes with a module, and I get the email address too (although it<0x2019>s normally a <CharStyle:pod-I>cpan.org<CharStyle:> address:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>% cpan -A Archive::Extract
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>Archive::Extract          KANE     kane@cpan.org             Jos Boumans
+<pSpaceAfter:><pstyle:Feature Para>Now I can send Jos a note about <CharStyle:pod-C>Archive::Extract<CharStyle:>. If I<0x2019>m sending a bug report, however, I don<0x2019>t even need to know the authors name because RT already has an email address for every module XXX
+<pstyle:Feature Para>Going the other way, I often want to see the list of modules by a particular author, so I use the <CharStyle:pod-C>-L<CharStyle:> switch:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>% cpan -L MERLYN
+<pSpaceBefore:><pstyle:Feature Code Para>CGI::Prototype
+<pstyle:Feature Code Para>CGI::Prototype::Hidden
+<pstyle:Feature Code Para>CGI::Prototype::Mecha
+<pstyle:Feature Code Para>File::Finder
+<pstyle:Feature Code Para>File::Finder::Steps
+<pstyle:Feature Code Para>Inline::Spew
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>Template::Plugin::DBM::Deep
+<pSpaceAfter:><pstyle:Feature Para>There<0x2019>s nothing particularly hard about any of these features; I just need to use a few of the CPAN prgramming interface hooks to put information together and display the results.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> The programmer<0x2019>s interface	
+<pstyle:Feature Section Lead>Everything that I can do from the interactive prompt is available to me in the programmers interface too. I also have access to all of the configuration information, if I want it. The programming interface documentation is in the <CharStyle:pod-C>CPAN.pm<CharStyle:>, although there is a lot there. Instead of going through everything, I<0x2019>ll just show the stuff I commonly use.
+<pstyle:Feature Para>I<0x2019>ll start with a small program, which is always a good way to learn a new interface. I want to just dump the configuration. Once I load <CharStyle:pod-C>CPAN.pm<CharStyle:>, I have to use <CharStyle:pod-C>CPAN::HandleConfig<CharStyle:> to get the configuration:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>#!/usr/bin/perl
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>use CPAN;
+<pstyle:Feature Code Para>use Data::Dumper;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>CPAN::HandleConfig-\>load;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>print Dumper( $CPAN::Config );
+<pSpaceAfter:><pstyle:Feature Para>When I run this program, I can see the configuration data for <CharStyle:pod-C>CPAN.pm<CharStyle:> as a hash reference:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>CPAN: File::HomeDir loaded ok (v0.80)
+<pSpaceBefore:><pstyle:Feature Code Para>$VAR1 = {
+<pstyle:Feature Code Para>          'cpan_home' =\> '/Users/brian/.cpan',
+<pstyle:Feature Code Para>          'makepl_arg' =\> '',
+<pstyle:Feature Code Para>          'histfile' =\> '/Users/brian/.cpan/histfile',
+<pstyle:Feature Code Para>          'unzip' =\> '/usr/bin/unzip',
+<pstyle:Feature Code Para>          'show_upload_date' =\> '1',
+<pstyle:Feature Code Para>          'dontload_hash' =\> {},
+<pstyle:Feature Code Para>          'mbuild_install_build_command' =\> './Build',
+<pstyle:Feature Code Para>          'lynx' =\> '',
+<pstyle:Feature Code Para>          'curl' =\> '/usr/bin/curl',
+<pstyle:Feature Code Para>          'ncftp' =\> '',
+<pstyle:Feature Code Para>          'urllist' =\> [
+<pstyle:Feature Code Para>                         'file:///MINICPAN',
+<pstyle:Feature Code Para>                         'ftp://cpan.teleglobe.net/pub/CPAN'
+<pstyle:Feature Code Para>                       ],
+<pstyle:Feature Code Para>           ...
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>         };
+<pSpaceAfter:><pstyle:Feature Para>Notice, however, that the first line of the output is not part of the Perl code. That<0x2019>s a status message from <CharStyle:pod-C>CPAN.pm<CharStyle:> telling me that it loaded <CharStyle:pod-C>File::HomeDir<CharStyle:>. I really don<0x2019>t want to see those messages and they don<0x2019>t belong in the configuration output. I can change that by setting the <CharStyle:pod-C>be_silent<CharStyle:> key to <CharStyle:pod-C>1<CharStyle:> when I load the configuration:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>#!/usr/bin/perl
+<pSpaceBefore:><pstyle:Feature Code Para>
+<pstyle:Feature Code Para>use CPAN;
+<pstyle:Feature Code Para>use Data::Dumper;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>CPAN::HandleConfig-\>load(
+<pstyle:Feature Code Para>    be_silent =\> 1
+<pstyle:Feature Code Para>    );
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>print Dumper( $CPAN::Config );
+<pSpaceAfter:><pstyle:Feature Para>That <CharStyle:pod-C>Dumper<CharStyle:> output is almost the same thing that<0x2019>s in the actual <CharStyle:pod-C>CPAN.pm<CharStyle:> configuration file, which is just Perl code that the module loads. If I adjust my code a little, I can make the <CharStyle:pod-C>Dumper<CharStyle:> output give a proper name to the data. Instead of simply calling <CharStyle:pod-C>Dumper<CharStyle:>, I<0x2019>ll use <CharStyle:pod-C>Data::Dumper<CharStyle:><0x2019>s object-oriented interface. I can then call the <CharStyle:pod-C>Dump<CharStyle:> method with an array reference of references to dump, and a second array reference of names to use for those data structures:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>#!/usr/bin/perl
+<pSpaceBefore:><pstyle:Feature Code Para># dump_config.pl
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>use CPAN;
+<pstyle:Feature Code Para>use Data::Dumper;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>CPAN::HandleConfig-\>load(
+<pstyle:Feature Code Para>    be_silent =\> 1
+<pstyle:Feature Code Para>    );
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>my $dd = Data::Dumper-\>new( 
+<pstyle:Feature Code Para>    [$CPAN::Config], 
+<pstyle:Feature Code Para>    ['$CPAN::Config'] 
+<pstyle:Feature Code Para>    );
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>print $dd-\>Dump;
+<pSpaceAfter:><pstyle:Feature Para>Now my output doesn<0x2019>t have the unsightly <CharStyle:pod-C>$VAR<CharStyle:> because it uses the right name for the variable:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>$CPAN::Config = {
+<pSpaceBefore:><pstyle:Feature Code Para>           ...
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>         };
+<pSpaceAfter:><pstyle:Feature Para>With one more change, I can make this look just like a real <CharStyle:pod-C>CPAN.pm<CharStyle:> configuration file. To pull it into <CharStyle:pod-C>CPAN.pm<CharStyle:>, the configuration file needs to end with a true value, just like all Perl modules and libraries do. Once <CharStyle:pod-C>CPAN::HandleConfig<CharStyle:> figures out where to find the configuration file (normally expected as <CharStyle:pod-C>CPAN::MyConfig<CharStyle:> in your <CharStyle:pod-I>.cpan<CharStyle:> directory under your home directory). I<0x2019>ll just fix that up in the <CharStyle:pod-C>print<CharStyle:> statement of my last program:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>print $dd-\>Dump, "1;\\n__END__\\n";<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>Now my output is the same as what <CharStyle:pod-C>CPAN::HandleConfig<CharStyle:> expects:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>$CPAN::Config = {
+<pSpaceBefore:><pstyle:Feature Code Para>           ...
+<pstyle:Feature Code Para>         };
+<pstyle:Feature Code Para>1;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>__END__
+<pSpaceAfter:><pstyle:Feature Para>Although you now know how to do this on your own, you can also do the same thing with the <CharStyle:pod-C>-j<CharStyle:> switch to <CharStyle:pod-C>cpan<CharStyle:> to get the same output:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>% cpan -j
+<pSpaceBefore:><pstyle:Feature Code Para>$CPAN::Config = {
+<pstyle:Feature Code Para>           ...
+<pstyle:Feature Code Para>         };
+<pstyle:Feature Code Para>1;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>__END__
+<pSpaceAfter:><pstyle:Feature Para>Since I can load the configuration, I can make a small tool that I often seem to need. Where will <CharStyle:pod-C>CPAN.pm<CharStyle:> try to look for files? Inspecting the configuration (or even reading the <CharStyle:pod-C>CPAN.pm<CharStyle:> documentation) shows me that the <CharStyle:pod-C>urllist<CharStyle:> has the list of CPAN sites to try:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>#!/usr/bin/perl
+<pSpaceBefore:><pstyle:Feature Code Para># list_mirrors.pl
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>use CPAN;
+<pstyle:Feature Code Para>use Data::Dumper;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>CPAN::HandleConfig-\>load(
+<pstyle:Feature Code Para>    be_silent =\> 1
+<pstyle:Feature Code Para>    );
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>foreach my $mirror ( @{ $CPAN::Config-\>{urllist} } )
+<pstyle:Feature Code Para>    {
+<pstyle:Feature Code Para>    print "$mirror\\n";
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Para>When I run this little program, I see that my primary mirror is my minicpan on my location machine, and the backup is a remote machine:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>% perl list_mirrors.pl
+<pSpaceBefore:><pstyle:Feature Code Para>file:///MINICPAN
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>ftp://cpan.teleglobe.net/pub/CPAN
+<pSpaceAfter:><pstyle:Feature Para>If I don<0x2019>t like that mirror list, I can even change the configuration after I<0x2019>ve loaded it:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>use Cwd;
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>$CPAN::Config-\>{urllist} = [ cwd() ];
+<pSpaceAfter:><pstyle:Feature Para>Custom configuration is especially handy as a custom tool when I don<0x2019>t know the CPAN miror source until runtime. For instance, I might have a copy of CPAN on a CD or thumb drive. Until I actually mount one of those, I don<0x2019>t know where it will end up, so I don<0x2019>t know where the CPAN sources will be. My custom tool figures it out at runtime and adjusts the configuration.
+<pstyle:Feature Sub Section>Reading a one-time configuration
+<pstyle:Feature Para>Now that I can dump the configuration from <CharStyle:pod-C>CPAN.pm<CharStyle:>, I can save it wherever I like and edit it. This is especially handy when I want to make a \<CPAN.pm\>-based tool act slightly differently without changing the current configuration. It seems that every time I change the configuration, I don<0x2019>t properly restore it. Instead of changing it, I<0x2019>ll just use a different configuration. This gets a bit tricky because <CharStyle:pod-C>CPAN::HandleConfig<CharStyle:> always looks first in <CharStyle:pod-I>~/.cpan<CharStyle:> to load the configuration. However, it doesn<0x2019>t do anything if it thinks that I<0x2019>ve already loaded <CharStyle:pod-C>CPAN::MyConfig<CharStyle:>.
+<pstyle:Feature Para>First, I need to be able to load the configuration and ensure that <CharStyle:pod-C>CPAN.pm<CharStyle:> doesn<0x2019>t load anything over it. I have to fake out <CharStyle:pod-C>%INC<CharStyle:>, the special variable that Perl uses to track what it has already loaded. I set the filename keys in <CharStyle:pod-C>%INC<CharStyle:> to a true value:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>#!/usr/bin/perl
+<pSpaceBefore:><pstyle:Feature Code Para># load_config.pl
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>use CPAN;
+<pstyle:Feature Code Para>use Data::Dumper;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>die "Could not find file [$ARGV[0]]\\n" 
+<pstyle:Feature Code Para>    unless -e $ARGV[0];
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>{
+<pstyle:Feature Code Para># don't search any Perl directories
+<pstyle:Feature Code Para># but look in the current directory if it's
+<pstyle:Feature Code Para># a relative path
+<pstyle:Feature Code Para>local @INC = qw(.);
+<pstyle:Feature Code Para>do $ARGV[0];
+<pstyle:Feature Code Para>die "Could not read $ARGV[0]! [$!]"    if $!;
+<pstyle:Feature Code Para>die "Could not compile $ARGV[0]! [$@]" if $@;
+<pstyle:Feature Code Para>}
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para># fake out CPAN::HandleConfig::require_myconfig_or_config
+<pstyle:Feature Code Para># I'll need this later
+<pstyle:Feature Code Para>$INC{'CPAN/MyConfig.pm'} = $file;
+<pstyle:Feature Code Para>$INC{'CPAN/Config.pm'} = 1;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>foreach my $mirror ( @{ $CPAN::Config-\>{urllist} } )
+<pstyle:Feature Code Para>    {
+<pstyle:Feature Code Para>    print "$mirror\\n";
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Para>There are a couple of ways that I could load my new configuration file, but I<0x2019>ll use <CharStyle:pod-C>do<CharStyle:> because I know I<0x2019>m just loading a data structure. I don<0x2019>t want to look in any other directories, so I localize <CharStyle:pod-C>@INC<CharStyle:> to just the current directory for the scope of the <CharStyle:pod-C>do<CharStyle:>. After I<0x2019>ve loaded my own configuration, I set the <CharStyle:pod-C>CPAN/MyConfig.pm<CharStyle:> and <CharStyle:pod-C>CPAN/Config.pm<CharStyle:> entries in <CharStyle:pod-C>%INC<CharStyle:>. Those are important for this program, but later I<0x2019>ll need them so <CharStyle:pod-C>CPAN::HandleConfig<CharStyle:> doesn<0x2019>t reload the real configuration over my custom one.
+<pstyle:Feature Para>I<0x2019>m ready to use my new program. I<0x2019>ll start with the configuration file that I dumped earlier but then change part of the configuration:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>% perl dump_config.pl \> Buster.rc<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>I then edit <CharStyle:pod-I>Buster.rc<CharStyle:>. For a real use, I<0x2019>d want to keep all of the <CharStyle:pod-C>CPAN.pm<CharStyle:> configuration directives, but in this case I edited it so that it only has the <CharStyle:pod-C>urllist<CharStyle:> key and the value that I want to use one time:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>$CPAN::Config = {
+<pSpaceBefore:><pstyle:Feature Code Para>    'urllist' =\> [
+<pstyle:Feature Code Para>        'file:///Users/brian/MCPAN',
+<pstyle:Feature Code Para>        ],
+<pstyle:Feature Code Para>    };
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>1;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>__END__
+<pSpaceAfter:><pstyle:Feature Para>Now when I run my <CharStyle:pod-I>load_config.pl<CharStyle:> program with my new configuration file, I see the mirrors I listed there:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>% perl load_config.pl Buster.rc
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>file:///Users/brian/MCPAN
+<pSpaceAfter:><pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Modules, Distributions, Authors, and Bundles	
+<pstyle:Feature Section Lead>Besides the <CharStyle:pod-C>CPAN::Shell<CharStyle:>, the <CharStyle:pod-C>CPAN.pm<CharStyle:> programming interface has four major sections that handle access to the various indices and information that CPAN tracks. A Module is part of a Distribution that belongs to an Author, and Bundles are lists of modules. I won<0x2019>t go through bundles in this article, however.
+<pstyle:Feature Para>Access to this information usually happens through the <CharStyle:pod-C>CPAN::Shell<CharStyle:>, which can find what I am looking for and give me an object that represents that. Once I have that object, I use the right methods to extract its information. I call the <CharStyle:pod-C>expand<CharStyle:> method with the <CharStyle:pod-C>$type<CharStyle:> of thing I<0x2019>m looking for and an argument that goes with it:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>$type = 'Module'; # or 'Author', 'Distribution', or 'Bundle'
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>CPAN::Shell-\>expand( $type, $argument );
+<pSpaceAfter:><pstyle:Feature Para>Also, since these methods deal with the various index files that <CharStyle:pod-C>CPAN<CharStyle:> uses, I should start most programs with a call to <CharStyle:pod-C>CPAN::Index<CharStyle:> to ensure that I have up-to-date information:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>use CPAN::Index;
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>CPAN::Index-\>reload;
+<pSpaceAfter:><pstyle:Feature Sub Section>Expanding information
+<pstyle:Feature Para>When I used the <CharStyle:pod-C>-A<CharStyle:> switch with <CharStyle:pod-C>cpan<CharStyle:>, I got the author name from a module name:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>% cpan -A Archive::Extract
+<pSpaceBefore:><pstyle:Feature Code Para><pSpaceAfter:4.500000>Archive::Extract          KANE     kane@cpan.org             Jos Boumans
+<pSpaceAfter:><pstyle:Feature Para>That<0x2019>s easy to do with the <CharStyle:pod-C>CPAN.pm<CharStyle:> interface. First, I expand the information I have, the module name, into a module object:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>my $module = CPAN::Shell-\>expand( 'Module', $module_name );<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>Once I have the <CharStyle:pod-C>$module<CharStyle:> object, I can use any of the methods for CPAN::Module. In this case, I want to get the PAUSE user name for the module, so I use the <CharStyle:pod-C>userid<CharStyle:> method:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>my $userid = $module-\>userid;<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>Now that I have the user name, I can call <CharStyle:pod-C>expand<CharStyle:> again, but this time turn the user name into an <CharStyle:pod-C>$author<CharStyle:> object.
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>my $author = CPAN::Shell-\>expand( "Author", $userid );<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>Finally, I can call methods on <CharStyle:pod-C>$author<CharStyle:> to get the information that I want. I<0x2019>ll just print a summary of the module and author details:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>printf "%-25s %-8s %-25s %s\\n", 
+<pSpaceBefore:><pstyle:Feature Code Para>    $module_name, 
+<pstyle:Feature Code Para>    $module-\>userid, 
+<pstyle:Feature Code Para>    $author-\>email, 
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    $author-\>fullname;
+<pSpaceAfter:><pstyle:Feature Para>Putting that all together with a little bit of error checking, I have my <CharStyle:pod-I>show_author.pl<CharStyle:> program:
+<pstyle:Feature Code Para><pSpaceBefore:4.500000>#!/usr/bin/perl
+<pSpaceBefore:><pstyle:Feature Code Para># show_author.pl
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>use CPAN;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>CPAN::HandleConfig-\>load(
+<pstyle:Feature Code Para>    be_silent =\> 1,
+<pstyle:Feature Code Para>    );
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>CPAN::Index-\>reload;
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>foreach my $arg ( @ARGV )
+<pstyle:Feature Code Para>    {
+<pstyle:Feature Code Para>    my $module = CPAN::Shell-\>expand( 
+<pstyle:Feature Code Para>        "Module", 
+<pstyle:Feature Code Para>        $arg 
+<pstyle:Feature Code Para>        );
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    unless( $module )
+<pstyle:Feature Code Para>        {
+<pstyle:Feature Code Para>        print "Didn't find a $arg module, so no author!";
+<pstyle:Feature Code Para>        next;
+<pstyle:Feature Code Para>        }
+<pstyle:Feature Code Para>        
+<pstyle:Feature Code Para>    my $author = CPAN::Shell-\>expand( 
+<pstyle:Feature Code Para>        "Author", 
+<pstyle:Feature Code Para>        $module-\>userid 
+<pstyle:Feature Code Para>        );
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    unless( $module )
+<pstyle:Feature Code Para>        {
+<pstyle:Feature Code Para>        print "Didn't get an author for $module!";
+<pstyle:Feature Code Para>        next;
+<pstyle:Feature Code Para>        }
+<pstyle:Feature Code Para>
+<pstyle:Feature Code Para>    printf "%-25s %-8s %-25s %s\\n", 
+<pstyle:Feature Code Para>        $arg, $module-\>userid, 
+<pstyle:Feature Code Para>        $author-\>email, $author-\>fullname;
+<pstyle:Feature Code Para><pSpaceAfter:4.500000>    }
+<pSpaceAfter:><pstyle:Feature Para>Many of the features of my <CharStyle:pod-C>cpan<CharStyle:> script are just variations of calls to <CharStyle:pod-C>expand<CharStyle:>.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> The CPAN.pm shell	
+<pstyle:Feature Section Lead>Getting and presenting information from CPAN is useful, but its easy for me to have <CharStyle:pod-C>CPAN.pm<CharStyle:> do something for me. The commands that I use in the <CharStyle:pod-C>CPAN.pm<CharStyle:> shell are also method names in <CharStyle:pod-C>CPAN::Shell<CharStyle:>. If I want to install soemthing, I call the <CharStyle:pod-C>install<CharStyle:> method:
+<pstyle:Feature Code Para><pSpaceAfter:4.500000><pSpaceBefore:4.500000>CPAN::Shell-\>install( $module );<pSpaceBefore:>
+<pSpaceAfter:><pstyle:Feature Para>The shell takes care of the rest, including downloading, unpacking, and testing the module, as well as installing its dependencies. If I<0x2019>m writing a Perl application that I want end users to install, I can create a <CharStyle:pod-C>Task<CharStyle:> bundle, which is just an empty distribution that has all of the supporting files for automatic installation. A <CharStyle:pod-C>Task<CharStyle:> bundle together with a custom CPAN installer can re-use all of the power of <CharStyle:pod-C>CPAN.pm<CharStyle:> but still hides all of the complexity from the end user.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Conclusion	
+<pstyle:Feature Section Lead>The <CharStyle:pod-C>CPAN.pm<CharStyle:> programming interface makes it easy to access and merge information about CPAN distributions, as well create custom CPAN tools with features that do exactly what you need. If you come up eith a new tool or feature, please let me know; there<0x2019>s probably room in <CharStyle:pod-C>cpan<CharStyle:> for it. Once in <CharStyle:pod-C>cpan<CharStyle:>, you can brag to your friends and family that some of your code is installed on millions of computers around the world.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> References	
+<pstyle:Feature Section Lead>The <CharStyle:pod-C>CPAN.pm<CharStyle:> documentation comes with Perl, so you should already have it. You can also read Perl documentation on <CharStyle:pod-I>search.cpan.org<CharStyle:> or <CharStyle:pod-I>perldoc.perl.org<CharStyle:>.
+<pstyle:Feature Para>The <CharStyle:pod-C>cpan<CharStyle:> script comes with <CharStyle:pod-C>CPAN.pm<CharStyle:>, but the latest version is always available separately on CPAN. The latest features may be in development versions.
+<pstyle:Feature Section><cTypeface:Regular><cFont:Wingdings>n<cTypeface:><cFont:> Author	
+<pstyle:Feature Section Lead>brian d foy (<CharStyle:pod-I>brian.d.foy@gmail.com<CharStyle:>) is the publisher of the <CharStyle:pod-I>The Perl Review<CharStyle:> and the author the the <CharStyle:pod-C>cpan<CharStyle:> script that comes with <CharStyle:pod-C>CPAN.pm<CharStyle:>.
